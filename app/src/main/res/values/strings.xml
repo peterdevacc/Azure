@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">AzureNum</string>
+    <string name="app_version_title">version</string>
+    <string name="app_version">1.0.0</string>
+    <string name="app_last_update_title">last update</string>
+    <string name="app_last_update">Oct 23 2022</string>
+    <string name="app_website">https://www.example.com</string>
+    <string name="app_motto">This is a motto.</string>
+
+    <string name="screen_home">Home</string>
+    <string name="screen_home_img_cd">Home navigation item</string>
+    <string name="screen_home_description">This is home screen description.</string>
+    <string name="screen_home_start_game">Start Game</string>
+    <string name="screen_home_continue_game">Continue</string>
+
+    <string name="screen_print">Print</string>
+    <string name="screen_print_img_cd">Print navigation item</string>
+    <string name="screen_print_description">This is print screen description.</string>
+    <string name="screen_print_generate_pdf">Generate PDF</string>
+    <string name="screen_print_share_pdf">Share PDF</string>
+
+    <string name="screen_help">Help</string>
+    <string name="screen_help_img_cd">Help navigation item</string>
+    <string name="screen_help_description">This is help screen description.</string>
+
+    <string name="screen_about">About</string>
+    <string name="screen_about_img_cd">About navigation item</string>
+    <string name="screen_about_description">This is about screen description.</string>
+    <string name="screen_about_slogan">AzureNum\nGood Sudoku App</string>
+
+    <string name="screen_game">Game</string>
+    <string name="screen_contract">Contract</string>
+    <string name="screen_greeting">Greeting</string>
+
+    <string name="service_title">terms of service</string>
+    <string name="privacy_title">privacy policy</string>
+    <string name="acknowledgement_title">acknowledgements</string>
+
+    <string name="game_level_easy">Easy</string>
+    <string name="game_level_moderate">Moderate</string>
+    <string name="game_level_hard">Hard</string>
+
+    <string-array name="game_level">
+        <item>@string/game_level_easy</item>
+        <item>@string/game_level_moderate</item>
+        <item>@string/game_level_hard</item>
+    </string-array>
+
+
+    <string name="error_io">a IO error happened, please try again.</string>
+    <string name="error_unknown">a unknown error happened, please try again.</string>
+
+    <string name="icon_cd_screen_home">Home page</string>
+    <string name="icon_cd_screen_print">Print page</string>
+    <string name="icon_cd_screen_help">Help page</string>
+    <string name="icon_cd_screen_about">About page</string>
+
+    <string name="icon_cd_navigation_menu">Navigation menu</string>
+    <string name="icon_cd_navigate_up">Navigate up</string>
+    <string name="icon_cd_navigate_to">Navigate to %1$s</string>
+    <string name="icon_cd_delete_game">Delete game</string>
+
+</resources>

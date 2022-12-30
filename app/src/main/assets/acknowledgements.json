@@ -1,0 +1,113 @@
+{
+  "type": "ACKNOWLEDGEMENTS",
+  "data": [
+    {
+      "type": "TITLE",
+      "text": "Jetbrains Kotlin Stdlib / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://github.com/JetBrains/kotlin"
+    },
+    {
+      "type": "TITLE",
+      "text": "Jetbrains Kotlin Coroutines / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://github.com/Kotlin/kotlinx.coroutines"
+    },
+    {
+      "type": "TITLE",
+      "text": "Google Material Components for Android / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://github.com/material-components/material-components-android"
+    },
+    {
+      "type": "TITLE",
+      "text": "Google Material Design Icons / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://github.com/google/material-design-icons"
+    },
+    {
+      "type": "TITLE",
+      "text": "Android Room / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/support/+/refs/heads/android-room-release"
+    },
+    {
+      "type": "TITLE",
+      "text": "Android Lifecycle / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-lifecycle-release"
+    },
+    {
+      "type": "TITLE",
+      "text": "Android Fragment / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-fragment-release"
+    },
+    {
+      "type": "TITLE",
+      "text": "Android Core / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-core-release"
+    },
+    {
+      "type": "TITLE",
+      "text": "Android Appcompat / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-appcompat-release"
+    },
+    {
+      "type": "TITLE",
+      "text": "Android Constraintlayout / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/opt/sherpa/+/studio-3.0/constraintlayout"
+    },
+    {
+      "type": "TITLE",
+      "text": "Android Navigation / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-navigation-release"
+    },
+    {
+      "type": "TITLE",
+      "text": "Android Preference / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-preference-release"
+    },
+    {
+      "type": "TITLE",
+      "text": "Google Dagger Hilt / Apache-2.0 License"
+    },
+    {
+      "type": "TEXT",
+      "text": "https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-hilt-release"
+    },
+    {
+      "type": "SIGNATURE",
+      "text": "蔚蓝数独 For Android, written in kotlin\nCopyright © 洪振健 2022，保留所有权利"
+    }
+  ]
+}
