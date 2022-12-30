@@ -84,17 +84,20 @@ fun PrintContent(
                             contentAlignment = Alignment.Center,
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            Column {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
                                 Image(
                                     painter = painterResource(R.drawable.example_img),
                                     contentDescription = "dummy logo",
                                     modifier = Modifier
                                         .padding(bottom = 8.dp)
-                                        .size(128.dp),
+                                        .width(256.dp)
+                                        .height(192.dp),
                                     contentScale = ContentScale.FillBounds
                                 )
                                 Text(
-                                    text = "empty",
+                                    text = stringResource(R.string.screen_print_tips),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onBackground,
                                     maxLines = 3

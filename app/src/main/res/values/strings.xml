@@ -16,6 +16,9 @@
     <string name="screen_print">Print</string>
     <string name="screen_print_img_cd">Print navigation item</string>
     <string name="screen_print_description">This is print screen description.</string>
+    <string name="screen_print_tips">
+        You can generate a Sudoku PDF \nand share it with others.
+    </string>
     <string name="screen_print_generate_pdf">Generate PDF</string>
     <string name="screen_print_share_pdf">Share PDF</string>
 
