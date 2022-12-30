@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -53,83 +54,72 @@ fun HomeContent(
 
     when (uiState) {
         is HomeUiState.Error -> {
-            AnimatedVisibility(
-                visible = uiState != HomeUiState.Loading,
-                enter = fadeIn(
-                    animationSpec = tween(600)
-                ),
-                exit = fadeOut(
-                    animationSpec = tween(600)
-                )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
             ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    ErrorNotice(uiState.code)
-                }
+                ErrorNotice(uiState.code)
             }
         }
         is HomeUiState.Success -> {
-            AnimatedVisibility(
-                visible = uiState != HomeUiState.Loading,
-                enter = fadeIn(
-                    animationSpec = tween(600)
-                ),
-                exit = fadeOut(
-                    animationSpec = tween(600)
-                )
+            Column(
+                modifier = Modifier.azureScreen()
             ) {
+                AzureTopBar(
+                    navDialogState = navDialogState,
+                    destination = AzureDestination.Main.HOME,
+                    navigateToMainScreens = navigateToMainScreens
+                )
+                Spacer(modifier = Modifier.weight(5f))
                 Column(
-                    modifier = Modifier.azureScreen()
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AzureTopBar(
-                        navDialogState = navDialogState,
-                        destination = AzureDestination.Main.HOME,
-                        navigateToMainScreens = navigateToMainScreens
-                    )
-                    Spacer(modifier = Modifier.weight(5f))
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        if (!uiState.gameExisted) {
-                            GameLevelSetting(
-                                getGameLevel = getGameLevel,
-                                fullSize = 288.dp,
-                            )
-                        } else {
-                            Spacer(modifier = Modifier.size(288.dp))
-                        }
-                        Spacer(modifier = Modifier.padding(bottom = 24.dp))
-                        val buttonText = if (uiState.gameExisted) {
-                            stringResource(R.string.screen_home_continue_game)
-                        } else {
-                            stringResource(R.string.screen_home_start_game)
-                        }
-                        val navigate = if (uiState.gameExisted) {
-                            navigateToContinueGame
-                        } else {
-                            navigateToNewGame
-                        }
-                        Button(
-                            contentPadding = PaddingValues(16.dp),
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .width(260.dp),
-                            onClick = navigate
-                        ) {
-                            Text(
-                                text = buttonText,
-                                fontSize = 16.sp,
-                            )
-                        }
+                    if (!uiState.gameExisted) {
+                        GameLevelSetting(
+                            getGameLevel = getGameLevel,
+                            fullSize = 288.dp,
+                        )
+                    } else {
+                        Spacer(modifier = Modifier.size(288.dp))
                     }
-                    Spacer(modifier = Modifier.weight(2f))
+                    Spacer(modifier = Modifier.padding(bottom = 24.dp))
+                    val buttonText = if (uiState.gameExisted) {
+                        stringResource(R.string.screen_home_continue_game)
+                    } else {
+                        stringResource(R.string.screen_home_start_game)
+                    }
+                    val navigate = if (uiState.gameExisted) {
+                        navigateToContinueGame
+                    } else {
+                        navigateToNewGame
+                    }
+                    Button(
+                        contentPadding = PaddingValues(16.dp),
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .width(260.dp),
+                        onClick = navigate
+                    ) {
+                        Text(
+                            text = buttonText,
+                            fontSize = 16.sp,
+                        )
+                    }
                 }
+                Spacer(modifier = Modifier.weight(2f))
             }
         }
-        is HomeUiState.Loading -> Unit
+        is HomeUiState.Loading -> {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp, 24.dp)
+                )
+            }
+        }
     }
 
 }
