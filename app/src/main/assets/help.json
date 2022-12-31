@@ -1,47 +1,12 @@
 [
   {
     "catalog": "FAQ",
-    "title": "faq 1",
-    "text": "text for faq 1"
-  },
-  {
-    "catalog": "FAQ",
-    "title": "faq 2",
-    "text": "text for faq 2"
-  },
-  {
-    "catalog": "FAQ",
-    "title": "faq 3",
-    "text": "text for faq 3"
+    "title": "Is AzureNum a free app?",
+    "text": "Yes, AzureNum is complete free, doesn't have any hidden charges and Ads."
   },
   {
     "catalog": "TUTORIAL",
-    "title": "TUTORIAL 4",
-    "text": "text for TUTORIAL 4"
-  },
-  {
-    "catalog": "TUTORIAL",
-    "title": "TUTORIAL 5",
-    "text": "text for TUTORIAL 5"
-  },
-  {
-    "catalog": "TUTORIAL",
-    "title": "TUTORIAL 6",
-    "text": "text for TUTORIAL 6"
-  },
-  {
-    "catalog": "FAQ",
-    "title": "faq 7",
-    "text": "text for faq 7"
-  },
-  {
-    "catalog": "TUTORIAL",
-    "title": "TUTORIAL 8",
-    "text": "text for TUTORIAL 8"
-  },
-  {
-    "catalog": "FAQ",
-    "title": "faq 9",
-    "text": "text for faq 9"
+    "title": "How to play Sudoku?",
+    "text": "Use numbers 1-9 to fill in a 9 times 9 spaces, and you can't repeat numbers within the row, column or square (3 times 3 spaces). You will understand it when you give it a try."
   }
 ]
