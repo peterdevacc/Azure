@@ -1,6 +1,5 @@
 package com.peter.azure.ui.game
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.peter.azure.R
 import com.peter.azure.data.entity.Mark
-import com.peter.azure.ui.about.AboutContent
 import com.peter.azure.ui.theme.AzureTheme
 
 @Composable
@@ -33,86 +31,50 @@ fun GameInput(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable(onClick = blank)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_clear_24),
-                        contentDescription = "clean",
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
+            ActionIcon(
+                iconId = R.drawable.ic_clear_24,
+                iconCd = "clean",
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+                    .clickable(onClick = blank)
+            )
             Divider(
                 thickness = 1.dp,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable { mark(Mark.WRONG) }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_cross_24),
-                        contentDescription = "mark wrong",
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
+            ActionIcon(
+                iconId = R.drawable.ic_cross_24,
+                iconCd = "mark wrong",
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+                    .clickable{ mark(Mark.WRONG) }
+            )
             Divider(
                 thickness = 1.dp,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable { mark(Mark.NONE) }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_circle_24),
-                        contentDescription = "mark none",
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
+            ActionIcon(
+                iconId = R.drawable.ic_circle_24,
+                iconCd = "mark none",
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+                    .clickable{ mark(Mark.NONE) }
+            )
             Divider(
                 thickness = 1.dp,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable { submit() }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_submit_24),
-                        contentDescription = "submit answer",
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
+            ActionIcon(
+                iconId = R.drawable.ic_submit_24,
+                iconCd = "submit answer",
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+                    .clickable(onClick = submit)
+            )
         }
         Divider(
             color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -161,6 +123,25 @@ fun GameInput(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun ActionIcon(
+    iconId: Int,
+    iconCd: String,
+    modifier: Modifier,
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+    ) {
+        Icon(
+            painter = painterResource(iconId),
+            contentDescription = iconCd,
+            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+            modifier = Modifier.size(24.dp)
+        )
     }
 }
 

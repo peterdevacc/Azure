@@ -35,7 +35,7 @@ fun GameScreen(
         submitAnswer = viewModel::submitAnswer,
         requestDelete = viewModel::requestDelete,
         deleteGame = viewModel::deleteGame,
-        closePlayingDialog = viewModel::closePlayingDialog,
+        closePlayingDialog = viewModel::closeDialog,
         navigateUp = navigateUp
     )
 
@@ -45,7 +45,7 @@ fun GameScreen(
 fun GameContent(
     uiState: GameUiState,
     deleteGame:() -> Unit,
-    selectLocation: (Location) -> Unit,
+    selectLocation: (Location, Int) -> Unit,
     writeNum: (Int) -> Unit,
     makeNote: (Mark) -> Unit,
     blankLocation: () -> Unit,
@@ -98,7 +98,7 @@ fun GameContent(
 @Composable
 private fun GamePlayingContent(
     uiState: GameUiState.Playing,
-    selectLocation: (Location) -> Unit,
+    selectLocation: (Location, Int) -> Unit,
     writeNum: (Int) -> Unit,
     makeNote: (Mark) -> Unit,
     blankLocation: () -> Unit,

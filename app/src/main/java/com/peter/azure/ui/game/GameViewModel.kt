@@ -32,7 +32,7 @@ class GameViewModel @Inject constructor(
 
     private val numState = mutableStateOf(0)
 
-    fun selectLocation(location: Location) {
+    fun selectLocation(location: Location, currentNum: Int) {
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
             if (uiState.location == location) {
@@ -45,6 +45,7 @@ class GameViewModel @Inject constructor(
                 if (note != null) {
                     markList = note.markList
                 }
+                numState.value = currentNum
                 _gameUiState.value = uiState.copy(
                     location = location,
                     markList = markList
@@ -123,7 +124,7 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    fun closePlayingDialog() {
+    fun closeDialog() {
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
             _gameUiState.value = uiState.copy(
