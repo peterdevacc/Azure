@@ -135,7 +135,6 @@ private fun Dial(
             }
     ) {
 
-
         drawCircle(
             brush = gradientBrush, radius = radius, center = centerOffset,
             style = Stroke(dialStrokeWidth)

@@ -3,12 +3,12 @@ package com.peter.azure.ui.greeting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.peter.azure.R
 import com.peter.azure.data.entity.Info
 import com.peter.azure.ui.util.ErrorDialog
@@ -74,6 +75,11 @@ fun GreetingContent(
         is GreetingUiState.Default -> Unit
     }
 
+    val underlineStyle = SpanStyle(
+        color = MaterialTheme.colorScheme.primary.copy(0.7f),
+        textDecoration = TextDecoration.Underline
+    )
+
     Column(
         modifier = Modifier.azureScreen()
     ) {
@@ -124,10 +130,7 @@ fun GreetingContent(
                     append("Please read our ")
                 }
                 withStyle(
-                    style = SpanStyle(
-                        color = Color.Blue.copy(0.7f),
-                        textDecoration = TextDecoration.Underline
-                    )
+                    style = underlineStyle
                 ) {
                     append("terms of service")
                 }
@@ -139,10 +142,7 @@ fun GreetingContent(
                     append(", ")
                 }
                 withStyle(
-                    style = SpanStyle(
-                        color = Color.Blue.copy(0.7f),
-                        textDecoration = TextDecoration.Underline
-                    )
+                    style = underlineStyle
                 ) {
                     append("privacy policy")
                 }
@@ -154,10 +154,7 @@ fun GreetingContent(
                     append(" and ")
                 }
                 withStyle(
-                    style = SpanStyle(
-                        color = Color.Blue.copy(0.7f),
-                        textDecoration = TextDecoration.Underline
-                    )
+                    style = underlineStyle
                 ) {
                     append("acknowledgements")
                 }
@@ -179,6 +176,26 @@ fun GreetingContent(
         ContractDecisionButton(
             text = "Reject and exit",
             decision = exitApp
+        )
+    }
+}
+
+@Composable
+private fun ContractDecisionButton(
+    text: String,
+    decision: () -> Unit
+) {
+    Button(
+        onClick = decision,
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .height(54.dp),
+        shape = MaterialTheme.shapes.small
+    ) {
+        Text(
+            text = text.uppercase(),
+            fontSize = 20.sp
         )
     }
 }

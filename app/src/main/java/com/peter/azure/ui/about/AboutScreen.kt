@@ -1,6 +1,7 @@
 package com.peter.azure.ui.about
 
-import androidx.compose.foundation.Image
+import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -8,17 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.peter.azure.R
 import com.peter.azure.data.entity.Info
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.ui.navigation.AzureTopBar
+import com.peter.azure.ui.theme.AzureTheme
 import com.peter.azure.ui.util.azureScreen
 
 @Composable
@@ -41,6 +43,14 @@ fun AboutContent(
     navigateToMainScreens: (String) -> Unit,
     navigateToContract: (String) -> Unit
 ) {
+    val gradientBrush = Brush.linearGradient(
+        listOf(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.tertiary
+        )
+    )
+
     Column(
         modifier = Modifier.azureScreen()
     ) {
@@ -49,16 +59,22 @@ fun AboutContent(
             destination = AzureDestination.Main.ABOUT,
             navigateToMainScreens = navigateToMainScreens
         )
-        Spacer(modifier = Modifier.weight(1f))
-        Image(
-            painter = painterResource(R.drawable.example_img),
-            contentDescription = "dummy logo",
+        Box(
+            contentAlignment = Center,
             modifier = Modifier
+                .background(gradientBrush)
                 .padding(top = 32.dp, bottom = 16.dp)
-                .size(128.dp)
-                .align(CenterHorizontally),
-            contentScale = ContentScale.FillBounds
-        )
+                .weight(2f)
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = stringResource(R.string.screen_about_slogan),
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onPrimary,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         AboutAppItem(
             heading = stringResource(R.string.app_version_title),
             text = stringResource(id = R.string.app_version)
@@ -91,17 +107,18 @@ fun AboutContent(
     }
 }
 
-//@Preview(
-//    name = "About Screen",
-//    showBackground = true
-//)
-//@Preview(
-//    name = "About Screen", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun AboutScreenPreview() {
-//    AzureTheme {
-//        AboutContent(false, {}, {}, {}, {})
-//    }
-//}
+@Preview(
+    name = "About Screen",
+    showBackground = true
+)
+@Preview(
+    name = "About Screen", showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun AboutScreenPreview() {
+    val showNavDialog = remember { mutableStateOf(false) }
+    AzureTheme {
+        AboutContent(showNavDialog, {}, {})
+    }
+}

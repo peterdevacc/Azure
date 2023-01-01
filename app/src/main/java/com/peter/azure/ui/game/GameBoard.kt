@@ -21,7 +21,7 @@ import com.peter.azure.data.entity.Puzzle
 fun GameBoard(
     puzzle: Puzzle,
     selectedLocation: Location,
-    selectLocation: (Location) -> Unit
+    selectLocation: (Location, Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -64,7 +64,7 @@ private fun GameCell(
     cell: Cell,
     location: Location,
     selectedLocation: Location,
-    select: (Location) -> Unit,
+    select: (Location, Int) -> Unit,
     modifier: Modifier
 ) {
     val boxModifier = if (cell.type == Cell.Type.BLANK) {
@@ -77,9 +77,7 @@ private fun GameCell(
                     MaterialTheme.colorScheme.surface
                 }
             )
-            .clickable {
-                select(location)
-            }
+            .clickable { select(location, cell.num) }
     } else {
         Modifier
             .then(modifier)
@@ -94,23 +92,19 @@ private fun GameCell(
     } else {
         MaterialTheme.colorScheme.onPrimaryContainer
     }
+    val numString = if (cell.num != 0) {
+        "${cell.num}"
+    } else {
+        ""
+    }
     Box(
-        modifier = boxModifier
+        contentAlignment = Alignment.Center,
+        modifier = boxModifier.fillMaxSize()
     ) {
-        val numString = if (cell.num != 0) {
-            "${cell.num}"
-        } else {
-            ""
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(
-                text = numString,
-                color = textColor
-            )
-        }
+        Text(
+            text = numString,
+            color = textColor
+        )
     }
 
 }

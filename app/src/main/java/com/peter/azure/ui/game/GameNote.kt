@@ -34,49 +34,46 @@ fun GameNote(
                 for (j in 0..2) {
                     val num = (j + 1) + (i * times)
                     val mark = markList[num - 1]
-                    Box(
-                        modifier = Modifier.weight(1f),
+                    ConstraintLayout(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxSize()
                     ) {
-                        ConstraintLayout(
-                            modifier = Modifier
-                                .fillMaxSize()
-                        ) {
-                            val (text, icon) = createRefs()
-                            Text(
-                                text = "$num",
-                                color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                modifier = Modifier.constrainAs(text) {
-                                    centerVerticallyTo(parent)
-                                    centerHorizontallyTo(parent)
-                                }
-                            )
-                            when (mark) {
-                                Mark.WRONG -> {
-                                    NoteIcon(
-                                        R.drawable.ic_cross_24,
-                                        Modifier.constrainAs(icon) {
+                        val (text, icon) = createRefs()
+                        Text(
+                            text = "$num",
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                            modifier = Modifier.constrainAs(text) {
+                                centerVerticallyTo(parent)
+                                centerHorizontallyTo(parent)
+                            }
+                        )
+                        when (mark) {
+                            Mark.WRONG -> {
+                                NoteIcon(
+                                    R.drawable.ic_cross_24,
+                                    Modifier.constrainAs(icon) {
+                                        end.linkTo(parent.end)
+                                        bottom.linkTo(parent.bottom)
+                                    }
+                                )
+                            }
+                            Mark.NONE -> {
+                                Spacer(
+                                    modifier = Modifier
+                                        .padding(bottom = 1.dp)
+                                        .size(16.dp)
+                                        .constrainAs(icon) {
                                             end.linkTo(parent.end)
                                             bottom.linkTo(parent.bottom)
                                         }
-                                    )
-                                }
-                                Mark.NONE -> {
-                                    Spacer(
-                                        modifier = Modifier
-                                            .padding(bottom = 1.dp)
-                                            .size(16.dp)
-                                            .constrainAs(icon) {
-                                                end.linkTo(parent.end)
-                                                bottom.linkTo(parent.bottom)
-                                            }
-                                    )
-                                }
+                                )
                             }
                         }
                     }
                     if (j != 2) {
                         Divider(
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .width(1.dp)
@@ -87,7 +84,7 @@ fun GameNote(
             if (i != 2) {
                 Divider(
                     thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                    color = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             }
         }

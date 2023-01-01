@@ -1,6 +1,7 @@
 package com.peter.azure.ui.print
 
 import android.content.Intent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -126,7 +127,7 @@ fun PrintContent(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(1.dp, MaterialTheme.colorScheme.secondaryContainer)
+                    .border(1.dp, MaterialTheme.colorScheme.primaryContainer)
             ) {
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
@@ -158,7 +159,7 @@ fun PrintContent(
                     }
                 }
                 Divider(
-                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    color = MaterialTheme.colorScheme.primaryContainer,
                     modifier = Modifier
                         .padding(horizontal = 4.dp)
                         .height(40.dp)
@@ -172,7 +173,7 @@ fun PrintContent(
                 ) {
                     Text(
                         text = "${gameLevelList.size} / $PDF_PAGE_SIZE",
-                        color = MaterialTheme.colorScheme.tertiary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -183,10 +184,11 @@ fun PrintContent(
                     .fillMaxWidth()
             ) {
                 GameLevel.values().forEach { level ->
-                    ElevatedButton(
+                    OutlinedButton(
                         onClick = { addGameLevel(level) },
                         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                         shape = MaterialTheme.shapes.medium,
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer),
                         modifier = Modifier
                             .padding(horizontal = 4.dp)
                             .height(28.dp)
