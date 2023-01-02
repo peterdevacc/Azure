@@ -145,7 +145,9 @@ class PdfRepository @Inject constructor(
                     fileList.sortByDescending { it.lastModified() }
                     val removeList = fileList.asList().subList(1, fileList.size - 1)
                     removeList.forEach {
-                        it.delete()
+                        if (it.name.startsWith("azure-sudoku-")) {
+                            it.delete()
+                        }
                     }
                 }
             }
@@ -172,8 +174,12 @@ class PdfRepository @Inject constructor(
 
         }
 
-    fun deleteCacheFiles() {
-        appContext.filesDir.deleteRecursively()
+    fun deleteCachePDF() {
+        appContext.filesDir.listFiles()?.forEach {
+            if (it.name.startsWith("azure-sudoku-")) {
+                it.delete()
+            }
+        }
     }
 
     private fun getPreviewImageList(pdf: File): List<Bitmap> {

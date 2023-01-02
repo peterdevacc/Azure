@@ -65,7 +65,7 @@ class PrintViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        pdfRepository.deleteCacheFiles()
+        pdfRepository.deleteCachePDF()
     }
 
 }
