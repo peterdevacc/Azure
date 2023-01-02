@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -62,19 +63,20 @@ fun AboutContent(
         Box(
             contentAlignment = Center,
             modifier = Modifier
+                .clip(MaterialTheme.shapes.medium)
                 .background(gradientBrush)
-                .padding(top = 32.dp, bottom = 16.dp)
                 .weight(2.5f)
                 .fillMaxWidth()
         ) {
             Text(
-                text = stringResource(R.string.screen_about_slogan),
-                style = MaterialTheme.typography.headlineMedium,
+                text = stringResource(R.string.app_motto),
+                style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onPrimary,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
         }
+        Spacer(modifier = Modifier.padding(top = 12.dp))
         AboutAppItem(
             heading = stringResource(R.string.app_version_title),
             text = stringResource(id = R.string.app_version)
