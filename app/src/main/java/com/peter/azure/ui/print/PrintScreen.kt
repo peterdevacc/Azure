@@ -3,6 +3,7 @@ package com.peter.azure.ui.print
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,6 +15,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -61,6 +64,12 @@ fun PrintContent(
     navigateToMainScreens: (String) -> Unit
 ) {
     val context = LocalContext.current
+    val gradientBrush = Brush.linearGradient(
+        listOf(
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.tertiary,
+        )
+    )
 
     Column(
         modifier = Modifier.azureScreen()
@@ -85,22 +94,18 @@ fun PrintContent(
                             contentAlignment = Alignment.Center,
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .clip(MaterialTheme.shapes.medium)
+                                    .background(gradientBrush)
+                                    .width(256.dp)
+                                    .height(192.dp),
                             ) {
-                                Image(
-                                    painter = painterResource(R.drawable.example_img),
-                                    contentDescription = "dummy logo",
-                                    modifier = Modifier
-                                        .padding(bottom = 8.dp)
-                                        .width(256.dp)
-                                        .height(192.dp),
-                                    contentScale = ContentScale.FillBounds
-                                )
                                 Text(
                                     text = stringResource(R.string.screen_print_tips),
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onBackground,
+                                    color = MaterialTheme.colorScheme.onSecondary,
                                     maxLines = 3
                                 )
                             }
@@ -161,14 +166,14 @@ fun PrintContent(
                 Divider(
                     color = MaterialTheme.colorScheme.primaryContainer,
                     modifier = Modifier
-                        .padding(horizontal = 4.dp)
+                        .padding(horizontal = 8.dp)
                         .height(40.dp)
                         .width(1.dp)
                 )
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .padding(end = 4.dp)
+                        .padding(end = 8.dp)
                         .height(40.dp)
                 ) {
                     Text(

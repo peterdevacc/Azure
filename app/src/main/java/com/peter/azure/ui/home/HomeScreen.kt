@@ -1,9 +1,5 @@
 package com.peter.azure.ui.home
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -17,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.peter.azure.R
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.ui.navigation.AzureTopBar
 import com.peter.azure.ui.util.ErrorNotice
 import com.peter.azure.ui.util.azureScreen
-import com.peter.azure.R
 
 @Composable
 fun HomeScreen(
@@ -98,12 +94,12 @@ fun HomeContent(
                         contentPadding = PaddingValues(16.dp),
                         modifier = Modifier
                             .padding(8.dp)
-                            .width(260.dp),
+                            .width(208.dp),
                         onClick = navigate
                     ) {
                         Text(
                             text = buttonText,
-                            fontSize = 16.sp,
+                            fontSize = 18.sp,
                         )
                     }
                 }

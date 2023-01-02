@@ -64,7 +64,7 @@ fun AboutContent(
             modifier = Modifier
                 .background(gradientBrush)
                 .padding(top = 32.dp, bottom = 16.dp)
-                .weight(2f)
+                .weight(2.5f)
                 .fillMaxWidth()
         ) {
             Text(
@@ -96,7 +96,7 @@ fun AboutContent(
             heading = stringResource(R.string.acknowledgement_title) to Info.Type.ACKNOWLEDGEMENTS,
             navigateToInfo = navigateToContract
         )
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(0.5f))
         Text(
             text = stringResource(id = R.string.app_website),
             style = MaterialTheme.typography.titleSmall,

@@ -17,7 +17,7 @@ fun AboutAppItem(heading: String, text: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp)
+            .padding(vertical = 8.dp)
     ) {
         Text(
             text = heading,
@@ -28,8 +28,8 @@ fun AboutAppItem(heading: String, text: String) {
             text = text,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 22.sp,
-            modifier = Modifier.padding(top = 4.dp)
+            fontSize = 20.sp,
+            modifier = Modifier.padding(top = 2.dp)
         )
     }
 }
