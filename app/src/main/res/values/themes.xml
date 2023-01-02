@@ -5,7 +5,7 @@
     </style>
 
     <style name="Theme.Azure.SplashScreenTheme" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/primaryContainer</item>
+        <item name="windowSplashScreenBackground">@color/primary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_azure_foreground</item>
         <item name="windowSplashScreenAnimationDuration">600</item>
         <item name="postSplashScreenTheme">@style/Theme.Azure</item>
