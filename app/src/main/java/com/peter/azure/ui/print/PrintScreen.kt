@@ -86,7 +86,7 @@ fun PrintContent(
                             Icon(
                                 painter = painterResource(R.drawable.ic_print_nav_24),
                                 contentDescription = stringResource(R.string.icon_cd_screen_print),
-                                tint = MaterialTheme.colorScheme.tertiary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(128.dp)
                             )
                         }

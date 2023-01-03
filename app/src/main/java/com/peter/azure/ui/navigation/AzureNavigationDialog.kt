@@ -69,9 +69,9 @@ fun AzureNavigationDialog(
                                 contentDescription = stringResource(
                                     destination.imageContentDescriptionId
                                 ),
-                                tint = MaterialTheme.colorScheme.onPrimary,
+                                tint = MaterialTheme.colorScheme.onTertiary,
                                 modifier = Modifier
-                                    .background(MaterialTheme.colorScheme.primary)
+                                    .background(MaterialTheme.colorScheme.tertiary)
                                     .padding(bottom = 2.dp)
                                     .weight(1f)
                                     .fillMaxSize()
