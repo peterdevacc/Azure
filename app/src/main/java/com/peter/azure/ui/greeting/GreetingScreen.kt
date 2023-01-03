@@ -118,7 +118,6 @@ fun GreetingContent(
                     contentDescription = stringResource(R.string.icon_cd_azure_logo),
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
-                        .padding(bottom = 12.dp)
                         .size(128.dp)
                         .align(Alignment.CenterHorizontally),
                 )
@@ -127,7 +126,6 @@ fun GreetingContent(
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
                     textAlign = TextAlign.Center,
-//                modifier = Modifier.fillMaxWidth()
                 )
             }
         }

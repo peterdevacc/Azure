@@ -52,8 +52,8 @@
 
     <string name="icon_cd_azure_logo">AzureNum Logo</string>
 
-    <string name="error_io">a IO error happened, please try again.</string>
-    <string name="error_unknown">a unknown error happened, please try again.</string>
+    <string name="error_io">a IO error happened, \nplease try again.</string>
+    <string name="error_unknown">a unknown error happened, \nplease try again.</string>
 
     <string name="icon_cd_screen_home">Home page</string>
     <string name="icon_cd_screen_print">Print page</string>
