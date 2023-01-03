@@ -1,14 +1,14 @@
 package com.peter.azure.ui.util
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,21 +28,22 @@ fun ErrorNotice(code: DataResult.Error.Code) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+            .clip(MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.error)
+            .padding(16.dp)
     ) {
-        Image(
-            painter = painterResource(R.drawable.example_img),
-            contentDescription = "dummy logo",
+        Icon(
+            painter = painterResource(R.drawable.error),
+            contentDescription = stringResource(R.string.icon_error),
+            tint = MaterialTheme.colorScheme.onError,
             modifier = Modifier
-                .padding(bottom = 8.dp)
-                .size(128.dp)
-                .align(Alignment.CenterHorizontally),
-            contentScale = ContentScale.FillBounds
+                .size(144.dp)
         )
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
         Text(
             text = reason,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.onError,
             maxLines = 3
         )
     }
@@ -50,7 +51,7 @@ fun ErrorNotice(code: DataResult.Error.Code) {
 
 @Preview(showBackground = true)
 @Composable
-fun AboutAppItemPreview() {
+fun ErrorNoticePreview() {
     AzureTheme {
         Box(
             contentAlignment = Alignment.Center,

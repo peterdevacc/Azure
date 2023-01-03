@@ -52,6 +52,7 @@
 
     <string name="icon_cd_azure_logo">AzureNum Logo</string>
 
+    <string name="icon_error">Error icon</string>
     <string name="error_io">a IO error happened, \nplease try again.</string>
     <string name="error_unknown">a unknown error happened, \nplease try again.</string>
 
