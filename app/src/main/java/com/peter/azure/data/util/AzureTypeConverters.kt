@@ -1,7 +1,9 @@
 package com.peter.azure.data.util
 
 import androidx.room.TypeConverter
-import com.peter.azure.data.entity.*
+import com.peter.azure.data.entity.Cell
+import com.peter.azure.data.entity.Location
+import com.peter.azure.data.entity.Mark
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

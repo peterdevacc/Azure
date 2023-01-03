@@ -2,7 +2,6 @@ package com.peter.azure.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "note",
