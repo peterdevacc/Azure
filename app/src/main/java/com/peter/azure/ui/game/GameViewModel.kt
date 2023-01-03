@@ -11,9 +11,11 @@ import com.peter.azure.data.repository.NoteRepository
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.data.repository.PuzzleRepository
 import com.peter.azure.data.repository.SudokuRepository
+import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,8 +31,18 @@ class GameViewModel @Inject constructor(
     val gameUiState: State<GameUiState> = _gameUiState
 
     private val noteListState = mutableStateOf(emptyList<Note>())
-
     private val numState = mutableStateOf(0)
+
+    private var task: TimerTask? = null
+
+    private fun scheduleLimit(job: Job) = azureSchedule {
+        if (_gameUiState.value is GameUiState.Loading) {
+            _gameUiState.value = GameUiState.Error(
+                DataResult.Error.Code.UNKNOWN
+            )
+            job.cancel()
+        }
+    }
 
     fun selectLocation(location: Location, currentNum: Int) {
         val uiState = _gameUiState.value
@@ -113,14 +125,15 @@ class GameViewModel @Inject constructor(
             _gameUiState.value = uiState.copy(
                 dialog = GameUiState.Playing.Dialog.Processing
             )
-            viewModelScope.launch {
+            val job = viewModelScope.launch {
                 val isCorrect = sudokuRepository.checkAnswer(uiState.puzzle)
-                delay(600)
                 _gameUiState.value = uiState.copy(
                     isCorrect = isCorrect,
                     dialog = GameUiState.Playing.Dialog.Submit
                 )
+                task?.cancel()
             }
+            task = scheduleLimit(job)
         }
     }
 
@@ -146,12 +159,10 @@ class GameViewModel @Inject constructor(
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
             _gameUiState.value = GameUiState.Loading
-            viewModelScope.launch {
+            val job = viewModelScope.launch {
                 noteRepository.deleteNotes()
                 puzzleRepository.deletePuzzle()
-                val result = preferencesRepository.setGameExistedState(false)
-                delay(600)
-                when (result) {
+                when (val result = preferencesRepository.setGameExistedState(false)) {
                     is DataResult.Error -> {
                         _gameUiState.value = GameUiState.Error(result.code)
                     }
@@ -159,13 +170,15 @@ class GameViewModel @Inject constructor(
                         _gameUiState.value = GameUiState.GameEnded
                     }
                 }
+                task?.cancel()
             }
+            task = scheduleLimit(job)
         }
     }
 
     init {
         val gameLevel = savedStateHandle.get<String>("gameLevel") ?: ""
-        viewModelScope.launch {
+        val job = viewModelScope.launch {
             val puzzle: Puzzle
             val noteList: List<Note>
             if (gameLevel.isNotEmpty() && gameLevel != "empty") {
@@ -203,7 +216,9 @@ class GameViewModel @Inject constructor(
                 dialog = GameUiState.Playing.Dialog.None,
                 isCorrect = false
             )
+            task?.cancel()
         }
+        task = scheduleLimit(job)
     }
 
 }

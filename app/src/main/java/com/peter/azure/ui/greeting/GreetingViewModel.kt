@@ -9,9 +9,12 @@ import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
 import com.peter.azure.data.repository.PreferencesRepository
+import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,10 +27,11 @@ class GreetingViewModel @Inject constructor(
         mutableStateOf(GreetingUiState.Default)
     val uiState: State<GreetingUiState> = greetingUiState
 
+    private var task: TimerTask? = null
+
     fun loadInfo(infoType: Info.Type) {
         greetingUiState.value = GreetingUiState.Processing
-        viewModelScope.launch {
-            delay(600)
+        val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
             when (val infoResult = infoRepository.getInfo(infoType)) {
                 is DataResult.Error -> {
                     greetingUiState.value = GreetingUiState
@@ -38,7 +42,10 @@ class GreetingViewModel @Inject constructor(
                         .ContractDialogLoaded(infoResult.result)
                 }
             }
+            task?.cancel()
         }
+        job.start()
+        task = scheduleLimit(job)
     }
 
     fun dismissDialog() {
@@ -46,7 +53,8 @@ class GreetingViewModel @Inject constructor(
     }
 
     fun agreeContracts() {
-        viewModelScope.launch {
+        greetingUiState.value = GreetingUiState.Processing
+        val job = viewModelScope.launch {
             when (val boardingResult = preferencesRepository.setOnBoardingState(true)) {
                 is DataResult.Error -> {
                     greetingUiState.value = GreetingUiState
@@ -57,6 +65,17 @@ class GreetingViewModel @Inject constructor(
                         .ContractsAgreed
                 }
             }
+            task?.cancel()
+        }
+        task = scheduleLimit(job)
+    }
+
+    private fun scheduleLimit(job: Job) = azureSchedule {
+        if (greetingUiState.value is GreetingUiState.Processing) {
+            greetingUiState.value = GreetingUiState.Error(
+                DataResult.Error.Code.UNKNOWN
+            )
+            job.cancel()
         }
     }
 

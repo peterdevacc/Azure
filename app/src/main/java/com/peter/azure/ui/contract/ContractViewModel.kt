@@ -9,8 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
+import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,11 +26,22 @@ class ContractViewModel @Inject constructor(
         mutableStateOf(ContractUiState.Loading)
     val uiState: State<ContractUiState> = contractUiState
 
+    private var task: TimerTask? = null
+
+    private fun scheduleLimit(job: Job) = azureSchedule {
+        if (contractUiState.value is ContractUiState.Loading) {
+            contractUiState.value = ContractUiState.Error(
+                DataResult.Error.Code.UNKNOWN
+            )
+            job.cancel()
+        }
+    }
+
     init {
         val infoType = savedStateHandle.get<String>("infoType") ?: ""
         if (infoType.isNotEmpty()) {
             val type = Info.Type.valueOf(infoType)
-            viewModelScope.launch {
+            val job = viewModelScope.launch {
                 when (val infoResult = infoRepository.getInfo(type)) {
                     is DataResult.Error -> {
                         contractUiState.value = ContractUiState
@@ -38,7 +52,9 @@ class ContractViewModel @Inject constructor(
                             .Success(infoResult.result)
                     }
                 }
+                task?.cancel()
             }
+            task = scheduleLimit(job)
         } else {
             contractUiState.value = ContractUiState
                 .Error(DataResult.Error.Code.UNKNOWN)

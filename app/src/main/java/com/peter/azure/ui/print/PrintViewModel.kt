@@ -10,8 +10,11 @@ import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.repository.PdfRepository
 import com.peter.azure.data.repository.SudokuRepository
 import com.peter.azure.data.util.PDF_PAGE_SIZE
+import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +28,17 @@ class PrintViewModel @Inject constructor(
 
     private val gameLevelListState = mutableStateOf(emptyList<GameLevel>())
     val gameLevelList: State<List<GameLevel>> = gameLevelListState
+
+    private var task: TimerTask? = null
+
+    private fun scheduleLimit(job: Job) = azureSchedule {
+        if (_pdfUiState.value is PdfUiState.Processing) {
+            _pdfUiState.value = PdfUiState.Error(
+                DataResult.Error.Code.UNKNOWN
+            )
+            job.cancel()
+        }
+    }
 
     fun addGameLevel(gameLevel: GameLevel) {
         if (gameLevelListState.value.size < PDF_PAGE_SIZE) {
@@ -43,7 +57,7 @@ class PrintViewModel @Inject constructor(
     }
 
     fun generateSudokuPdf() {
-        viewModelScope.launch {
+        val job = viewModelScope.launch {
             _pdfUiState.value = PdfUiState.Processing
             val boardList = sudokuRepository.getPrintGameList(gameLevelListState.value)
             when (val sudokuPdfResult = pdfRepository.generateSudokuPdf(boardList)) {
@@ -56,7 +70,9 @@ class PrintViewModel @Inject constructor(
                     )
                 }
             }
+            task?.cancel()
         }
+        task = scheduleLimit(job)
     }
 
     fun dismissErrorDialog() {
