@@ -1,15 +1,18 @@
 package com.peter.azure.ui.greeting
 
-import androidx.compose.foundation.Image
+import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -18,10 +21,12 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.peter.azure.R
 import com.peter.azure.data.entity.Info
+import com.peter.azure.ui.theme.AzureTheme
 import com.peter.azure.ui.util.ErrorDialog
 import com.peter.azure.ui.util.ProcessingDialog
 import com.peter.azure.ui.util.azureScreen
@@ -90,22 +95,42 @@ fun GreetingContent(
             fontStyle = FontStyle.Italic
         )
         Spacer(modifier = Modifier.weight(2f))
-        Image(
-            painter = painterResource(R.drawable.example_img),
-            contentDescription = "dummy logo",
-            modifier = Modifier
-                .padding(bottom = 12.dp)
-                .size(128.dp)
-                .align(Alignment.CenterHorizontally),
-            contentScale = ContentScale.FillBounds
-        )
-        Text(
-            text = stringResource(R.string.screen_about_slogan),
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-            textAlign = TextAlign.Center,
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxWidth()
-        )
+        ) {
+            Column(
+                modifier = Modifier
+                    .clip(MaterialTheme.shapes.large)
+                    .background(
+                        Brush.sweepGradient(
+                            listOf(
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.secondary,
+                                MaterialTheme.colorScheme.tertiary,
+                            )
+                        )
+                    )
+                    .padding(16.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.azure_logo_x),
+                    contentDescription = stringResource(R.string.icon_cd_azure_logo),
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .size(128.dp)
+                        .align(Alignment.CenterHorizontally),
+                )
+                Text(
+                    text = stringResource(R.string.screen_about_slogan),
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    textAlign = TextAlign.Center,
+//                modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
         Spacer(modifier = Modifier.weight(1.5f))
         ClickableText(
             onClick = { index ->
@@ -197,5 +222,20 @@ private fun ContractDecisionButton(
             text = text.uppercase(),
             fontSize = 20.sp
         )
+    }
+}
+
+@Preview(
+    name = "Greeting Screen",
+    showBackground = true
+)
+@Preview(
+    name = "Greeting Screen", showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun AboutScreenPreview() {
+    AzureTheme {
+        GreetingContent({}, GreetingUiState.Default, {}, {}, {}, {})
     }
 }
