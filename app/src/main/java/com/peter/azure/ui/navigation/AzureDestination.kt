@@ -15,7 +15,7 @@ sealed interface AzureDestination {
 
         object HOME: Main {
             override val route = "home"
-            override val imageId = R.drawable.example_img
+            override val imageId = R.drawable.ic_home_nav_24
             override val imageContentDescriptionId = R.string.screen_home_img_cd
             override val textId = R.string.screen_home
             override val descriptionId = R.string.screen_home_description
@@ -23,7 +23,7 @@ sealed interface AzureDestination {
 
         object PRINT: Main {
             override val route = "print"
-            override val imageId = R.drawable.example_img
+            override val imageId = R.drawable.ic_print_nav_24
             override val imageContentDescriptionId = R.string.screen_print_img_cd
             override val textId = R.string.screen_print
             override val descriptionId = R.string.screen_print_description
@@ -31,7 +31,7 @@ sealed interface AzureDestination {
 
         object HELP: Main {
             override val route = "help"
-            override val imageId = R.drawable.example_img
+            override val imageId = R.drawable.ic_help_nav_24
             override val imageContentDescriptionId = R.string.screen_help_img_cd
             override val textId = R.string.screen_help
             override val descriptionId = R.string.screen_help_description
@@ -39,7 +39,7 @@ sealed interface AzureDestination {
 
         object ABOUT: Main {
             override val route = "about"
-            override val imageId = R.drawable.example_img
+            override val imageId = R.drawable.ic_about_nav_24
             override val imageContentDescriptionId = R.string.screen_about_img_cd
             override val textId = R.string.screen_about
             override val descriptionId = R.string.screen_about_description

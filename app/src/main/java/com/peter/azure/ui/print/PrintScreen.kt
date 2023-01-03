@@ -84,9 +84,9 @@ fun PrintContent(
                             modifier = Modifier.fillMaxSize()
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.ic_azure_print_24),
+                                painter = painterResource(R.drawable.ic_print_nav_24),
                                 contentDescription = stringResource(R.string.icon_cd_screen_print),
-                                tint = MaterialTheme.colorScheme.onBackground,
+                                tint = MaterialTheme.colorScheme.tertiary,
                                 modifier = Modifier.size(128.dp)
                             )
                         }

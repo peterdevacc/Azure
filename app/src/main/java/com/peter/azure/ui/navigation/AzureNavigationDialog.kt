@@ -1,11 +1,11 @@
 package com.peter.azure.ui.navigation
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -62,17 +61,20 @@ fun AzureNavigationDialog(
                             .padding(8.dp)
                             .fillMaxSize()
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Image(
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Icon(
                                 painter = painterResource(destination.imageId),
                                 contentDescription = stringResource(
                                     destination.imageContentDescriptionId
                                 ),
+                                tint = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.primary)
                                     .padding(bottom = 2.dp)
                                     .weight(1f)
-                                    .align(Alignment.CenterHorizontally),
-                                contentScale = ContentScale.FillBounds
+                                    .fillMaxSize()
                             )
                             Text(
                                 text = stringResource(destination.textId),
@@ -108,7 +110,7 @@ fun AzureNavigationDialogPreview() {
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            AzureNavigationDialog(AzureDestination.Main.ABOUT, {}, {})
+            AzureNavigationDialog(AzureDestination.Main.HOME, {}, {})
         }
     }
 }
