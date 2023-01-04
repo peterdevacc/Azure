@@ -37,7 +37,7 @@ fun ErrorNotice(code: DataResult.Error.Code) {
             contentDescription = stringResource(R.string.icon_error),
             tint = MaterialTheme.colorScheme.onError,
             modifier = Modifier
-                .size(144.dp)
+                .size(128.dp)
         )
         Spacer(modifier = Modifier.padding(vertical = 4.dp))
         Text(
