@@ -39,7 +39,8 @@ fun PrintScreen(
         navDialogState = navDialog,
         pdfUiState = viewModel.pdfUiState.value,
         generatePdf = viewModel::generateSudokuPdf,
-        dismissErrorDialog = viewModel::dismissErrorDialog,
+        notShareableNotice = viewModel::notShareableDialog,
+        dismissDialog = viewModel::dismissDialog,
         gameLevelList = viewModel.gameLevelList.value,
         addGameLevel = viewModel::addGameLevel,
         removeGameLevel = viewModel::removeGameLevel,
@@ -52,7 +53,8 @@ fun PrintContent(
     navDialogState: MutableState<Boolean>,
     pdfUiState: PdfUiState,
     generatePdf: () -> Unit,
-    dismissErrorDialog: () -> Unit,
+    notShareableNotice: () -> Unit,
+    dismissDialog: () -> Unit,
     gameLevelList: List<GameLevel>,
     addGameLevel: (GameLevel) -> Unit,
     removeGameLevel: (GameLevel) -> Unit,
@@ -97,13 +99,18 @@ fun PrintContent(
                             modifier = Modifier.fillMaxSize()
                         )
                     }
+                    is PdfUiState.NotShareable -> {
+                        NotShareableDialog(
+                            onDismiss = dismissDialog
+                        )
+                    }
                     PdfUiState.Processing -> {
                         ProcessingDialog()
                     }
                     is PdfUiState.Error -> {
                         ErrorDialog(
                             code = pdfUiState.code,
-                            onDismiss = dismissErrorDialog
+                            onDismiss = dismissDialog
                         )
                     }
                 }
@@ -212,6 +219,8 @@ fun PrintContent(
                             shareIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                             shareIntent.type = "application/pdf"
                             startActivity(context, shareIntent, null)
+                        } else {
+                            notShareableNotice()
                         }
                     },
                     shape = MaterialTheme.shapes.medium,

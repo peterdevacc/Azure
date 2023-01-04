@@ -11,6 +11,8 @@ sealed interface PdfUiState {
 
     object Processing: PdfUiState
 
+    object NotShareable: PdfUiState
+
     object Default: PdfUiState
 
     data class Error(

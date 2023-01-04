@@ -25,8 +25,8 @@ fun ErrorDialog(
     ) {
         Surface(
             color = MaterialTheme.colorScheme.surfaceVariant,
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier.padding(4.dp)
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.padding(8.dp)
         ) {
             ErrorNotice(code)
         }

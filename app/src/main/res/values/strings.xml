@@ -18,6 +18,10 @@
     <string name="screen_print_description">You can create and share Sudoku PDF.</string>
     <string name="screen_print_generate_pdf">Generate PDF</string>
     <string name="screen_print_share_pdf">Share PDF</string>
+    <string name="screen_print_share_pdf_dialog_title">Sudoku PDF Sharing</string>
+    <string name="screen_print_share_pdf_dialog_msg">
+        You need to generate Sudoku PDF first.
+    </string>
 
     <string name="screen_help">Help</string>
     <string name="screen_help_img_cd">Help navigation item</string>
@@ -33,8 +37,26 @@
     <string name="screen_about_slogan">AzureNum\nGood Sudoku App</string>
 
     <string name="screen_game">Game</string>
+    <string name="screen_game_delete_dialog_title">Delete game</string>
+    <string name="screen_game_delete_dialog_msg">
+        Current game will be permanently deleted.
+    </string>
+    <string name="screen_game_delete_dialog_confirm">Confirm</string>
+    <string name="screen_game_delete_dialog_cancel">Cancel</string>
+    <string name="screen_game_submit_dialog_title">Result</string>
+    <string name="screen_game_submit_dialog_correct_result">
+        Congratulation! The answer is correct.
+    </string>
+    <string name="screen_game_submit_dialog_wrong_result">
+        The Answer is wrong.
+    </string>
+    <string name="screen_game_submit_dialog_finish">
+        Finish game, back to home page.
+    </string>
+
     <string name="screen_contract">Contract</string>
     <string name="screen_greeting">Greeting</string>
+
 
     <string name="service_title">terms of service</string>
     <string name="privacy_title">privacy policy</string>

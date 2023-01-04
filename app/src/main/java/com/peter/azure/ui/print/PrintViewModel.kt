@@ -75,7 +75,11 @@ class PrintViewModel @Inject constructor(
         task = scheduleLimit(job)
     }
 
-    fun dismissErrorDialog() {
+    fun notShareableDialog() {
+        _pdfUiState.value = PdfUiState.NotShareable
+    }
+
+    fun dismissDialog() {
         _pdfUiState.value = PdfUiState.Default
     }
 
