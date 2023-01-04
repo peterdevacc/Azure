@@ -29,12 +29,21 @@ import kotlin.math.*
 
 @Composable
 fun GameLevelSetting(
-    getGameLevel: (Double) -> Unit,
     fullSize: Dp,
+    dialAngle: Double,
+    setGameLevel: (Double) -> Unit,
 ) {
 
-    val dial = @Composable { Dial(fullSize = fullSize, getGameLevel = getGameLevel) }
-    val indicator = @Composable { Indicator(height = fullSize / 2.6f) }
+    val dial = @Composable {
+        Dial(
+            fullSize = fullSize,
+            dialAngle = dialAngle,
+            setGameLevel = setGameLevel
+        )
+    }
+    val indicator = @Composable {
+        Indicator(height = fullSize / 2.6f)
+    }
 
     Layout(
         contents = listOf(dial, indicator),
@@ -65,7 +74,8 @@ fun GameLevelSetting(
 @Composable
 private fun Dial(
     fullSize: Dp,
-    getGameLevel: (Double) -> Unit,
+    dialAngle: Double,
+    setGameLevel: (Double) -> Unit,
 ) {
     var sizeParam = fullSize
     if (sizeParam < 192.dp) {
@@ -92,7 +102,6 @@ private fun Dial(
 
     var viewRotation = remember { 0.0 }
     var spinRotation = remember { 0.0 }
-    var rotation by remember { mutableStateOf(0.0) }
 
     val primaryColor = MaterialTheme.colorScheme.primary
     val primaryContainerColor = MaterialTheme.colorScheme.primaryContainer
@@ -109,7 +118,7 @@ private fun Dial(
 
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        viewRotation = rotation
+                        viewRotation = dialAngle
                         spinRotation = getRotationDegree(
                             (x - centerX).toDouble(),
                             (centerY - y).toDouble()
@@ -120,8 +129,9 @@ private fun Dial(
                             (x - centerX).toDouble(),
                             (centerY - y).toDouble()
                         )
-                        rotation = (viewRotation + newSpinRotation - spinRotation)
-                        getGameLevel(rotation)
+                        setGameLevel(
+                            viewRotation + newSpinRotation - spinRotation
+                        )
                     }
                     MotionEvent.ACTION_UP -> {
                         spinRotation = 0.0
@@ -131,7 +141,7 @@ private fun Dial(
                 true
             }
             .graphicsLayer {
-                rotationZ = rotation.toFloat()
+                rotationZ = dialAngle.toFloat()
             }
     ) {
 
@@ -299,14 +309,17 @@ private fun getRotationDegree(
 //)
 @Composable
 fun GameLevelSettingPreview() {
+    val angle = remember {
+        mutableStateOf(0.0)
+    }
     AzureTheme {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
             GameLevelSetting(
-                {}, 256.dp
-            )
+                256.dp, angle.value
+            ) { angle.value = it }
         }
     }
 }

@@ -32,7 +32,7 @@ fun HomeScreen(
         uiState = viewModel.uiState.value,
         navDialogState = navDialogState,
         navigateToMainScreens = navigateToMainScreens,
-        getGameLevel = viewModel::getGameLevel,
+        getGameLevel = viewModel::setGameLevel,
         navigateToNewGame = navigateToNewGame,
         navigateToContinueGame = navigateToContinueGame
     )
@@ -73,8 +73,9 @@ fun HomeContent(
                 ) {
                     if (!uiState.gameExisted) {
                         GameLevelSetting(
-                            getGameLevel = getGameLevel,
                             fullSize = 288.dp,
+                            setGameLevel = getGameLevel,
+                            dialAngle = uiState.dialAngle
                         )
                     } else {
                         Spacer(modifier = Modifier.size(288.dp))

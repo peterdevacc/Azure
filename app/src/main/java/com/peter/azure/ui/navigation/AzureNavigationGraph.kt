@@ -62,26 +62,28 @@ fun AzureNavigationGraph(
                     }
                 },
                 navigateToNewGame = {
-                    val state = viewModel.uiState.value as HomeUiState.Success
-                    navHostController.navigate(
-                        "${AzureDestination.General.GAME.route}/${state.gameLevel}"
-                    ) {
-                        popUpTo(AzureDestination.Main.HOME.route) {
-                            saveState = true
+                    if (viewModel.uiState.value is HomeUiState.Success) {
+                        val level = viewModel.getGameLevel()
+                        val route = "${AzureDestination.General.GAME.route}/$level"
+                        navHostController.navigate(route) {
+                            popUpTo(AzureDestination.Main.HOME.route) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 },
                 navigateToContinueGame = {
-                    navHostController.navigate(
-                        "${AzureDestination.General.GAME.route}/empty"
-                    ) {
-                        popUpTo(AzureDestination.Main.HOME.route) {
-                            saveState = true
+                    if (viewModel.uiState.value is HomeUiState.Success) {
+                        val route = "${AzureDestination.General.GAME.route}/empty"
+                        navHostController.navigate(route) {
+                            popUpTo(AzureDestination.Main.HOME.route) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 }
             )

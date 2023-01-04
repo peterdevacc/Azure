@@ -20,18 +20,26 @@ class HomeViewModel @Inject constructor(
     private val homeUiState: MutableState<HomeUiState> = mutableStateOf(HomeUiState.Loading)
     val uiState: State<HomeUiState> = homeUiState
 
-    fun getGameLevel(angle: Double) {
+    fun setGameLevel(angle: Double) {
         if (homeUiState.value is HomeUiState.Success) {
             val state = (homeUiState.value as HomeUiState.Success)
-            val level = if (angle >= -120.0 && angle < 0.0) {
+            homeUiState.value = state.copy(dialAngle = angle)
+        }
+    }
+
+    fun getGameLevel(): GameLevel? {
+        if (homeUiState.value is HomeUiState.Success) {
+            val state = (homeUiState.value as HomeUiState.Success)
+            val level = if (state.dialAngle >= -120.0 && state.dialAngle < 0.0) {
                 GameLevel.HARD
-            } else if (angle in 0.0..120.0) {
+            } else if (state.dialAngle in 0.0..120.0) {
                 GameLevel.MODERATE
             } else {
                 GameLevel.EASY
             }
-            homeUiState.value = state.copy(gameLevel = level)
+            return level
         }
+        return null
     }
 
     init {
@@ -46,7 +54,7 @@ class HomeViewModel @Inject constructor(
                         } else {
                             homeUiState.value = HomeUiState.Success(
                                 gameExisted = prefResult.result,
-                                gameLevel = GameLevel.EASY
+                                dialAngle = 0.0
                             )
                         }
                     }
