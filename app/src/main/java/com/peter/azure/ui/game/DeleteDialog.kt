@@ -2,9 +2,7 @@ package com.peter.azure.ui.game
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,24 +40,27 @@ fun DeleteDialog(
                 text = stringResource(R.string.screen_game_delete_dialog_msg)
             )
             Row {
-                OutlinedButton(
+                Button(
                     onClick = onDismiss,
                     shape = MaterialTheme.shapes.medium,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error
+                    ),
                     modifier = Modifier.weight(1f),
                 ) {
                     Text(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onError,
                         text = stringResource(R.string.screen_game_delete_dialog_cancel)
                     )
                 }
                 Spacer(modifier = Modifier.padding(horizontal = 4.dp))
-                OutlinedButton(
+                Button(
                     onClick = delete,
                     shape = MaterialTheme.shapes.medium,
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         text = stringResource(R.string.screen_game_delete_dialog_confirm)
                     )
                 }

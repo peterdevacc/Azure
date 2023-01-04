@@ -38,8 +38,8 @@ fun NotShareableDialog(
             Text(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                text = stringResource(R.string.screen_print_share_pdf_dialog_msg),
                 modifier = Modifier.padding(vertical = 12.dp),
-                text = stringResource(R.string.screen_print_share_pdf_dialog_msg)
             )
         }
     }

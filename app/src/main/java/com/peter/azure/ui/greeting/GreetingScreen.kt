@@ -4,10 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -192,34 +189,37 @@ fun GreetingContent(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(8.dp)
         )
-        ContractDecisionButton(
-            text = "Accept and continue",
-            decision = agreeContracts
-        )
-        ContractDecisionButton(
-            text = "Reject and exit",
-            decision = exitApp
-        )
-    }
-}
-
-@Composable
-private fun ContractDecisionButton(
-    text: String,
-    decision: () -> Unit
-) {
-    Button(
-        onClick = decision,
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .height(54.dp),
-        shape = MaterialTheme.shapes.small
-    ) {
-        Text(
-            text = text.uppercase(),
-            fontSize = 20.sp
-        )
+        Button(
+            onClick = agreeContracts,
+            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .height(54.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.screen_greeting_accept),
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontSize = 20.sp
+            )
+        }
+        Button(
+            onClick = exitApp,
+            shape = MaterialTheme.shapes.medium,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.error
+            ),
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .height(54.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.screen_greeting_reject),
+                color = MaterialTheme.colorScheme.onError,
+                fontSize = 20.sp
+            )
+        }
     }
 }
 

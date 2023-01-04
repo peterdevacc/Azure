@@ -18,7 +18,7 @@
     <string name="screen_print_description">You can create and share Sudoku PDF.</string>
     <string name="screen_print_generate_pdf">Generate PDF</string>
     <string name="screen_print_share_pdf">Share PDF</string>
-    <string name="screen_print_share_pdf_dialog_title">Sudoku PDF Sharing</string>
+    <string name="screen_print_share_pdf_dialog_title">PDF Sharing</string>
     <string name="screen_print_share_pdf_dialog_msg">
         You need to generate Sudoku PDF first.
     </string>
@@ -45,18 +45,18 @@
     <string name="screen_game_delete_dialog_cancel">Cancel</string>
     <string name="screen_game_submit_dialog_title">Result</string>
     <string name="screen_game_submit_dialog_correct_result">
-        Congratulation! The answer is correct.
+        Excellent! The answer is correct.
     </string>
     <string name="screen_game_submit_dialog_wrong_result">
         The Answer is wrong.
     </string>
-    <string name="screen_game_submit_dialog_finish">
-        Finish game, back to home page.
-    </string>
+    <string name="screen_game_submit_dialog_finish">Finish</string>
+    <string name="screen_game_submit_dialog_cancel">Cancel</string>
 
     <string name="screen_contract">Contract</string>
     <string name="screen_greeting">Greeting</string>
-
+    <string name="screen_greeting_accept">ACCEPT AND CONTINUE</string>
+    <string name="screen_greeting_reject">REJECT AND EXIT</string>
 
     <string name="service_title">terms of service</string>
     <string name="privacy_title">privacy policy</string>
