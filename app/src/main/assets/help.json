@@ -1,6 +1,11 @@
 [
   {
     "catalog": "FAQ",
+    "title": "What is AzureNum?",
+    "text": "AzureNum is a app that can let play Sudoku, generate Sudoku PDF and share with others."
+  },
+  {
+    "catalog": "FAQ",
     "title": "Is AzureNum a free app?",
     "text": "Yes, AzureNum is complete free, doesn't have any hidden charges and Ads."
   },

@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.peter.azure.data.entity.Help
 import com.peter.azure.ui.navigation.AzureDestination
@@ -89,28 +90,20 @@ private fun HelpList(
             item {
                 Column(
                     modifier = Modifier
-                        .background(
-                            color = MaterialTheme.colorScheme.surfaceVariant,
-                            shape = MaterialTheme.shapes.medium
-                        )
+                        .clip(MaterialTheme.shapes.medium)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                        .padding(16.dp)
                 ) {
                     Text(
                         text = catalog.name,
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(
-                            start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp
-                        )
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
                     helpList.forEach { help ->
                         Column(
                             modifier = Modifier
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    top = 4.dp,
-                                    bottom = 4.dp
-                                )
+                                .padding(top = 4.dp, bottom = 4.dp)
                                 .fillMaxWidth()
                         ) {
                             Text(
