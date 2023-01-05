@@ -29,10 +29,6 @@ class PdfRepository @Inject constructor(
     private val appContext: Context,
 ) {
 
-    /**
-     * Generate a sudoku pdf
-     * @return A SudokuPdf object.
-     */
     suspend fun generateSudokuPdf(printGameList: List<PrintGame>): DataResult<SudokuPdf> =
         withContext(Dispatchers.IO) {
 

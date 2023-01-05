@@ -8,4 +8,4 @@ const val GAME_EXISTED_PREF_KEY = "game_existed_pref"
 
 const val HELP_FILE_NAME = "help.json"
 
-const val PDF_PAGE_SIZE = 7
+const val PDF_PAGE_SIZE = 5
