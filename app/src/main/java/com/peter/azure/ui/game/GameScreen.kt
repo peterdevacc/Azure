@@ -138,14 +138,25 @@ private fun GamePlayingContent(
             destination = AzureDestination.General.GAME,
             navigateUp = navigateUp,
             leftSideContent = {
-                IconButton(
-                    onClick = requestDelete
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_delete_game_24),
-                        contentDescription = stringResource(R.string.icon_cd_delete_game),
-                        tint = MaterialTheme.colorScheme.onBackground,
-                    )
+                Row {
+                    IconButton(
+                        onClick = requestDelete
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_delete_game_24),
+                            contentDescription = stringResource(R.string.icon_cd_delete_game),
+                            tint = MaterialTheme.colorScheme.onBackground,
+                        )
+                    }
+                    IconButton(
+                        onClick = submitAnswer
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_submit_24),
+                            contentDescription = stringResource(R.string.icon_cd_submit_answer),
+                            tint = MaterialTheme.colorScheme.onBackground,
+                        )
+                    }
                 }
             }
         )
@@ -176,7 +187,6 @@ private fun GamePlayingContent(
                     blank = blankLocation,
                     mark = makeNote,
                     write = writeNum,
-                    submit = submitAnswer
                 )
             }
         }

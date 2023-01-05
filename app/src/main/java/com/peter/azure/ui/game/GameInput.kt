@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.peter.azure.R
@@ -23,7 +24,6 @@ fun GameInput(
     blank: () -> Unit,
     mark: (Mark) -> Unit,
     write: (Int) -> Unit,
-    submit: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -36,7 +36,7 @@ fun GameInput(
         ) {
             ActionIcon(
                 iconId = R.drawable.ic_clear_24,
-                iconCd = "clean",
+                iconCd = stringResource(R.string.icon_cd_clean),
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
@@ -47,36 +47,36 @@ fun GameInput(
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             ActionIcon(
+                iconId = R.drawable.ic_star_24,
+                iconCd = stringResource(R.string.icon_cd_mark_potential),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+                    .clickable { mark(Mark.Potential) }
+            )
+            Divider(
+                thickness = 1.dp,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+            ActionIcon(
                 iconId = R.drawable.ic_cross_24,
-                iconCd = "mark wrong",
+                iconCd = stringResource(R.string.icon_cd_mark_wrong),
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
-                    .clickable{ mark(Mark.WRONG) }
+                    .clickable { mark(Mark.WRONG) }
             )
             Divider(
                 thickness = 1.dp,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             ActionIcon(
-                iconId = R.drawable.ic_circle_24,
-                iconCd = "mark none",
+                iconId = R.drawable.ic_mark_none_24,
+                iconCd = stringResource(R.string.icon_cd_mark_none),
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
-                    .clickable{ mark(Mark.NONE) }
-            )
-            Divider(
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
-            ActionIcon(
-                iconId = R.drawable.ic_submit_24,
-                iconCd = "submit answer",
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
-                    .clickable(onClick = submit)
+                    .clickable { mark(Mark.NONE) }
             )
         }
         Divider(
@@ -160,7 +160,7 @@ private fun ActionIcon(
 fun AboutScreenPreview() {
     AzureTheme {
         Box(modifier = Modifier.padding(16.dp)) {
-            GameInput({}, {}, {}, {})
+            GameInput({}, {}, {})
         }
     }
 }

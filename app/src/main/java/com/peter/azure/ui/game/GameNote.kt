@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.peter.azure.R
@@ -49,9 +50,20 @@ fun GameNote(
                             }
                         )
                         when (mark) {
+                            Mark.Potential -> {
+                                NoteIcon(
+                                    R.drawable.ic_star_24,
+                                    R.string.icon_cd_mark_potential,
+                                    Modifier.constrainAs(icon) {
+                                        end.linkTo(parent.end)
+                                        bottom.linkTo(parent.bottom)
+                                    }
+                                )
+                            }
                             Mark.WRONG -> {
                                 NoteIcon(
                                     R.drawable.ic_cross_24,
+                                    R.string.icon_cd_mark_wrong,
                                     Modifier.constrainAs(icon) {
                                         end.linkTo(parent.end)
                                         bottom.linkTo(parent.bottom)
@@ -96,11 +108,12 @@ fun GameNote(
 private fun NoteIcon(
     @DrawableRes
     noteIconId: Int,
+    noteIconContentDescriptionId: Int,
     modifier: Modifier
 ) {
     Icon(
         painter = painterResource(noteIconId),
-        contentDescription = "mark wrong",
+        contentDescription = stringResource(noteIconContentDescriptionId),
         tint = MaterialTheme.colorScheme.onTertiaryContainer,
         modifier = modifier.then(
             Modifier
@@ -110,24 +123,3 @@ private fun NoteIcon(
     )
 }
 
-//@Preview(
-//    name = "GameBlockNote",
-//    showBackground = true
-//)
-//@Preview(
-//    name = "GameInputSection", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun GameNotePreview() {
-//    val numList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
-//    AzureTheme {
-//        Column(modifier = Modifier.fillMaxSize()) {
-//            Spacer(modifier = Modifier.weight(1f))
-//            Box(modifier = Modifier.weight(1f)) {
-//                GameNote(numList)
-//            }
-//            Spacer(modifier = Modifier.weight(1f))
-//        }
-//    }
-//}

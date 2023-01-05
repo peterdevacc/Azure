@@ -87,5 +87,10 @@
     <string name="icon_cd_navigate_up">Navigate up</string>
     <string name="icon_cd_navigate_to">Navigate to %1$s</string>
     <string name="icon_cd_delete_game">Delete game</string>
+    <string name="icon_cd_submit_answer">Submit answer</string>
+    <string name="icon_cd_clean">clean</string>
+    <string name="icon_cd_mark_potential">mark potential</string>
+    <string name="icon_cd_mark_wrong">mark wrong</string>
+    <string name="icon_cd_mark_none">mark none</string>
 
 </resources>

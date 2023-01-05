@@ -2,7 +2,7 @@ package com.peter.azure.data.entity
 
 @kotlinx.serialization.Serializable
 enum class Mark {
-    WRONG, NONE;
+    Potential, WRONG, NONE;
 
     companion object {
         fun getDefaultList(): List<Mark> {
