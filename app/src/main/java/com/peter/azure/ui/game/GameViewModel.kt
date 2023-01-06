@@ -160,7 +160,7 @@ class GameViewModel @Inject constructor(
         if (uiState is GameUiState.Playing) {
             _gameUiState.value = GameUiState.Loading
             val job = viewModelScope.launch {
-                noteRepository.deleteNotes()
+                noteRepository.deleteAllNote()
                 puzzleRepository.deletePuzzle()
                 when (val result = preferencesRepository.setGameExistedState(false)) {
                     is DataResult.Error -> {
