@@ -28,7 +28,7 @@ fun GameInput(
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .background(MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f))
             .border(1.dp, MaterialTheme.colorScheme.onBackground)
     ) {
         Column(

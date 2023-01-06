@@ -77,21 +77,17 @@ fun PrintContent(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .weight(1f)
+                    .fillMaxWidth()
                     .padding(bottom = 12.dp)
             ) {
                 when (pdfUiState) {
                     PdfUiState.Default -> {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_print_nav_24),
-                                contentDescription = stringResource(R.string.icon_cd_screen_print),
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(128.dp)
-                            )
-                        }
+                        Icon(
+                            painter = painterResource(R.drawable.ic_print_nav_24),
+                            contentDescription = stringResource(R.string.icon_cd_screen_print),
+                            tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f),
+                            modifier = Modifier.size(128.dp)
+                        )
                     }
                     is PdfUiState.Loaded -> {
                         PdfViewer(
@@ -133,7 +129,13 @@ fun PrintContent(
                         OutlinedButton(
                             onClick = { removeGameLevel(level) },
                             shape = MaterialTheme.shapes.medium,
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = MaterialTheme.colorScheme.secondary
+                            ),
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                            border = BorderStroke(
+                                1.dp, MaterialTheme.colorScheme.secondaryContainer
+                            ),
                             modifier = Modifier
                                 .padding(horizontal = 4.dp)
                                 .height(28.dp)
@@ -180,7 +182,9 @@ fun PrintContent(
                         onClick = { addGameLevel(level) },
                         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                         shape = MaterialTheme.shapes.medium,
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer),
+                        border = BorderStroke(
+                            1.dp, MaterialTheme.colorScheme.primaryContainer
+                        ),
                         modifier = Modifier
                             .padding(horizontal = 4.dp)
                             .height(28.dp)

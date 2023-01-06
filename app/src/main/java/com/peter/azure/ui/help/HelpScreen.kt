@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.peter.azure.data.entity.Help
 import com.peter.azure.ui.navigation.AzureDestination
@@ -88,16 +89,17 @@ private fun HelpList(
     ) {
         helpMap.forEach { (catalog, helpList) ->
             item {
+                val colorPair = getHelpItemColorPair(catalog)
                 Column(
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.medium)
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                        .background(colorPair.first)
                         .padding(16.dp)
                 ) {
                     Text(
                         text = catalog.name,
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = colorPair.second.copy(alpha = 0.7f),
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                     helpList.forEach { help ->
@@ -109,13 +111,13 @@ private fun HelpList(
                             Text(
                                 text = help.title,
                                 style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                color = colorPair.second,
                                 modifier = Modifier.padding(top = 2.dp, bottom = 4.dp)
                             )
                             Text(
                                 text = help.text,
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                color = colorPair.second,
                                 modifier = Modifier.padding(vertical = 2.dp)
                             )
                         }
@@ -126,6 +128,20 @@ private fun HelpList(
                 Spacer(modifier = Modifier.padding(vertical = 8.dp))
             }
         }
+    }
+}
+
+@Composable
+private fun getHelpItemColorPair(catalog: Help.Catalog): Pair<Color, Color> {
+    return when (catalog) {
+        Help.Catalog.FAQ -> Pair(
+            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+            MaterialTheme.colorScheme.onPrimaryContainer
+        )
+        Help.Catalog.TUTORIAL -> Pair(
+            MaterialTheme.colorScheme.secondaryContainer,
+            MaterialTheme.colorScheme.onSecondaryContainer
+        )
     }
 }
 

@@ -32,7 +32,7 @@ fun PdfViewer(
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.background(MaterialTheme.colorScheme.tertiaryContainer)
+            modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
             itemsIndexed(preview) { index, bitmap ->
                 val request = ImageRequest.Builder(context)

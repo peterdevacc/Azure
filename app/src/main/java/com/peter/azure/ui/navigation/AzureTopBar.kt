@@ -49,6 +49,9 @@ fun AzureTopBar(
         FilledTonalIconButton(
             onClick = { navDialogState.value = true },
             shape = azureShapes.large,
+            colors = IconButtonDefaults.filledTonalIconButtonColors(
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer
+            ),
             modifier = Modifier
                 .size(48.dp)
                 .constrainAs(icon) {
@@ -59,6 +62,7 @@ fun AzureTopBar(
             Icon(
                 painter = painterResource(R.drawable.ic_menu_24),
                 contentDescription = stringResource(R.string.icon_cd_navigation_menu),
+                tint = MaterialTheme.colorScheme.onTertiaryContainer,
                 modifier = Modifier.size(24.dp)
             )
         }

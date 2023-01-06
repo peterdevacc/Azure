@@ -81,7 +81,7 @@ private fun GameCell(
     } else {
         Modifier
             .then(modifier)
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f))
     }
     val textColor = if (cell.type == Cell.Type.BLANK) {
         if (location == selectedLocation) {

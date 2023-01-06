@@ -24,7 +24,7 @@ fun GameNote(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.tertiaryContainer)
+            .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.7f))
             .border(1.dp, MaterialTheme.colorScheme.onBackground)
     ) {
         val times = 3
