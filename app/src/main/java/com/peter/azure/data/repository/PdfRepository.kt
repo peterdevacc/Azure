@@ -25,9 +25,10 @@ import kotlin.math.sqrt
 
 @Singleton
 class PdfRepository @Inject constructor(
-    @ApplicationContext
-    private val appContext: Context,
+    @ApplicationContext private val appContext: Context,
 ) {
+
+    private val pdfFileNamePrefix = "azure-sudoku"
 
     suspend fun generateSudokuPdf(printGameList: List<PrintGame>): DataResult<SudokuPdf> =
         withContext(Dispatchers.IO) {
@@ -38,80 +39,84 @@ class PdfRepository @Inject constructor(
             val pdfDocument = PdfDocument()
 
             printGameList.forEachIndexed { index, printGame ->
-                val myPageInfo = PdfDocument
+                val sudokuPageInfo = PdfDocument
                     .PageInfo
                     .Builder(pageWidth, pageHeight, index)
                     .create()
-                val myPage = pdfDocument.startPage(myPageInfo)
+                val myPage = pdfDocument.startPage(sudokuPageInfo)
                 val canvas = myPage.canvas
 
-                val docInfo = Paint()
-                docInfo.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
-                docInfo.color = Color.BLACK
-                docInfo.textSize = 12f
+                val infoTextPaint = Paint()
+                infoTextPaint.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
+                infoTextPaint.color = Color.BLACK
+                infoTextPaint.textSize = 12f
 
                 // header
                 val appName = "Azure Sudoku"
-                val appNameHeight = (docInfo.fontMetrics.descent - docInfo.fontMetrics.ascent)
+                val appNameHeight =
+                    infoTextPaint.fontMetrics.descent - infoTextPaint.fontMetrics.ascent
                 val appNameStartY = 52f + (appNameHeight / 3)
-                canvas.drawText(appName, 60f, appNameStartY, docInfo)
+                canvas.drawText(appName, 60f, appNameStartY, infoTextPaint)
 
                 val dateTime = DateFormat.getDateInstance()
                     .format(Calendar.getInstance().time)
-                val dateTimeWidth = docInfo.measureText(dateTime)
+                val dateTimeWidth = infoTextPaint.measureText(dateTime)
                 val dateTimeStartX = 535f - dateTimeWidth
-                val dateTimeHeight = (docInfo.fontMetrics.descent - docInfo.fontMetrics.ascent)
+                val dateTimeHeight =
+                    infoTextPaint.fontMetrics.descent - infoTextPaint.fontMetrics.ascent
                 val dateTimeStartY = 52f + (dateTimeHeight / 3)
-                canvas.drawText(dateTime, dateTimeStartX, dateTimeStartY, docInfo)
+                canvas.drawText(dateTime, dateTimeStartX, dateTimeStartY, infoTextPaint)
 
                 // footer
                 val gameLevel = "Game Level - ${printGame.gameLevel.name}"
-                val gameLevelHeight = (docInfo.fontMetrics.descent - docInfo.fontMetrics.ascent)
+                val gameLevelHeight =
+                    infoTextPaint.fontMetrics.descent - infoTextPaint.fontMetrics.ascent
                 val gameLevelStartY = 790f + (gameLevelHeight / 3)
-                canvas.drawText(gameLevel, 60f, gameLevelStartY, docInfo)
+                canvas.drawText(gameLevel, 60f, gameLevelStartY, infoTextPaint)
 
                 val pageNum = "${index + 1} / ${printGameList.size}"
-                val page = Paint()
-                page.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
-                page.color = Color.BLACK
-                page.textSize = 12f
-                val pageNumWidth = docInfo.measureText(pageNum)
+                val pagePaint = Paint()
+                pagePaint.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
+                pagePaint.color = Color.BLACK
+                pagePaint.textSize = 12f
+                val pageNumWidth = infoTextPaint.measureText(pageNum)
                 val pageNumStartX = 535f - pageNumWidth
-                val pageNumHeight = (docInfo.fontMetrics.descent - docInfo.fontMetrics.ascent)
+                val pageNumHeight =
+                    infoTextPaint.fontMetrics.descent - infoTextPaint.fontMetrics.ascent
                 val pageNumStartY = 790f + (pageNumHeight / 3)
-                canvas.drawText(pageNum, pageNumStartX, pageNumStartY, page)
+                canvas.drawText(pageNum, pageNumStartX, pageNumStartY, pagePaint)
 
                 // board frame
                 val rectStartX = 60f
                 val rectStartY = 146f
                 val rectEndX = 535f
                 val rectEndY = 696f
-                val rectBoarder = Paint()
-                rectBoarder.style = Paint.Style.STROKE
-                rectBoarder.color = Color.BLACK
-                rectBoarder.strokeWidth = 1f
-                canvas.drawRect(rectStartX, rectStartY, rectEndX, rectEndY, rectBoarder)
+                val rectBoarderPaint = Paint()
+                rectBoarderPaint.style = Paint.Style.STROKE
+                rectBoarderPaint.color = Color.BLACK
+                rectBoarderPaint.strokeWidth = 1f
+                canvas.drawRect(rectStartX, rectStartY, rectEndX, rectEndY, rectBoarderPaint)
 
                 // board cell
-                val line = Paint()
-                line.color = Color.BLACK
-                line.strokeWidth = 1f
+                val boardPaint = Paint()
+                boardPaint.color = Color.BLACK
+                boardPaint.strokeWidth = 1f
                 val heightGap = (rectEndY - rectStartY) / 9
                 for (i in 1..8) {
                     val horizontal = i * heightGap + rectStartY
-                    canvas.drawLine(rectStartX, horizontal, rectEndX, horizontal, line)
+                    canvas.drawLine(rectStartX, horizontal, rectEndX, horizontal, boardPaint)
                 }
                 val widthGap = (rectEndX - rectStartX) / 9
                 for (i in 1..8) {
                     val vertical = i * widthGap + rectStartX
-                    canvas.drawLine(vertical, rectStartY, vertical, rectEndY, line)
+                    canvas.drawLine(vertical, rectStartY, vertical, rectEndY, boardPaint)
                 }
 
                 // fill num
-                val num = Paint()
-                num.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
-                num.color = Color.BLACK
-                num.textSize = 20f
+                val numPaint = Paint()
+                numPaint.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+                numPaint.color = Color.BLACK
+                numPaint.textSize = 20f
                 val textWidthGap = widthGap / 2
                 val textHeightGap = heightGap / 2
                 printGame.sudoku.forEachIndexed { row, numList ->
@@ -122,12 +127,12 @@ class PdfRepository @Inject constructor(
                         } else {
                             ""
                         }
-                        val textWidth = num.measureText(text)
+                        val textWidth = numPaint.measureText(text)
                         val textStartX = i * widthGap + rectStartX + textWidthGap - (textWidth / 2)
-                        val textHeight = (num.fontMetrics.descent - num.fontMetrics.ascent)
+                        val textHeight = numPaint.fontMetrics.descent - numPaint.fontMetrics.ascent
                         val textStartY = startY + textHeightGap + (textHeight / 3)
 
-                        canvas.drawText(text, textStartX, textStartY, num)
+                        canvas.drawText(text, textStartX, textStartY, numPaint)
                     }
                 }
 
@@ -141,7 +146,7 @@ class PdfRepository @Inject constructor(
                     fileList.sortByDescending { it.lastModified() }
                     val removeList = fileList.asList().subList(1, fileList.size - 1)
                     removeList.forEach {
-                        if (it.name.startsWith("azure-sudoku-")) {
+                        if (it.name.startsWith(pdfFileNamePrefix)) {
                             it.delete()
                         }
                     }
@@ -149,7 +154,7 @@ class PdfRepository @Inject constructor(
             }
 
             try {
-                val fileName = "azure-sudoku-${UUID.randomUUID()}.pdf"
+                val fileName = "$pdfFileNamePrefix-${UUID.randomUUID()}.pdf"
                 val file = File(appContext.filesDir, fileName)
 
                 pdfDocument.writeTo(FileOutputStream(file))
@@ -172,7 +177,7 @@ class PdfRepository @Inject constructor(
 
     fun deleteCachePDF() {
         appContext.filesDir.listFiles()?.forEach {
-            if (it.name.startsWith("azure-sudoku-")) {
+            if (it.name.startsWith(pdfFileNamePrefix)) {
                 it.delete()
             }
         }
