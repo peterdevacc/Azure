@@ -11,6 +11,8 @@ import android.os.ParcelFileDescriptor
 import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.entity.PrintGame
 import com.peter.azure.data.entity.SudokuPdf
+import com.peter.azure.data.util.PDF_NAME_PREFIX
+import com.peter.azure.data.util.PDF_NUM_LIMIT
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,8 +30,6 @@ class PdfRepository @Inject constructor(
     @ApplicationContext private val appContext: Context,
 ) {
 
-    private val pdfFileNamePrefix = "azure-sudoku"
-
     suspend fun generateSudokuPdf(printGameList: List<PrintGame>): DataResult<SudokuPdf> =
         withContext(Dispatchers.IO) {
 
@@ -43,8 +43,8 @@ class PdfRepository @Inject constructor(
                     .PageInfo
                     .Builder(pageWidth, pageHeight, index)
                     .create()
-                val myPage = pdfDocument.startPage(sudokuPageInfo)
-                val canvas = myPage.canvas
+                val sudokuPage = pdfDocument.startPage(sudokuPageInfo)
+                val canvas = sudokuPage.canvas
 
                 val infoTextPaint = Paint()
                 infoTextPaint.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
@@ -136,31 +136,32 @@ class PdfRepository @Inject constructor(
                     }
                 }
 
-                pdfDocument.finishPage(myPage)
+                pdfDocument.finishPage(sudokuPage)
             }
 
 
             val files = appContext.filesDir.listFiles()
             files?.let { fileList ->
-                if (fileList.size > 4) {
-                    fileList.sortByDescending { it.lastModified() }
-                    val removeList = fileList.asList().subList(1, fileList.size - 1)
+                val pdfList = fileList
+                    .filter { it.name.startsWith(PDF_NAME_PREFIX) }
+                    .toMutableList()
+                if (pdfList.size > PDF_NUM_LIMIT) {
+                    pdfList.sortByDescending { it.lastModified() }
+                    val removeList = pdfList.subList(1, pdfList.size)
                     removeList.forEach {
-                        if (it.name.startsWith(pdfFileNamePrefix)) {
-                            it.delete()
-                        }
+                        it.delete()
                     }
                 }
             }
 
             try {
-                val fileName = "$pdfFileNamePrefix-${UUID.randomUUID()}.pdf"
+                val fileName = "$PDF_NAME_PREFIX-${UUID.randomUUID()}.pdf"
                 val file = File(appContext.filesDir, fileName)
 
                 pdfDocument.writeTo(FileOutputStream(file))
                 pdfDocument.close()
 
-                val preview = getPreviewImageList(file)
+                val preview = getPageImageList(file)
 
                 return@withContext DataResult.Success(SudokuPdf(file, preview))
             } catch (exception: Exception) {
@@ -177,13 +178,13 @@ class PdfRepository @Inject constructor(
 
     fun deleteCachePDF() {
         appContext.filesDir.listFiles()?.forEach {
-            if (it.name.startsWith(pdfFileNamePrefix)) {
+            if (it.name.startsWith(PDF_NAME_PREFIX)) {
                 it.delete()
             }
         }
     }
 
-    private fun getPreviewImageList(pdf: File): List<Bitmap> {
+    private fun getPageImageList(pdf: File): List<Bitmap> {
         val input = ParcelFileDescriptor.open(pdf, ParcelFileDescriptor.MODE_READ_ONLY)
         val renderer = PdfRenderer(input)
         val width = 1080
