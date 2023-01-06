@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.util.GAME_EXISTED_PREF_KEY
 import com.peter.azure.data.util.ON_BOARDING_PREF_KEY
@@ -57,14 +58,17 @@ class PreferencesRepository @Inject constructor(
 
     suspend fun getGameExistedState(): Flow<DataResult<Boolean>> {
         return dataStore.data
-            .map<Preferences, DataResult<Boolean>> { pref ->
-                DataResult.Success(pref[gameExistedKey] ?: false)
-            }
             .catch {
-                emit(
-                    DataResult.Error(DataResult.Error.Code.IO)
-                )
+                emit(emptyPreferences())
             }
+            .map { pref ->
+                if (pref.asMap().isEmpty()) {
+                    DataResult.Error(DataResult.Error.Code.IO)
+                } else {
+                    DataResult.Success(pref[gameExistedKey] ?: false)
+                }
+            }
+
     }
 
     suspend fun setGameExistedState(value: Boolean): DataResult<String> =
