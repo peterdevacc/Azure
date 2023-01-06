@@ -7,10 +7,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SavedPuzzleDAOTest {
+class Test {
 
     @Test
-    fun getHistory() {
+    fun demo() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         Assert.assertEquals("com.peter.azure", appContext.packageName)
