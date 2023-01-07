@@ -9,6 +9,7 @@ import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.util.azureSchedule
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
@@ -33,7 +34,7 @@ class MainViewModel @Inject constructor(
     }
 
     init {
-        val job = viewModelScope.launch {
+        val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
             when (val boardingResult = preferencesRepository.getOnBoardingState()) {
                 is DataResult.Success<Boolean> -> {
                     if (boardingResult.result) {
@@ -52,6 +53,7 @@ class MainViewModel @Inject constructor(
             task?.cancel()
         }
         task = scheduleLimit(job)
+        job.start()
     }
 
 }

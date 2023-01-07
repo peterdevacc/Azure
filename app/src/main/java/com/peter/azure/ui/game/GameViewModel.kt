@@ -13,6 +13,7 @@ import com.peter.azure.data.repository.PuzzleRepository
 import com.peter.azure.data.repository.SudokuRepository
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
@@ -125,7 +126,7 @@ class GameViewModel @Inject constructor(
             _gameUiState.value = uiState.copy(
                 dialog = GameUiState.Playing.Dialog.Processing
             )
-            val job = viewModelScope.launch {
+            val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
                 val isCorrect = sudokuRepository.checkAnswer(uiState.puzzle)
                 _gameUiState.value = uiState.copy(
                     isCorrect = isCorrect,
@@ -134,6 +135,7 @@ class GameViewModel @Inject constructor(
                 task?.cancel()
             }
             task = scheduleLimit(job)
+            job.start()
         }
     }
 
@@ -159,7 +161,7 @@ class GameViewModel @Inject constructor(
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
             _gameUiState.value = GameUiState.Loading
-            val job = viewModelScope.launch {
+            val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
                 noteRepository.deleteAllNote()
                 puzzleRepository.deletePuzzle()
                 when (val result = preferencesRepository.setGameExistedState(false)) {
@@ -173,12 +175,13 @@ class GameViewModel @Inject constructor(
                 task?.cancel()
             }
             task = scheduleLimit(job)
+            job.start()
         }
     }
 
     init {
         val gameLevel = savedStateHandle.get<String>("gameLevel") ?: ""
-        val job = viewModelScope.launch {
+        val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
             val puzzle: Puzzle
             val noteList: List<Note>
             if (gameLevel.isNotEmpty() && gameLevel != "empty") {
@@ -219,6 +222,7 @@ class GameViewModel @Inject constructor(
             task?.cancel()
         }
         task = scheduleLimit(job)
+        job.start()
     }
 
 }

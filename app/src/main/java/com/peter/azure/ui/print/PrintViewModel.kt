@@ -12,6 +12,7 @@ import com.peter.azure.data.repository.SudokuRepository
 import com.peter.azure.data.util.PDF_PAGE_SIZE
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
@@ -57,7 +58,7 @@ class PrintViewModel @Inject constructor(
     }
 
     fun generateSudokuPdf() {
-        val job = viewModelScope.launch {
+        val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
             _pdfUiState.value = PdfUiState.Processing
             if (gameLevelListState.value.isNotEmpty()) {
                 val boardList = sudokuRepository.getPrintGameList(gameLevelListState.value)
@@ -77,6 +78,7 @@ class PrintViewModel @Inject constructor(
             task?.cancel()
         }
         task = scheduleLimit(job)
+        job.start()
     }
 
     fun notShareableDialog() {

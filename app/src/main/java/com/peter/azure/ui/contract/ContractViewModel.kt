@@ -11,6 +11,7 @@ import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
@@ -41,7 +42,7 @@ class ContractViewModel @Inject constructor(
         val infoType = savedStateHandle.get<String>("infoType") ?: ""
         if (infoType.isNotEmpty()) {
             val type = Info.Type.valueOf(infoType)
-            val job = viewModelScope.launch {
+            val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
                 when (val infoResult = infoRepository.getInfo(type)) {
                     is DataResult.Error -> {
                         contractUiState.value = ContractUiState
@@ -55,6 +56,7 @@ class ContractViewModel @Inject constructor(
                 task?.cancel()
             }
             task = scheduleLimit(job)
+            job.start()
         } else {
             contractUiState.value = ContractUiState
                 .Error(DataResult.Error.Code.UNKNOWN)

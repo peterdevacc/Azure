@@ -9,6 +9,7 @@ import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.repository.HelpRepository
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
@@ -34,7 +35,7 @@ class HelpViewModel @Inject constructor(
     }
 
     init {
-        val job = viewModelScope.launch {
+        val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
             when (val helpMapResult = helpRepository.getHelpMap()) {
                 is DataResult.Error -> {
                     helpUiState.value = HelpUiState.Error(helpMapResult.code)
@@ -46,6 +47,7 @@ class HelpViewModel @Inject constructor(
             task?.cancel()
         }
         task = scheduleLimit(job)
+        job.start()
     }
 
 }

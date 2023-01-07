@@ -44,8 +44,8 @@ class GreetingViewModel @Inject constructor(
             }
             task?.cancel()
         }
-        job.start()
         task = scheduleLimit(job)
+        job.start()
     }
 
     fun dismissDialog() {
@@ -54,7 +54,7 @@ class GreetingViewModel @Inject constructor(
 
     fun agreeContracts() {
         greetingUiState.value = GreetingUiState.Processing
-        val job = viewModelScope.launch {
+        val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
             when (val boardingResult = preferencesRepository.setOnBoardingState(true)) {
                 is DataResult.Error -> {
                     greetingUiState.value = GreetingUiState
@@ -68,6 +68,7 @@ class GreetingViewModel @Inject constructor(
             task?.cancel()
         }
         task = scheduleLimit(job)
+        job.start()
     }
 
     private fun scheduleLimit(job: Job) = azureSchedule {
