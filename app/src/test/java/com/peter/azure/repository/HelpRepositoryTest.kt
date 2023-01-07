@@ -30,12 +30,12 @@ class HelpRepositoryTest {
         Help(Help.Catalog.TUTORIAL, "TUTORIAL 8", "text for TUTORIAL 8"),
         Help(Help.Catalog.FAQ, "faq 9", "text for faq 9"),
     )
+    private val expected = helpList.groupBy { it.catalog }
 
     @Test
     fun `get help map`() = runBlocking {
-        val expect = helpList.groupBy { it.catalog }
-        val jsonString = Json.encodeToString(helpList)
-        val inputStream: InputStream = jsonString.byteInputStream()
+        val inputStream: InputStream = Json
+            .encodeToString(helpList).byteInputStream()
 
         val resultError = helpRepository.getHelpMap()
         assertTrue(resultError is DataResult.Error)
@@ -57,8 +57,8 @@ class HelpRepositoryTest {
 
         assertTrue(resultSuccess is DataResult.Success)
         val helpMap = resultSuccess as DataResult.Success
-        assertEquals(expect.size, helpMap.result.size)
-        assertEquals(expect, helpMap.result)
+        assertEquals(expected.size, helpMap.result.size)
+        assertEquals(expected, helpMap.result)
     }
 
 }

@@ -18,18 +18,20 @@ class InfoRepositoryTest {
     private val assetManager = mockk<AssetManager>(relaxed = true)
     private val infoRepository = InfoRepository(assetManager)
 
+    private val type = Info.Type.SERVICE
+    private val serviceInfo = Info(
+        type,
+        listOf(
+            Info.Item(Info.Item.Type.TITLE, "${type.name} TITLE"),
+            Info.Item(Info.Item.Type.TEXT, "${type.name} TEXT"),
+            Info.Item(Info.Item.Type.SIGNATURE, "${type.name} SIGNATURE")
+        )
+    )
+
     @Test
     fun `get info`() = runBlocking {
-        val type = Info.Type.SERVICE
-        val serviceInfo = Info(
-            type,
-            listOf(
-                Info.Item(Info.Item.Type.TITLE, "${type.name} TITLE"),
-                Info.Item(Info.Item.Type.TEXT, "${type.name} TEXT"),
-                Info.Item(Info.Item.Type.SIGNATURE, "${type.name} SIGNATURE")
-            )
-        )
-        val serviceInputStream: InputStream = Json.encodeToString(serviceInfo).byteInputStream()
+        val serviceInputStream: InputStream = Json
+            .encodeToString(serviceInfo).byteInputStream()
 
         val resultError = infoRepository.getInfo(Info.Type.SERVICE)
         assertTrue(resultError is DataResult.Error)
