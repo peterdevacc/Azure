@@ -1,4 +1,4 @@
-package com.peter.azure
+package com.peter.azure.repository
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -55,6 +55,11 @@ class PdfRepositoryTest {
         pdfRepository.generateSudokuPdf(
             sudokuRepository.getPrintGameList(
                 listOf(gameLevelList.first(), gameLevelList[1])
+            )
+        )
+        pdfRepository.generateSudokuPdf(
+            sudokuRepository.getPrintGameList(
+                listOf(gameLevelList[2], gameLevelList[1])
             )
         )
 
