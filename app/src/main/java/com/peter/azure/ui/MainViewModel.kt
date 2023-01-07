@@ -8,7 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.ui.navigation.AzureDestination
+import com.peter.azure.util.azureSchedule
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -18,8 +21,19 @@ class MainViewModel @Inject constructor(
     private val mainUiState: MutableState<MainUiState> = mutableStateOf(MainUiState.Loading)
     val uiState: State<MainUiState> = mainUiState
 
+    private var task: TimerTask? = null
+
+    private fun scheduleLimit(job: Job) = azureSchedule {
+        if (mainUiState.value is MainUiState.Loading) {
+            mainUiState.value = MainUiState.Error(
+                DataResult.Error.Code.UNKNOWN
+            )
+            job.cancel()
+        }
+    }
+
     init {
-        viewModelScope.launch {
+        val job = viewModelScope.launch {
             when (val boardingResult = preferencesRepository.getOnBoardingState()) {
                 is DataResult.Success<Boolean> -> {
                     if (boardingResult.result) {
@@ -35,7 +49,9 @@ class MainViewModel @Inject constructor(
                         .Error(code = boardingResult.code)
                 }
             }
+            task?.cancel()
         }
+        task = scheduleLimit(job)
     }
 
 }
