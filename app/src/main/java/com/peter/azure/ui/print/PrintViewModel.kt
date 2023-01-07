@@ -32,15 +32,6 @@ class PrintViewModel @Inject constructor(
 
     private var task: TimerTask? = null
 
-    private fun scheduleLimit(job: Job) = azureSchedule {
-        if (_pdfUiState.value is PdfUiState.Processing) {
-            _pdfUiState.value = PdfUiState.Error(
-                DataResult.Error.Code.UNKNOWN
-            )
-            job.cancel()
-        }
-    }
-
     fun addGameLevel(gameLevel: GameLevel) {
         if (gameLevelListState.value.size < PDF_PAGE_SIZE) {
             val levelList = gameLevelListState.value.toMutableList()
@@ -67,9 +58,7 @@ class PrintViewModel @Inject constructor(
                         _pdfUiState.value = PdfUiState.Error(sudokuPdfResult.code)
                     }
                     is DataResult.Success -> {
-                        _pdfUiState.value = PdfUiState.Loaded(
-                            sudokuPdfResult.result
-                        )
+                        _pdfUiState.value = PdfUiState.Loaded(sudokuPdfResult.result)
                     }
                 }
             } else {
@@ -81,7 +70,7 @@ class PrintViewModel @Inject constructor(
         job.start()
     }
 
-    fun notShareableDialog() {
+    fun notShareable() {
         _pdfUiState.value = PdfUiState.NotShareable
     }
 
@@ -92,6 +81,15 @@ class PrintViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         pdfRepository.deleteCachePDF()
+    }
+
+    private fun scheduleLimit(job: Job) = azureSchedule {
+        if (_pdfUiState.value is PdfUiState.Processing) {
+            _pdfUiState.value = PdfUiState.Error(
+                DataResult.Error.Code.UNKNOWN
+            )
+            job.cancel()
+        }
     }
 
 }

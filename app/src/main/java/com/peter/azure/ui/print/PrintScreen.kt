@@ -1,6 +1,7 @@
 package com.peter.azure.ui.print
 
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
@@ -24,6 +26,7 @@ import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.util.PDF_PAGE_SIZE
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.ui.navigation.AzureTopBar
+import com.peter.azure.ui.theme.AzureTheme
 import com.peter.azure.ui.util.ErrorDialog
 import com.peter.azure.ui.util.ProcessingDialog
 import com.peter.azure.ui.util.azureScreen
@@ -39,7 +42,7 @@ fun PrintScreen(
         navDialogState = navDialog,
         pdfUiState = viewModel.pdfUiState.value,
         generatePdf = viewModel::generateSudokuPdf,
-        notShareableNotice = viewModel::notShareableDialog,
+        notShareable = viewModel::notShareable,
         dismissDialog = viewModel::dismissDialog,
         gameLevelList = viewModel.gameLevelList.value,
         addGameLevel = viewModel::addGameLevel,
@@ -53,7 +56,7 @@ fun PrintContent(
     navDialogState: MutableState<Boolean>,
     pdfUiState: PdfUiState,
     generatePdf: () -> Unit,
-    notShareableNotice: () -> Unit,
+    notShareable: () -> Unit,
     dismissDialog: () -> Unit,
     gameLevelList: List<GameLevel>,
     addGameLevel: (GameLevel) -> Unit,
@@ -132,7 +135,7 @@ fun PrintContent(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(1.dp, MaterialTheme.colorScheme.secondaryContainer)
+                    .border(1.dp, MaterialTheme.colorScheme.primaryContainer)
             ) {
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
@@ -147,11 +150,11 @@ fun PrintContent(
                             onClick = { removeGameLevel(level) },
                             shape = MaterialTheme.shapes.medium,
                             colors = ButtonDefaults.outlinedButtonColors(
-                                contentColor = MaterialTheme.colorScheme.secondary
+                                contentColor = MaterialTheme.colorScheme.primary
                             ),
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                             border = BorderStroke(
-                                1.dp, MaterialTheme.colorScheme.secondaryContainer
+                                1.dp, MaterialTheme.colorScheme.primaryContainer
                             ),
                             modifier = Modifier
                                 .padding(horizontal = 4.dp)
@@ -170,7 +173,7 @@ fun PrintContent(
                     }
                 }
                 Divider(
-                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    color = MaterialTheme.colorScheme.primaryContainer,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .height(40.dp)
@@ -184,7 +187,7 @@ fun PrintContent(
                 ) {
                     Text(
                         text = "${gameLevelList.size} / $PDF_PAGE_SIZE",
-                        color = MaterialTheme.colorScheme.secondary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -241,7 +244,7 @@ fun PrintContent(
                             shareIntent.type = "application/pdf"
                             startActivity(context, shareIntent, null)
                         } else {
-                            notShareableNotice()
+                            notShareable()
                         }
                     },
                     shape = MaterialTheme.shapes.medium,
@@ -262,14 +265,19 @@ fun PrintContent(
     }
 }
 
-//@Preview(name = "Print Screen", showBackground = true)
-//@Preview(
-//    name = "Print Screen", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun PrintScreenPreview() {
-//    AzureTheme {
-//        PrintContent(false, {}, {}, {})
-//    }
-//}
+@Preview(name = "Print Screen", showBackground = true)
+@Preview(
+    name = "Print Screen", showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun PrintScreenPreview() {
+    val navDialog = remember { mutableStateOf(false) }
+
+    AzureTheme {
+        PrintContent(
+            navDialog, PdfUiState.Default,
+            {}, {}, {}, emptyList(), {}, {}, {}
+        )
+    }
+}
