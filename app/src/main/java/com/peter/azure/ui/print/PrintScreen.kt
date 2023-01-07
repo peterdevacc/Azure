@@ -95,8 +95,25 @@ fun PrintContent(
                             modifier = Modifier.fillMaxSize()
                         )
                     }
+                    is PdfUiState.EmptyGameLevelList -> {
+                        PrintMessageDialog(
+                            title = stringResource(
+                                R.string.screen_print_empty_game_level_list_dialog_title
+                            ),
+                            text = stringResource(
+                                R.string.screen_print_empty_game_level_list_dialog_msg
+                            ),
+                            onDismiss = dismissDialog
+                        )
+                    }
                     is PdfUiState.NotShareable -> {
-                        NotShareableDialog(
+                        PrintMessageDialog(
+                            title = stringResource(
+                                R.string.screen_print_not_shareable_pdf_dialog_title
+                            ),
+                            text = stringResource(
+                                R.string.screen_print_not_shareable_pdf_dialog_msg
+                            ),
                             onDismiss = dismissDialog
                         )
                     }
@@ -115,7 +132,7 @@ fun PrintContent(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(1.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .border(1.dp, MaterialTheme.colorScheme.secondaryContainer)
             ) {
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
@@ -153,7 +170,7 @@ fun PrintContent(
                     }
                 }
                 Divider(
-                    color = MaterialTheme.colorScheme.primaryContainer,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .height(40.dp)
@@ -167,7 +184,7 @@ fun PrintContent(
                 ) {
                     Text(
                         text = "${gameLevelList.size} / $PDF_PAGE_SIZE",
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.secondary
                     )
                 }
             }

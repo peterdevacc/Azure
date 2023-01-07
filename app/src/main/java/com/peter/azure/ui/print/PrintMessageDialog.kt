@@ -10,13 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.peter.azure.R
 
 @Composable
-fun NotShareableDialog(
+fun PrintMessageDialog(
+    title: String,
+    text: String,
     onDismiss: () -> Unit
 ) {
     Dialog(
@@ -33,12 +33,12 @@ fun NotShareableDialog(
             Text(
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                text = stringResource(R.string.screen_print_share_pdf_dialog_title)
+                text = title
             )
             Text(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                text = stringResource(R.string.screen_print_share_pdf_dialog_msg),
+                text = text,
                 modifier = Modifier.padding(vertical = 12.dp),
             )
         }

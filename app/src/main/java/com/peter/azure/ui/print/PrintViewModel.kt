@@ -59,16 +59,20 @@ class PrintViewModel @Inject constructor(
     fun generateSudokuPdf() {
         val job = viewModelScope.launch {
             _pdfUiState.value = PdfUiState.Processing
-            val boardList = sudokuRepository.getPrintGameList(gameLevelListState.value)
-            when (val sudokuPdfResult = pdfRepository.generateSudokuPdf(boardList)) {
-                is DataResult.Error -> {
-                    _pdfUiState.value = PdfUiState.Error(sudokuPdfResult.code)
+            if (gameLevelListState.value.isNotEmpty()) {
+                val boardList = sudokuRepository.getPrintGameList(gameLevelListState.value)
+                when (val sudokuPdfResult = pdfRepository.generateSudokuPdf(boardList)) {
+                    is DataResult.Error -> {
+                        _pdfUiState.value = PdfUiState.Error(sudokuPdfResult.code)
+                    }
+                    is DataResult.Success -> {
+                        _pdfUiState.value = PdfUiState.Loaded(
+                            sudokuPdfResult.result
+                        )
+                    }
                 }
-                is DataResult.Success -> {
-                    _pdfUiState.value = PdfUiState.Loaded(
-                        sudokuPdfResult.result
-                    )
-                }
+            } else {
+                _pdfUiState.value = PdfUiState.EmptyGameLevelList
             }
             task?.cancel()
         }
