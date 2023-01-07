@@ -139,27 +139,14 @@ class PdfRepository @Inject constructor(
                 pdfDocument.finishPage(sudokuPage)
             }
 
-
-            val files = appContext.filesDir.listFiles()
-            files?.let { fileList ->
-                val pdfList = fileList
-                    .filter { it.name.startsWith(PDF_NAME_PREFIX) }
-                    .toMutableList()
-                if (pdfList.size > PDF_NUM_LIMIT) {
-                    pdfList.sortByDescending { it.lastModified() }
-                    val removeList = pdfList.subList(1, pdfList.size)
-                    removeList.forEach {
-                        it.delete()
-                    }
-                }
-            }
-
             try {
                 val fileName = "$PDF_NAME_PREFIX-${UUID.randomUUID()}.pdf"
                 val file = File(appContext.filesDir, fileName)
 
                 pdfDocument.writeTo(FileOutputStream(file))
                 pdfDocument.close()
+
+                limitPdfNum(appContext.filesDir)
 
                 val preview = getPageImageList(file)
 
@@ -180,6 +167,22 @@ class PdfRepository @Inject constructor(
         appContext.filesDir.listFiles()?.forEach {
             if (it.name.startsWith(PDF_NAME_PREFIX)) {
                 it.delete()
+            }
+        }
+    }
+
+    private fun limitPdfNum(filesDir: File) {
+        val files = filesDir.listFiles()
+        files?.let { fileList ->
+            val pdfList = fileList
+                .filter { it.name.startsWith(PDF_NAME_PREFIX) }
+                .toMutableList()
+            if (pdfList.size > PDF_NUM_LIMIT) {
+                pdfList.sortByDescending { it.lastModified() }
+                val removeList = pdfList.subList(2, pdfList.size)
+                removeList.forEach {
+                    it.delete()
+                }
             }
         }
     }
