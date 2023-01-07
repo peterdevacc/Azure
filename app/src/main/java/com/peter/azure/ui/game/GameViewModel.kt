@@ -36,15 +36,6 @@ class GameViewModel @Inject constructor(
 
     private var task: TimerTask? = null
 
-    private fun scheduleLimit(job: Job) = azureSchedule {
-        if (_gameUiState.value is GameUiState.Loading) {
-            _gameUiState.value = GameUiState.Error(
-                DataResult.Error.Code.UNKNOWN
-            )
-            job.cancel()
-        }
-    }
-
     fun selectLocation(location: Location, currentNum: Int) {
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
@@ -176,6 +167,15 @@ class GameViewModel @Inject constructor(
             }
             task = scheduleLimit(job)
             job.start()
+        }
+    }
+
+    private fun scheduleLimit(job: Job) = azureSchedule {
+        if (_gameUiState.value is GameUiState.Loading) {
+            _gameUiState.value = GameUiState.Error(
+                DataResult.Error.Code.UNKNOWN
+            )
+            job.cancel()
         }
     }
 
