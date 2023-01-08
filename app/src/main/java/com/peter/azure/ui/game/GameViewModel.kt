@@ -192,7 +192,9 @@ class GameViewModel @Inject constructor(
                     val puzzle: Puzzle
                     val noteList: List<Note>
                     if (!gameExistedResult.result) {
-                        val gameLevel: String = checkNotNull(savedStateHandle[GAME_LEVEL_SAVED_KEY])
+                        val gameLevel: String = checkNotNull(
+                            savedStateHandle[GAME_LEVEL_SAVED_KEY]
+                        )
                         val level = GameLevel.valueOf(gameLevel)
                         val sudoku = sudokuRepository.getBoard(level)
                         noteList = mutableListOf()
