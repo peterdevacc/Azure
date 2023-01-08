@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
+import com.peter.azure.data.util.INFO_TYPE_SAVED_KEY
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
@@ -39,28 +40,23 @@ class ContractViewModel @Inject constructor(
     }
 
     init {
-        val infoType = savedStateHandle.get<String>("infoType") ?: ""
-        if (infoType.isNotEmpty()) {
-            val type = Info.Type.valueOf(infoType)
-            val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
-                when (val infoResult = infoRepository.getInfo(type)) {
-                    is DataResult.Error -> {
-                        contractUiState.value = ContractUiState
-                            .Error(infoResult.code)
-                    }
-                    is DataResult.Success -> {
-                        contractUiState.value = ContractUiState
-                            .Success(infoResult.result)
-                    }
+        val infoType: String = checkNotNull(savedStateHandle[INFO_TYPE_SAVED_KEY])
+        val type = Info.Type.valueOf(infoType)
+        val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
+            when (val infoResult = infoRepository.getInfo(type)) {
+                is DataResult.Error -> {
+                    contractUiState.value = ContractUiState
+                        .Error(infoResult.code)
                 }
-                task?.cancel()
+                is DataResult.Success -> {
+                    contractUiState.value = ContractUiState
+                        .Success(infoResult.result)
+                }
             }
-            task = scheduleLimit(job)
-            job.start()
-        } else {
-            contractUiState.value = ContractUiState
-                .Error(DataResult.Error.Code.UNKNOWN)
+            task?.cancel()
         }
+        task = scheduleLimit(job)
+        job.start()
     }
 
 }

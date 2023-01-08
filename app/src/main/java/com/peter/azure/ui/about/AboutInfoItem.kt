@@ -14,10 +14,10 @@ import com.peter.azure.data.entity.Info
 @Composable
 fun AboutInfoItem(
     heading: Pair<String, Info.Type>,
-    navigateToInfo: (String) -> Unit
+    navigateToInfo: (Info.Type) -> Unit
 ) {
     OutlinedCard(
-        onClick = { navigateToInfo(heading.second.name) },
+        onClick = { navigateToInfo(heading.second) },
         modifier = Modifier
             .padding(vertical = 6.dp)
             .fillMaxWidth()

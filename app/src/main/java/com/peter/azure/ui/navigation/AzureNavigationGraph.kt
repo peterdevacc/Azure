@@ -62,10 +62,11 @@ fun AzureNavigationGraph(
                     }
                 },
                 navigateToNewGame = {
-                    if (viewModel.uiState.value is HomeUiState.Success) {
-                        val level = viewModel.getGameLevel()
-                        val route = "${AzureDestination.General.GAME.route}/$level"
-                        navHostController.navigate(route) {
+                    val level = viewModel.getGameLevel()
+                    level?.let {
+                        navHostController.navigate(
+                            AzureDestination.Main.HOME.getNavGameRoute(false, it)
+                        ) {
                             popUpTo(AzureDestination.Main.HOME.route) {
                                 saveState = true
                             }
@@ -76,8 +77,9 @@ fun AzureNavigationGraph(
                 },
                 navigateToContinueGame = {
                     if (viewModel.uiState.value is HomeUiState.Success) {
-                        val route = "${AzureDestination.General.GAME.route}/empty"
-                        navHostController.navigate(route) {
+                        navHostController.navigate(
+                            AzureDestination.Main.HOME.getNavGameRoute(true)
+                        ) {
                             popUpTo(AzureDestination.Main.HOME.route) {
                                 saveState = true
                             }
@@ -129,9 +131,9 @@ fun AzureNavigationGraph(
                         restoreState = true
                     }
                 },
-                navigateToContract = { infoType ->
+                navigateToContract = {
                     navHostController.navigate(
-                        "${AzureDestination.General.CONTRACT.route}/$infoType"
+                        AzureDestination.Main.ABOUT.getNavContractRoute(it)
                     ) {
                         launchSingleTop = true
                     }
@@ -139,7 +141,8 @@ fun AzureNavigationGraph(
             )
         }
         composable(
-            route = "${AzureDestination.General.GAME.route}/{gameLevel}"
+            route = AzureDestination.General.GAME.destRoute,
+            arguments = AzureDestination.General.GAME.navArguments
         ) {
             val viewModel = hiltViewModel<GameViewModel>()
             GameScreen(
@@ -149,9 +152,7 @@ fun AzureNavigationGraph(
                 }
             )
         }
-        composable(
-            route = "${AzureDestination.General.CONTRACT.route}/{infoType}",
-        ) {
+        composable(AzureDestination.General.CONTRACT.destRoute) {
             val viewModel = hiltViewModel<ContractViewModel>()
             ContractScreen(
                 viewModel = viewModel,

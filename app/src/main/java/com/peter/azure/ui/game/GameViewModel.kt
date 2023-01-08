@@ -11,6 +11,8 @@ import com.peter.azure.data.repository.NoteRepository
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.data.repository.PuzzleRepository
 import com.peter.azure.data.repository.SudokuRepository
+import com.peter.azure.data.util.GAME_EXISTED_SAVED_KEY
+import com.peter.azure.data.util.GAME_LEVEL_SAVED_KEY
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
@@ -180,11 +182,13 @@ class GameViewModel @Inject constructor(
     }
 
     init {
-        val gameLevel = savedStateHandle.get<String>("gameLevel") ?: ""
         val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
+            val gameExisted = checkNotNull(savedStateHandle[GAME_EXISTED_SAVED_KEY])
+                .toString().toBoolean()
             val puzzle: Puzzle
             val noteList: List<Note>
-            if (gameLevel.isNotEmpty() && gameLevel != "empty") {
+            if (!gameExisted) {
+                val gameLevel: String = checkNotNull(savedStateHandle[GAME_LEVEL_SAVED_KEY])
                 val level = GameLevel.valueOf(gameLevel)
                 val sudoku = sudokuRepository.getBoard(level)
                 noteList = mutableListOf()
@@ -205,20 +209,36 @@ class GameViewModel @Inject constructor(
 
                 noteRepository.insertNoteList(noteList)
                 puzzleRepository.insertPuzzle(puzzle)
-                preferencesRepository.setGameExistedState(true)
+                when (preferencesRepository.setGameExistedState(true)) {
+                    is DataResult.Error -> {
+                        _gameUiState.value = GameUiState.Error(
+                            DataResult.Error.Code.UNKNOWN
+                        )
+                    }
+                    is DataResult.Success -> {
+                        noteListState.value = noteList
+                        _gameUiState.value = GameUiState.Playing(
+                            puzzle = puzzle,
+                            location = Location(-1, -1),
+                            markList = Mark.getDefaultList(),
+                            dialog = GameUiState.Playing.Dialog.None,
+                            isCorrect = false
+                        )
+                    }
+                }
             } else {
                 puzzle = puzzleRepository.getPuzzle()
                 noteList = noteRepository.getNoteList()
-            }
 
-            noteListState.value = noteList
-            _gameUiState.value = GameUiState.Playing(
-                puzzle = puzzle,
-                location = Location(-1, -1),
-                markList = Mark.getDefaultList(),
-                dialog = GameUiState.Playing.Dialog.None,
-                isCorrect = false
-            )
+                noteListState.value = noteList
+                _gameUiState.value = GameUiState.Playing(
+                    puzzle = puzzle,
+                    location = Location(-1, -1),
+                    markList = Mark.getDefaultList(),
+                    dialog = GameUiState.Playing.Dialog.None,
+                    isCorrect = false
+                )
+            }
             task?.cancel()
         }
         task = scheduleLimit(job)

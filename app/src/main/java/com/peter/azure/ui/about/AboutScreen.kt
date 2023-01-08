@@ -27,7 +27,7 @@ import com.peter.azure.ui.util.azureScreen
 @Composable
 fun AboutScreen(
     navigateToMainScreens: (String) -> Unit,
-    navigateToContract: (String) -> Unit
+    navigateToContract: (Info.Type) -> Unit
 ) {
     val showNavDialog = remember { mutableStateOf(false) }
 
@@ -42,7 +42,7 @@ fun AboutScreen(
 fun AboutContent(
     navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit,
-    navigateToContract: (String) -> Unit
+    navigateToContract: (Info.Type) -> Unit
 ) {
     val gradientBrush = Brush.linearGradient(
         listOf(
