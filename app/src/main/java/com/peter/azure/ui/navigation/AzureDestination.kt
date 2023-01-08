@@ -4,7 +4,6 @@ import androidx.navigation.navArgument
 import com.peter.azure.R
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.entity.Info
-import com.peter.azure.data.util.GAME_EXISTED_SAVED_KEY
 import com.peter.azure.data.util.GAME_LEVEL_SAVED_KEY
 import com.peter.azure.data.util.INFO_TYPE_SAVED_KEY
 
@@ -26,11 +25,8 @@ sealed interface AzureDestination {
             override val textId = R.string.screen_home
             override val descriptionId = R.string.screen_home_description
 
-            fun getNavGameRoute(
-                gameExisted: Boolean, gameLevel: GameLevel? = null
-            ): String {
-                var route = "${General.GAME.route}/$gameExisted" +
-                        "?$GAME_LEVEL_SAVED_KEY=null"
+            fun getNavGameRoute(gameLevel: GameLevel? = null): String {
+                var route = "${General.GAME.route}?$GAME_LEVEL_SAVED_KEY=null"
                 gameLevel?.let {
                     route = route.replace("null", it.name)
                 }
@@ -82,8 +78,7 @@ sealed interface AzureDestination {
             override val route = "game"
             override val textId = R.string.screen_game
 
-            val destRoute = "$route/{$GAME_EXISTED_SAVED_KEY}" +
-                    "?$GAME_LEVEL_SAVED_KEY={$GAME_LEVEL_SAVED_KEY}"
+            val destRoute = "$route?$GAME_LEVEL_SAVED_KEY={$GAME_LEVEL_SAVED_KEY}"
             val navArguments = listOf(
                 navArgument(GAME_LEVEL_SAVED_KEY) {
                     nullable = true
@@ -95,7 +90,7 @@ sealed interface AzureDestination {
             override val route = "contract"
             override val textId = R.string.screen_contract
 
-            const val destRoute = "contract/{$INFO_TYPE_SAVED_KEY}"
+            val destRoute = "$route/{$INFO_TYPE_SAVED_KEY}"
         }
 
         object GREETING: General {

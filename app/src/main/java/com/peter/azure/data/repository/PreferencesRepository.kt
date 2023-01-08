@@ -9,10 +9,7 @@ import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.util.GAME_EXISTED_PREF_KEY
 import com.peter.azure.data.util.ON_BOARDING_PREF_KEY
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
@@ -68,8 +65,18 @@ class PreferencesRepository @Inject constructor(
                     DataResult.Success(pref[gameExistedKey] ?: false)
                 }
             }
-
     }
+
+    suspend fun getGameExistedStateLatest(): DataResult<Boolean> =
+        withContext(Dispatchers.IO) {
+            try {
+                val pref = dataStore.data.first()
+
+                return@withContext DataResult.Success(pref[gameExistedKey] ?: false)
+            } catch (exception: Exception) {
+                return@withContext DataResult.Error(DataResult.Error.Code.UNKNOWN)
+            }
+        }
 
     suspend fun setGameExistedState(value: Boolean): DataResult<String> =
         withContext(Dispatchers.IO) {

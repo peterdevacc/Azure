@@ -10,7 +10,6 @@ const val HELP_FILE_NAME = "help.json"
 
 const val INFO_TYPE_SAVED_KEY = "info_type"
 const val GAME_LEVEL_SAVED_KEY = "game_level"
-const val GAME_EXISTED_SAVED_KEY = "game_existed"
 
 const val PDF_NAME_PREFIX = "azure-sudoku"
 const val PDF_NUM_LIMIT = 5

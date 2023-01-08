@@ -11,7 +11,6 @@ import com.peter.azure.data.repository.NoteRepository
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.data.repository.PuzzleRepository
 import com.peter.azure.data.repository.SudokuRepository
-import com.peter.azure.data.util.GAME_EXISTED_SAVED_KEY
 import com.peter.azure.data.util.GAME_LEVEL_SAVED_KEY
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -183,39 +182,58 @@ class GameViewModel @Inject constructor(
 
     init {
         val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
-            val gameExisted = checkNotNull(savedStateHandle[GAME_EXISTED_SAVED_KEY])
-                .toString().toBoolean()
-            val puzzle: Puzzle
-            val noteList: List<Note>
-            if (!gameExisted) {
-                val gameLevel: String = checkNotNull(savedStateHandle[GAME_LEVEL_SAVED_KEY])
-                val level = GameLevel.valueOf(gameLevel)
-                val sudoku = sudokuRepository.getBoard(level)
-                noteList = mutableListOf()
-                val markList = Mark.getDefaultList()
-                val board = sudoku.mapIndexed { y, row ->
-                    row.mapIndexed { x, num ->
-                        val type = if (num == 0) {
-                            val note = Note(Location(y, x), markList)
-                            noteList.add(note)
-                            Cell.Type.BLANK
-                        } else {
-                            Cell.Type.QUESTION
-                        }
-                        Cell(num, type)
-                    }
+            when (val gameExistedResult = preferencesRepository.getGameExistedStateLatest()) {
+                is DataResult.Error -> {
+                    _gameUiState.value = GameUiState.Error(
+                        DataResult.Error.Code.UNKNOWN
+                    )
                 }
-                puzzle = Puzzle(board = board)
+                is DataResult.Success -> {
+                    val puzzle: Puzzle
+                    val noteList: List<Note>
+                    if (!gameExistedResult.result) {
+                        val gameLevel: String = checkNotNull(savedStateHandle[GAME_LEVEL_SAVED_KEY])
+                        val level = GameLevel.valueOf(gameLevel)
+                        val sudoku = sudokuRepository.getBoard(level)
+                        noteList = mutableListOf()
+                        val markList = Mark.getDefaultList()
+                        val board = sudoku.mapIndexed { y, row ->
+                            row.mapIndexed { x, num ->
+                                val type = if (num == 0) {
+                                    val note = Note(Location(y, x), markList)
+                                    noteList.add(note)
+                                    Cell.Type.BLANK
+                                } else {
+                                    Cell.Type.QUESTION
+                                }
+                                Cell(num, type)
+                            }
+                        }
+                        puzzle = Puzzle(board = board)
 
-                noteRepository.insertNoteList(noteList)
-                puzzleRepository.insertPuzzle(puzzle)
-                when (preferencesRepository.setGameExistedState(true)) {
-                    is DataResult.Error -> {
-                        _gameUiState.value = GameUiState.Error(
-                            DataResult.Error.Code.UNKNOWN
-                        )
-                    }
-                    is DataResult.Success -> {
+                        noteRepository.insertNoteList(noteList)
+                        puzzleRepository.insertPuzzle(puzzle)
+                        when (preferencesRepository.setGameExistedState(true)) {
+                            is DataResult.Error -> {
+                                _gameUiState.value = GameUiState.Error(
+                                    DataResult.Error.Code.UNKNOWN
+                                )
+                            }
+                            is DataResult.Success -> {
+                                noteListState.value = noteList
+                                _gameUiState.value = GameUiState.Playing(
+                                    puzzle = puzzle,
+                                    location = Location(-1, -1),
+                                    markList = Mark.getDefaultList(),
+                                    dialog = GameUiState.Playing.Dialog.None,
+                                    isCorrect = false
+                                )
+                            }
+                        }
+                    } else {
+                        puzzle = puzzleRepository.getPuzzle()
+                        noteList = noteRepository.getNoteList()
+
                         noteListState.value = noteList
                         _gameUiState.value = GameUiState.Playing(
                             puzzle = puzzle,
@@ -226,18 +244,6 @@ class GameViewModel @Inject constructor(
                         )
                     }
                 }
-            } else {
-                puzzle = puzzleRepository.getPuzzle()
-                noteList = noteRepository.getNoteList()
-
-                noteListState.value = noteList
-                _gameUiState.value = GameUiState.Playing(
-                    puzzle = puzzle,
-                    location = Location(-1, -1),
-                    markList = Mark.getDefaultList(),
-                    dialog = GameUiState.Playing.Dialog.None,
-                    isCorrect = false
-                )
             }
             task?.cancel()
         }

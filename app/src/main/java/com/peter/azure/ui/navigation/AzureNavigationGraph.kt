@@ -65,7 +65,7 @@ fun AzureNavigationGraph(
                     val level = viewModel.getGameLevel()
                     level?.let {
                         navHostController.navigate(
-                            AzureDestination.Main.HOME.getNavGameRoute(false, it)
+                            AzureDestination.Main.HOME.getNavGameRoute(it)
                         ) {
                             popUpTo(AzureDestination.Main.HOME.route) {
                                 saveState = true
@@ -78,7 +78,7 @@ fun AzureNavigationGraph(
                 navigateToContinueGame = {
                     if (viewModel.uiState.value is HomeUiState.Success) {
                         navHostController.navigate(
-                            AzureDestination.Main.HOME.getNavGameRoute(true)
+                            AzureDestination.Main.HOME.getNavGameRoute()
                         ) {
                             popUpTo(AzureDestination.Main.HOME.route) {
                                 saveState = true
