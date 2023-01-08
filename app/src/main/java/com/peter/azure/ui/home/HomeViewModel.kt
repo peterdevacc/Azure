@@ -48,15 +48,10 @@ class HomeViewModel @Inject constructor(
             gameExistedFlow.collect { prefResult ->
                 when (prefResult) {
                     is DataResult.Success -> {
-                        if (homeUiState.value is HomeUiState.Success) {
-                            homeUiState.value = (homeUiState.value as HomeUiState.Success)
-                                .copy(gameExisted = prefResult.result)
-                        } else {
-                            homeUiState.value = HomeUiState.Success(
-                                gameExisted = prefResult.result,
-                                dialAngle = 0.0
-                            )
-                        }
+                        homeUiState.value = HomeUiState.Success(
+                            gameExisted = prefResult.result,
+                            dialAngle = 0.0
+                        )
                     }
                     is DataResult.Error -> {
                         homeUiState.value = HomeUiState.Error(prefResult.code)
