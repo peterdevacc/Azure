@@ -68,7 +68,8 @@ class GameViewModel @Inject constructor(
                 val updatedBoard = uiState.puzzle.board.map {
                     it.toMutableList()
                 }
-                updatedBoard[uiState.location.y][uiState.location.x] = Cell(num, Cell.Type.BLANK)
+                updatedBoard[uiState.location.y][uiState.location.x] =
+                    Cell(num, Cell.Type.BLANK)
                 val updatePuzzle = Puzzle(board = updatedBoard)
                 viewModelScope.launch {
                     puzzleRepository.updatePuzzle(updatePuzzle)
@@ -138,24 +139,6 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    fun closeDialog() {
-        val uiState = _gameUiState.value
-        if (uiState is GameUiState.Playing) {
-            _gameUiState.value = uiState.copy(
-                dialog = GameUiState.Playing.Dialog.None
-            )
-        }
-    }
-
-    fun requestDelete() {
-        val uiState = _gameUiState.value
-        if (uiState is GameUiState.Playing) {
-            _gameUiState.value = uiState.copy(
-                dialog = GameUiState.Playing.Dialog.Delete
-            )
-        }
-    }
-
     fun deleteGame() {
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
@@ -175,6 +158,24 @@ class GameViewModel @Inject constructor(
             }
             task = scheduleLimit(job)
             job.start()
+        }
+    }
+
+    fun requestDelete() {
+        val uiState = _gameUiState.value
+        if (uiState is GameUiState.Playing) {
+            _gameUiState.value = uiState.copy(
+                dialog = GameUiState.Playing.Dialog.Delete
+            )
+        }
+    }
+
+    fun closeDialog() {
+        val uiState = _gameUiState.value
+        if (uiState is GameUiState.Playing) {
+            _gameUiState.value = uiState.copy(
+                dialog = GameUiState.Playing.Dialog.None
+            )
         }
     }
 
@@ -198,6 +199,7 @@ class GameViewModel @Inject constructor(
                 is DataResult.Success -> {
                     val puzzle: Puzzle
                     val noteList: List<Note>
+                    var prefFailed: Boolean? = null
                     if (!gameExistedResult.result) {
                         val gameLevel: String = checkNotNull(
                             savedStateHandle[GAME_LEVEL_SAVED_KEY]
@@ -222,27 +224,20 @@ class GameViewModel @Inject constructor(
 
                         noteRepository.insertNoteList(noteList)
                         puzzleRepository.insertPuzzle(puzzle)
-                        when (preferencesRepository.setGameExistedState(true)) {
+                        prefFailed = when (preferencesRepository.setGameExistedState(true)) {
                             is DataResult.Error -> {
-                                _gameUiState.value = GameUiState.Error(
-                                    DataResult.Error.Code.UNKNOWN
-                                )
+                                true
                             }
                             is DataResult.Success -> {
-                                noteListState.addAll(noteList)
-                                _gameUiState.value = GameUiState.Playing(
-                                    puzzle = puzzle,
-                                    location = Location.getDefault(),
-                                    markList = Mark.getDefaultList(),
-                                    dialog = GameUiState.Playing.Dialog.None,
-                                    isCorrect = false
-                                )
+                                false
                             }
                         }
                     } else {
                         puzzle = puzzleRepository.getPuzzle()
                         noteList = noteRepository.getNoteList()
+                    }
 
+                    if (prefFailed == null || !prefFailed) {
                         noteListState.addAll(noteList)
                         _gameUiState.value = GameUiState.Playing(
                             puzzle = puzzle,
@@ -250,6 +245,10 @@ class GameViewModel @Inject constructor(
                             markList = Mark.getDefaultList(),
                             dialog = GameUiState.Playing.Dialog.None,
                             isCorrect = false
+                        )
+                    } else {
+                        _gameUiState.value = GameUiState.Error(
+                            DataResult.Error.Code.UNKNOWN
                         )
                     }
                 }
