@@ -3,6 +3,7 @@ package com.peter.azure.ui.help
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -87,46 +88,42 @@ private fun HelpList(
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-        helpMap.forEach { (catalog, helpList) ->
-            item {
-                val colorPair = getHelpItemColorPair(catalog)
-                Column(
-                    modifier = Modifier
-                        .clip(MaterialTheme.shapes.medium)
-                        .background(colorPair.first)
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = catalog.name,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = colorPair.second.copy(alpha = 0.7f),
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
-                    helpList.forEach { help ->
-                        Column(
-                            modifier = Modifier
-                                .padding(top = 4.dp, bottom = 4.dp)
-                                .fillMaxWidth()
-                        ) {
-                            Text(
-                                text = help.title,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = colorPair.second,
-                                modifier = Modifier.padding(top = 2.dp, bottom = 4.dp)
-                            )
-                            Text(
-                                text = help.text,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = colorPair.second,
-                                modifier = Modifier.padding(vertical = 2.dp)
-                            )
-                        }
+        items(helpMap.toList()) { (catalog, helpList) ->
+            val colorPair = getHelpItemColorPair(catalog)
+            Column(
+                modifier = Modifier
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(colorPair.first)
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = catalog.name,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = colorPair.second.copy(alpha = 0.7f),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                helpList.forEach { help ->
+                    Column(
+                        modifier = Modifier
+                            .padding(top = 4.dp, bottom = 4.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = help.title,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = colorPair.second,
+                            modifier = Modifier.padding(top = 2.dp, bottom = 4.dp)
+                        )
+                        Text(
+                            text = help.text,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = colorPair.second,
+                            modifier = Modifier.padding(vertical = 2.dp)
+                        )
                     }
                 }
             }
-            item {
-                Spacer(modifier = Modifier.padding(vertical = 8.dp))
-            }
+            Spacer(modifier = Modifier.padding(vertical = 8.dp))
         }
     }
 }

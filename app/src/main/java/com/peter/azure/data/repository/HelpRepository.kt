@@ -17,7 +17,7 @@ class HelpRepository @Inject constructor(
     private val assetManager: AssetManager,
 ) {
 
-    private val helpMap = mutableMapOf<Help.Catalog, List<Help>>()
+    private var helpMap = emptyMap<Help.Catalog, List<Help>>()
 
     suspend fun getHelpMap(): DataResult<Map<Help.Catalog, List<Help>>> =
         withContext(Dispatchers.IO) {
@@ -26,9 +26,7 @@ class HelpRepository @Inject constructor(
                     val jsonFileInputStream = assetManager.open(HELP_FILE_NAME)
                     val jsonString = jsonFileInputStream.bufferedReader().readText()
                     val helpList = Json.decodeFromString<List<Help>>(jsonString)
-                    helpMap.putAll(
-                        helpList.groupBy { it.catalog }
-                    )
+                    helpMap = helpList.groupBy { it.catalog }
                     jsonFileInputStream.close()
                 } catch (exception: Exception) {
                     val code = if (exception is IOException) {
