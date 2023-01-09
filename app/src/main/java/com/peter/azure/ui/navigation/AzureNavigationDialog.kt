@@ -92,7 +92,7 @@ fun AzureNavigationDialog(
                             Text(
                                 text = stringResource(destination.descriptionId),
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface
+                                color = MaterialTheme.colorScheme.onSurface,
                             )
                         }
                     }
