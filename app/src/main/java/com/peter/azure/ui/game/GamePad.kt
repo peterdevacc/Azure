@@ -20,7 +20,7 @@ import com.peter.azure.data.entity.Mark
 import com.peter.azure.ui.theme.AzureTheme
 
 @Composable
-fun GameInput(
+fun GamePad(
     blank: () -> Unit,
     mark: (Mark) -> Unit,
     write: (Int) -> Unit,
@@ -149,18 +149,18 @@ private fun ActionIcon(
 }
 
 @Preview(
-    name = "GameInput",
+    name = "Game Pad",
     showBackground = true
 )
 //@Preview(
-//    name = "GameInput", showBackground = true,
+//    name = "Game Pad", showBackground = true,
 //    uiMode = Configuration.UI_MODE_NIGHT_YES
 //)
 @Composable
-fun AboutScreenPreview() {
+fun GamePadPreview() {
     AzureTheme {
         Box(modifier = Modifier.padding(16.dp)) {
-            GameInput({}, {}, {})
+            GamePad({}, {}, {})
         }
     }
 }

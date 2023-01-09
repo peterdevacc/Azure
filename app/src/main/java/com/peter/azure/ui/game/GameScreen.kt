@@ -183,7 +183,7 @@ private fun GamePlayingContent(
             Box(
                 modifier = Modifier.weight(3f)
             ) {
-                GameInput(
+                GamePad(
                     blank = blankLocation,
                     mark = makeNote,
                     write = writeNum,
