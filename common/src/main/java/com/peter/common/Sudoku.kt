@@ -2,6 +2,12 @@ package com.peter.common
 
 class Sudoku {
 
+    private val gameConfigList = listOf(
+        0 to listOf(4, 5),
+        1 to listOf(5, 6),
+        2 to listOf(6, 7),
+    )
+
     fun createSudoku(gameLevel: Int): List<List<Int>> {
         val boardList = mutableListOf<MutableList<MutableList<Int>>>()
         for (n in 1..8) {
@@ -12,16 +18,12 @@ class Sudoku {
         }
         val board = boardList.random()
 
-        val blankNumList = when (gameLevel) {
-            0 -> listOf(4, 5)
-            1 -> listOf(5, 6)
-            else -> listOf(6, 7)
-        }
+        val gameConfig = gameConfigList[gameLevel]
         for (i in 0..8) {
             val front = mutableListOf(0, 1, 2)
             val middle = mutableListOf(3, 4, 5)
             val end = mutableListOf(6, 7, 8)
-            val blankNum = blankNumList.random()
+            val blankNum = gameConfig.second.random()
             for (j in 0 until blankNum) {
                 val index: Int
                 when (j) {
@@ -48,10 +50,54 @@ class Sudoku {
         return board
     }
 
-    fun verifySudokuAnswer(
-        answer: List<List<Int>>
-    ): Boolean {
+    fun verifySudokuAnswer(answer: List<List<Int>>): Boolean {
         return verify(answer)
+    }
+
+    private fun createNumBoard(): MutableList<MutableList<Int>> {
+        val board = mutableListOf<MutableList<Int>>()
+        for (i in 0..8) {
+            board.add(
+                mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+            )
+        }
+
+        var numList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9).shuffled()
+        var j = 0
+        for (i in 0..8) {
+            when (i) {
+                0, 1, 2 -> {
+                    board[i][0] = numList[j]
+                    board[i][1] = numList[j + 1]
+                    board[i][2] = numList[j + 2]
+                    j += 3
+                    if (i == 2) {
+                        j = 0
+                        numList = numList.shuffled()
+                    }
+                }
+                3, 4, 5 -> {
+                    board[i][3] = numList[j]
+                    board[i][4] = numList[j + 1]
+                    board[i][5] = numList[j + 2]
+                    j += 3
+                    if (i == 5) {
+                        j = 0
+                        numList = numList.shuffled()
+                    }
+                }
+                else -> {
+                    board[i][6] = numList[j]
+                    board[i][7] = numList[j + 1]
+                    board[i][8] = numList[j + 2]
+                    j += 3
+                }
+            }
+        }
+
+        fillRemainCell(board)
+
+        return board
     }
 
     private fun verify(answer: List<List<Int>>): Boolean {
@@ -111,52 +157,6 @@ class Sudoku {
         }
 
         return result
-    }
-
-    private fun createNumBoard(): MutableList<MutableList<Int>> {
-        val board = mutableListOf<MutableList<Int>>()
-        for (i in 0..8) {
-            board.add(
-                mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
-            )
-        }
-
-        var numList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9).shuffled()
-        var j = 0
-        for (i in 0..8) {
-            when (i) {
-                0, 1, 2 -> {
-                    board[i][0] = numList[j]
-                    board[i][1] = numList[j + 1]
-                    board[i][2] = numList[j + 2]
-                    j += 3
-                    if (i == 2) {
-                        j = 0
-                        numList = numList.shuffled()
-                    }
-                }
-                3, 4, 5 -> {
-                    board[i][3] = numList[j]
-                    board[i][4] = numList[j + 1]
-                    board[i][5] = numList[j + 2]
-                    j += 3
-                    if (i == 5) {
-                        j = 0
-                        numList = numList.shuffled()
-                    }
-                }
-                else -> {
-                    board[i][6] = numList[j]
-                    board[i][7] = numList[j + 1]
-                    board[i][8] = numList[j + 2]
-                    j += 3
-                }
-            }
-        }
-
-        fillRemainCell(board)
-
-        return board
     }
 
     private fun fillRemainCell(
