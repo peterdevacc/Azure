@@ -13,49 +13,29 @@ class Sudoku {
         val board = boardList.random()
 
         val blankNumList = when (gameLevel) {
-            0 -> listOf(3, 4, 5)
-            1 -> listOf(4, 5, 6)
-            else -> listOf(5, 6, 7)
+            0 -> listOf(4, 5)
+            1 -> listOf(5, 6)
+            else -> listOf(6, 7)
         }
-        val randomIndexList = listOf(0, 1, 1, 2, 2)
         for (i in 0..8) {
             val front = mutableListOf(0, 1, 2)
             val middle = mutableListOf(3, 4, 5)
             val end = mutableListOf(6, 7, 8)
             val blankNum = blankNumList.random()
-            val remain = blankNum % 3
-            val randomIndex = blankNum - remain
             for (j in 0 until blankNum) {
                 val index: Int
-                val section = if (remain != 0 && j > randomIndex) {
-                    randomIndexList.random()
-                } else {
-                    j
-                }
-                when (section) {
+                when (j) {
                     0, 3, 6 -> {
-                        if (front.isNotEmpty()) {
-                            index = front.random()
-                            front.remove(index)
-                        } else {
-                            index = 0
-                        }
+                        index = front.random()
+                        front.remove(index)
                     }
                     1, 4, 7 -> {
-                        if (middle.isNotEmpty()) {
-                            index = middle.random()
-                            middle.remove(index)
-                        } else {
-                            index = 0
-                        }
+                        index = middle.random()
+                        middle.remove(index)
                     }
                     2, 5, 8 -> {
-                        if (end.isNotEmpty()) {
-                            index = end.random()
-                            end.remove(index)
-                        } else {
-                            index = 0
-                        }
+                        index = end.random()
+                        end.remove(index)
                     }
                     else -> {
                         index = 0
