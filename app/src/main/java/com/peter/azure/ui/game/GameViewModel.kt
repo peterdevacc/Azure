@@ -2,6 +2,7 @@ package com.peter.azure.ui.game
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -32,7 +33,7 @@ class GameViewModel @Inject constructor(
     private val _gameUiState: MutableState<GameUiState> = mutableStateOf(GameUiState.Loading)
     val gameUiState: State<GameUiState> = _gameUiState
 
-    private val noteListState = mutableStateOf(emptyList<Note>())
+    private val noteListState = mutableStateListOf<Note>()
     private val numState = mutableStateOf(0)
 
     private var task: TimerTask? = null
@@ -42,11 +43,11 @@ class GameViewModel @Inject constructor(
         if (uiState is GameUiState.Playing) {
             if (uiState.location == location) {
                 _gameUiState.value = uiState.copy(
-                    location = Location(-1, -1)
+                    location = Location.getDefault()
                 )
             } else {
                 var markList = Mark.getDefaultList()
-                val note = noteListState.value.find { it.location == location }
+                val note = noteListState.find { it.location == location }
                 if (note != null) {
                     markList = note.markList
                 }
@@ -86,27 +87,33 @@ class GameViewModel @Inject constructor(
     fun makeNote(mark: Mark) {
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
-            if (uiState.location.isNotDefault()) {
-                viewModelScope.launch {
-                    val currentNote = noteListState.value.find {
-                        it.location == uiState.location
+            if (uiState.location.isNotDefault() && numState.value != 0) {
+                val currentNote = noteListState.find {
+                    it.location == uiState.location
+                }
+                if (currentNote != null) {
+                    val currentNoteIndex = noteListState.indexOf(currentNote)
+                    val markList = currentNote.markList.toMutableList()
+                    markList[numState.value - 1] = mark
+                    val note = Note(currentNote.location, markList)
+                    noteListState[currentNoteIndex] = note
+
+                    val updatedBoard = uiState.puzzle.board.map {
+                        it.toMutableList()
                     }
-                    if (currentNote != null) {
-                        val currentNoteIndex = noteListState.value.indexOf(currentNote)
-                        val markList = currentNote.markList.toMutableList()
-                        if (numState.value != 0) {
-                            markList[numState.value - 1] = mark
-                            val note = Note(currentNote.location, markList)
-                            noteRepository.updateNote(note)
-                            val noteList = noteListState.value.toMutableList()
-                            noteList[currentNoteIndex] = note
-                            noteListState.value = noteList
-                            _gameUiState.value = uiState.copy(
-                                markList = markList
-                            )
-                            writeNum(0)
-                        }
+                    updatedBoard[currentNote.location.y][currentNote.location.x] =
+                        Cell(0, Cell.Type.BLANK)
+                    val updatePuzzle = Puzzle(board = updatedBoard)
+
+                    viewModelScope.launch {
+                        noteRepository.updateNote(note)
+                        puzzleRepository.updatePuzzle(updatePuzzle)
                     }
+
+                    _gameUiState.value = uiState.copy(
+                        puzzle = updatePuzzle,
+                        markList = markList
+                    )
                 }
             }
         }
@@ -222,10 +229,10 @@ class GameViewModel @Inject constructor(
                                 )
                             }
                             is DataResult.Success -> {
-                                noteListState.value = noteList
+                                noteListState.addAll(noteList)
                                 _gameUiState.value = GameUiState.Playing(
                                     puzzle = puzzle,
-                                    location = Location(-1, -1),
+                                    location = Location.getDefault(),
                                     markList = Mark.getDefaultList(),
                                     dialog = GameUiState.Playing.Dialog.None,
                                     isCorrect = false
@@ -236,10 +243,10 @@ class GameViewModel @Inject constructor(
                         puzzle = puzzleRepository.getPuzzle()
                         noteList = noteRepository.getNoteList()
 
-                        noteListState.value = noteList
+                        noteListState.addAll(noteList)
                         _gameUiState.value = GameUiState.Playing(
                             puzzle = puzzle,
-                            location = Location(-1, -1),
+                            location = Location.getDefault(),
                             markList = Mark.getDefaultList(),
                             dialog = GameUiState.Playing.Dialog.None,
                             isCorrect = false

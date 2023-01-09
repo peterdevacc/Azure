@@ -177,7 +177,7 @@ private fun GamePlayingContent(
             Box(
                 modifier = Modifier.weight(2f)
             ) {
-                GameNote(uiState.markList)
+                GameMarkBlock(uiState.markList)
             }
             Spacer(modifier = Modifier.padding(horizontal = 6.dp))
             Box(

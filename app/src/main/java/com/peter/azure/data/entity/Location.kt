@@ -8,4 +8,10 @@ data class Location(
     fun isNotDefault(): Boolean {
         return y != -1 && x != -1
     }
+
+    companion object {
+        fun getDefault(): Location {
+            return Location(-1, -1)
+        }
+    }
 }

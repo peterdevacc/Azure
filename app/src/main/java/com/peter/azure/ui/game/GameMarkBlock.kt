@@ -18,7 +18,7 @@ import com.peter.azure.R
 import com.peter.azure.data.entity.Mark
 
 @Composable
-fun GameNote(
+fun GameMarkBlock(
     markList: List<Mark>,
 ) {
     Column(
@@ -51,7 +51,7 @@ fun GameNote(
                         )
                         when (mark) {
                             Mark.Potential -> {
-                                NoteIcon(
+                                MarkIcon(
                                     R.drawable.ic_star_24,
                                     R.string.icon_cd_mark_potential,
                                     Modifier.constrainAs(icon) {
@@ -61,7 +61,7 @@ fun GameNote(
                                 )
                             }
                             Mark.WRONG -> {
-                                NoteIcon(
+                                MarkIcon(
                                     R.drawable.ic_cross_24,
                                     R.string.icon_cd_mark_wrong,
                                     Modifier.constrainAs(icon) {
@@ -105,15 +105,15 @@ fun GameNote(
 }
 
 @Composable
-private fun NoteIcon(
+private fun MarkIcon(
     @DrawableRes
-    noteIconId: Int,
-    noteIconContentDescriptionId: Int,
+    markIconId: Int,
+    markIconContentDescriptionId: Int,
     modifier: Modifier
 ) {
     Icon(
-        painter = painterResource(noteIconId),
-        contentDescription = stringResource(noteIconContentDescriptionId),
+        painter = painterResource(markIconId),
+        contentDescription = stringResource(markIconContentDescriptionId),
         tint = MaterialTheme.colorScheme.onTertiaryContainer,
         modifier = modifier.then(
             Modifier
