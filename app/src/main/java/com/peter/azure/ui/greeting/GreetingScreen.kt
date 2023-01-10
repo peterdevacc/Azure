@@ -1,7 +1,6 @@
 package com.peter.azure.ui.greeting
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.*
@@ -9,10 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -46,6 +44,7 @@ fun GreetingScreen(
     )
 }
 
+@OptIn(ExperimentalTextApi::class)
 @Composable
 fun GreetingContent(
     loadInfo: (Info.Type) -> Unit,
@@ -97,37 +96,23 @@ fun GreetingContent(
         Spacer(modifier = Modifier.weight(2f))
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
         ) {
-            Column(
-                modifier = Modifier
-                    .clip(MaterialTheme.shapes.large)
-                    .background(
-                        Brush.sweepGradient(
-                            listOf(
-                                MaterialTheme.colorScheme.primary,
-                                MaterialTheme.colorScheme.secondary,
-                                MaterialTheme.colorScheme.tertiary,
-                            )
+            Text(
+                text = stringResource(R.string.screen_about_slogan),
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    brush = Brush.linearGradient(
+                        listOf(
+                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.secondary,
+                            MaterialTheme.colorScheme.tertiary,
                         )
                     )
-                    .padding(16.dp)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.azure_logo_x),
-                    contentDescription = stringResource(R.string.icon_cd_azure_logo),
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .size(128.dp)
-                        .align(Alignment.CenterHorizontally),
-                )
-                Text(
-                    text = stringResource(R.string.screen_about_slogan),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    textAlign = TextAlign.Center,
-                )
-            }
+                ),
+                textAlign = TextAlign.Center,
+            )
         }
         Spacer(modifier = Modifier.weight(1.5f))
         ClickableText(

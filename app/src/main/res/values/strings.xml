@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">AzureNum</string>
     <string name="app_version_title">version</string>
-    <string name="app_version">1.0.0</string>
+    <string name="app_version">1.0</string>
     <string name="app_last_update_title">last update</string>
-    <string name="app_last_update">Jan 2 2023</string>
+    <string name="app_last_update">Jan 10 2023</string>
     <string name="app_website">https://github.com/peterdevacc/AzureNum</string>
     <string name="app_motto">Build and improve \nyour own judgement.</string>
 
