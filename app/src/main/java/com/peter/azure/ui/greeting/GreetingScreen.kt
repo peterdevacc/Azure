@@ -85,7 +85,10 @@ fun GreetingContent(
         is GreetingUiState.Default -> Unit
     }
 
-    val underlineStyle = SpanStyle(
+    val defaultTextSpanStyle = SpanStyle(
+        color = MaterialTheme.colorScheme.onBackground
+    )
+    val linkTextSpanStyle = SpanStyle(
         color = MaterialTheme.colorScheme.primary.copy(0.7f),
         textDecoration = TextDecoration.Underline
     )
@@ -135,84 +138,53 @@ fun GreetingContent(
                 }
             },
             text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                ) {
+                withStyle(defaultTextSpanStyle) {
                     append("Please read our ")
                 }
-                withStyle(
-                    style = underlineStyle
-                ) {
+                withStyle(linkTextSpanStyle) {
                     append("service terms")
                 }
-                withStyle(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                ) {
+                withStyle(defaultTextSpanStyle) {
                     append(", ")
                 }
-                withStyle(
-                    style = underlineStyle
-                ) {
+                withStyle(linkTextSpanStyle) {
                     append("privacy policy")
                 }
-                withStyle(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                ) {
+                withStyle(defaultTextSpanStyle) {
                     append(" and ")
                 }
-                withStyle(
-                    style = underlineStyle
-                ) {
+                withStyle(linkTextSpanStyle) {
                     append("acknowledgements")
                 }
-                withStyle(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                ) {
+                withStyle(defaultTextSpanStyle) {
                     append(".")
                 }
             },
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(vertical = 8.dp)
         )
-        Button(
-            onClick = agreeContracts,
-            shape = MaterialTheme.shapes.medium,
+        DecisionButton(
+            onclick = agreeContracts,
+            textId = R.string.screen_greeting_accept,
+            textColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.primary,
+            fontSize = 20.sp,
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .fillMaxWidth()
-                .height(54.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.screen_greeting_accept),
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = 20.sp
-            )
-        }
-        Button(
-            onClick = exitApp,
-            shape = MaterialTheme.shapes.medium,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.error
-            ),
+                .height(54.dp)
+        )
+        DecisionButton(
+            onclick = exitApp,
+            textId = R.string.screen_greeting_reject,
+            textColor = MaterialTheme.colorScheme.onError,
+            containerColor = MaterialTheme.colorScheme.error,
+            fontSize = 20.sp,
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .fillMaxWidth()
-                .height(54.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.screen_greeting_reject),
-                color = MaterialTheme.colorScheme.onError,
-                fontSize = 20.sp
-            )
-        }
+                .height(54.dp)
+        )
     }
 }
 
