@@ -62,7 +62,7 @@
     <string name="screen_greeting_accept">ACCEPT AND CONTINUE</string>
     <string name="screen_greeting_reject">REJECT AND EXIT</string>
 
-    <string name="service_title">terms of service</string>
+    <string name="service_title">service terms</string>
     <string name="privacy_title">privacy policy</string>
     <string name="acknowledgement_title">acknowledgements</string>
 
