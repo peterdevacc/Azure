@@ -97,9 +97,7 @@ fun GreetingContent(
         Spacer(modifier = Modifier.weight(2f))
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = stringResource(R.string.screen_about_slogan),
@@ -120,13 +118,13 @@ fun GreetingContent(
         ClickableText(
             onClick = { index ->
                 when (index) {
-                    in 17..32 -> {
+                    in 17..29 -> {
                         loadInfo(Info.Type.SERVICE)
                     }
-                    in 35..48 -> {
+                    in 32..45 -> {
                         loadInfo(Info.Type.PRIVACY)
                     }
-                    in 54..69 -> {
+                    in 51..66 -> {
                         loadInfo(Info.Type.ACKNOWLEDGEMENTS)
                     }
                 }
@@ -142,7 +140,7 @@ fun GreetingContent(
                 withStyle(
                     style = underlineStyle
                 ) {
-                    append("terms of service")
+                    append("service terms")
                 }
                 withStyle(
                     style = SpanStyle(
@@ -177,13 +175,13 @@ fun GreetingContent(
                 }
             },
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(vertical = 8.dp)
         )
         Button(
             onClick = agreeContracts,
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(vertical = 8.dp)
                 .fillMaxWidth()
                 .height(54.dp),
         ) {
@@ -200,7 +198,7 @@ fun GreetingContent(
                 containerColor = MaterialTheme.colorScheme.error
             ),
             modifier = Modifier
-                .padding(8.dp)
+                .padding(vertical = 8.dp)
                 .fillMaxWidth()
                 .height(54.dp),
         ) {
