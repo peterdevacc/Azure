@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.SpanStyle
@@ -26,6 +27,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.R
 import com.peter.azure.data.entity.Info
 import com.peter.azure.ui.theme.AzureTheme
@@ -39,12 +42,15 @@ fun GreetingScreen(
     navigateToHome: () -> Unit,
     exitApp: () -> Unit
 ) {
+    val isPortrait = LocalConfiguration.current.orientation ==
+            Configuration.ORIENTATION_PORTRAIT
 
     GreetingContent(
         loadInfo = viewModel::loadInfo,
         greetingUiState = viewModel.uiState.value,
         dismissDialog = viewModel::dismissDialog,
         agreeContracts = viewModel::agreeContracts,
+        isPortrait = isPortrait,
         navigateToHome = navigateToHome,
         exitApp = exitApp
     )
@@ -57,10 +63,10 @@ fun GreetingContent(
     greetingUiState: GreetingUiState,
     dismissDialog: () -> Unit,
     agreeContracts: () -> Unit,
+    isPortrait: Boolean,
     navigateToHome: () -> Unit,
     exitApp: () -> Unit
 ) {
-
     when (greetingUiState) {
         is GreetingUiState.ContractsAgreed -> {
             LaunchedEffect(Unit) {
@@ -76,6 +82,7 @@ fun GreetingContent(
         is GreetingUiState.ContractDialogLoaded -> {
             ContractDialog(
                 info = greetingUiState.info,
+                isPortrait = isPortrait,
                 onDismiss = dismissDialog
             )
         }
@@ -102,10 +109,11 @@ fun GreetingContent(
             color = MaterialTheme.colorScheme.onBackground,
             fontStyle = FontStyle.Italic
         )
-        Spacer(modifier = Modifier.weight(2f))
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
         ) {
             Text(
                 text = stringResource(R.string.screen_about_slogan),
@@ -122,7 +130,6 @@ fun GreetingContent(
                 textAlign = TextAlign.Center,
             )
         }
-        Spacer(modifier = Modifier.weight(1.5f))
         ClickableText(
             onClick = { index ->
                 when (index) {
@@ -161,30 +168,86 @@ fun GreetingContent(
                 }
             },
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(bottom = 16.dp)
         )
-        DecisionButton(
-            onclick = agreeContracts,
-            textId = R.string.screen_greeting_accept,
-            textColor = MaterialTheme.colorScheme.onPrimary,
-            containerColor = MaterialTheme.colorScheme.primary,
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .fillMaxWidth()
-                .height(54.dp)
-        )
-        DecisionButton(
-            onclick = exitApp,
-            textId = R.string.screen_greeting_reject,
-            textColor = MaterialTheme.colorScheme.onError,
-            containerColor = MaterialTheme.colorScheme.error,
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .fillMaxWidth()
-                .height(54.dp)
-        )
+        ConstraintLayout(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            val (acceptButton, rejectButton, centerSpacer) = createRefs()
+            val acceptButtonModifier: Modifier
+            val rejectButtonModifier: Modifier
+            val centerSpacerModifier: Modifier
+            if (isPortrait) {
+                acceptButtonModifier = Modifier.constrainAs(acceptButton) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(centerSpacer.top)
+                    width = Dimension.fillToConstraints
+                }
+                rejectButtonModifier = Modifier.constrainAs(rejectButton) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(centerSpacer.bottom)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                }
+                centerSpacerModifier = Modifier
+                    .constrainAs(centerSpacer) {
+                        centerVerticallyTo(parent)
+                    }
+                    .padding(vertical = 8.dp)
+            } else {
+                acceptButtonModifier = Modifier.constrainAs(acceptButton) {
+                    start.linkTo(centerSpacer.end)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                }
+                rejectButtonModifier = Modifier.constrainAs(rejectButton) {
+                    start.linkTo(parent.start)
+                    end.linkTo(centerSpacer.start)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                }
+                centerSpacerModifier = Modifier
+                    .constrainAs(centerSpacer) {
+                        centerHorizontallyTo(parent)
+                    }
+                    .padding(horizontal = 8.dp)
+            }
+            Button(
+                onClick = agreeContracts,
+                shape = MaterialTheme.shapes.medium,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                modifier = acceptButtonModifier.height(54.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.screen_greeting_accept),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = 20.sp
+                )
+            }
+            Spacer(modifier = centerSpacerModifier)
+            Button(
+                onClick = exitApp,
+                shape = MaterialTheme.shapes.medium,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                ),
+                modifier = rejectButtonModifier.height(54.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.screen_greeting_reject),
+                    color = MaterialTheme.colorScheme.onError,
+                    fontSize = 20.sp
+                )
+            }
+        }
     }
 }
 
@@ -198,7 +261,9 @@ fun GreetingContent(
 )
 @Composable
 fun AboutScreenPreview() {
+    val isPortrait = LocalConfiguration.current.orientation ==
+            Configuration.ORIENTATION_PORTRAIT
     AzureTheme {
-        GreetingContent({}, GreetingUiState.Default, {}, {}, {}, {})
+        GreetingContent({}, GreetingUiState.Default, {}, {}, isPortrait, {}, {})
     }
 }
