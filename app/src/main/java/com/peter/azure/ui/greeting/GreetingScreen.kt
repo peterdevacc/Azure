@@ -14,6 +14,7 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
@@ -103,7 +104,8 @@ fun GreetingContent(
             Text(
                 text = stringResource(R.string.screen_about_slogan),
                 style = MaterialTheme.typography.headlineLarge.copy(
-                    brush = Brush.linearGradient(
+                    fontWeight = FontWeight.Bold,
+                    brush = Brush.horizontalGradient(
                         listOf(
                             MaterialTheme.colorScheme.primary,
                             MaterialTheme.colorScheme.secondary,
