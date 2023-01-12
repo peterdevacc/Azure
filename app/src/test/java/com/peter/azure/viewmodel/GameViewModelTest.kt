@@ -149,7 +149,7 @@ class GameViewModelTest {
             clearAllMocks()
 
             // has not selected location
-            viewModel.makeNote(Mark.Potential)
+            viewModel.makeMark(Mark.Potential)
             coVerify(exactly = 0) {
                 noteRepository.updateNote(note)
                 puzzleRepository.updatePuzzle(puzzle)
@@ -166,7 +166,7 @@ class GameViewModelTest {
             delay(magicNum)
             clearAllMocks()
 
-            viewModel.makeNote(Mark.Potential)
+            viewModel.makeMark(Mark.Potential)
             delay(magicNum)
             coVerify(exactly = 1) {
                 noteRepository.updateNote(updatedNote)
