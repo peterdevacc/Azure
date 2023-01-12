@@ -195,10 +195,10 @@ fun GreetingContent(
                     width = Dimension.fillToConstraints
                 }
                 centerSpacerModifier = Modifier
+                    .padding(vertical = 8.dp)
                     .constrainAs(centerSpacer) {
                         centerVerticallyTo(parent)
                     }
-                    .padding(vertical = 8.dp)
             } else {
                 acceptButtonModifier = Modifier.constrainAs(acceptButton) {
                     start.linkTo(centerSpacer.end)
@@ -215,10 +215,10 @@ fun GreetingContent(
                     width = Dimension.fillToConstraints
                 }
                 centerSpacerModifier = Modifier
+                    .padding(horizontal = 8.dp)
                     .constrainAs(centerSpacer) {
                         centerHorizontallyTo(parent)
                     }
-                    .padding(horizontal = 8.dp)
             }
 
             Button(

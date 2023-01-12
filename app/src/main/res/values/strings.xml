@@ -90,6 +90,8 @@
     <string name="icon_cd_navigation_menu">Navigation menu</string>
     <string name="icon_cd_navigate_up">Navigate up</string>
     <string name="icon_cd_navigate_to">Navigate to %1$s</string>
+    <string name="icon_cd_add_level">Add level %1$s to the list</string>
+    <string name="icon_cd_remove_level">Remove level %1$s from the list</string>
     <string name="icon_cd_delete_game">Delete game</string>
     <string name="icon_cd_submit_answer">Submit answer</string>
     <string name="icon_cd_clean">clean</string>

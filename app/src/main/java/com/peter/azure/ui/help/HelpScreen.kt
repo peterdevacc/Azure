@@ -123,7 +123,6 @@ fun HelpContent(
                 }
             }
         }
-
     }
 }
 
@@ -196,7 +195,9 @@ private fun LazyListScope.getHelpItems(
                     text = help.text,
                     style = MaterialTheme.typography.bodyLarge,
                     color = colorPair.second,
-                    modifier = Modifier.padding(vertical = 2.dp)
+                    modifier = Modifier
+                        .padding(vertical = 2.dp)
+                        .fillMaxWidth()
                 )
             }
         }

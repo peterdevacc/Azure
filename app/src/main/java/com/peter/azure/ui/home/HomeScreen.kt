@@ -62,14 +62,6 @@ fun HomeContent(
 ) {
 
     when (uiState) {
-        is HomeUiState.Error -> {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                ErrorNotice(uiState.code)
-            }
-        }
         is HomeUiState.Success -> {
             ConstraintLayout(
                 modifier = Modifier.azureScreen()
@@ -173,14 +165,18 @@ fun HomeContent(
                 }
             }
         }
-        is HomeUiState.Loading -> {
+        else -> {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize()
             ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp, 24.dp)
-                )
+                if (uiState is HomeUiState.Error) {
+                    ErrorNotice(uiState.code)
+                } else {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                }
             }
         }
     }

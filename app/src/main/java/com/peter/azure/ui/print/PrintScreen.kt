@@ -110,7 +110,7 @@ fun PrintContent(
                 height = Dimension.fillToConstraints
             }
             levelListModifier = Modifier
-                .padding(top = 8.dp)
+                .padding(top = 16.dp)
                 .constrainAs(levelList) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
@@ -124,7 +124,7 @@ fun PrintContent(
                 width = Dimension.fillToConstraints
             }
             shareButtonModifier = Modifier
-                .padding(end = 4.dp, top = 8.dp)
+                .padding(end = 4.dp, top = 16.dp)
                 .height(36.dp)
                 .constrainAs(shareButton) {
                     start.linkTo(parent.start)
@@ -133,7 +133,7 @@ fun PrintContent(
                     width = Dimension.fillToConstraints
                 }
             generateButtonModifier = Modifier
-                .padding(start = 4.dp, top = 8.dp)
+                .padding(start = 4.dp, top = 16.dp)
                 .height(36.dp)
                 .constrainAs(generateButton) {
                     start.linkTo(centerHorizontalGuideline)
@@ -272,30 +272,13 @@ fun PrintContent(
                         .height(40.dp)
                 ) {
                     items(gameLevelList) { level ->
-                        OutlinedButton(
+                        LevelListItem(
                             onClick = { removeGameLevel(level) },
-                            shape = MaterialTheme.shapes.medium,
-                            colors = ButtonDefaults.outlinedButtonColors(
-                                contentColor = MaterialTheme.colorScheme.primary
-                            ),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                            border = BorderStroke(
-                                1.dp, MaterialTheme.colorScheme.primaryContainer
-                            ),
+                            text = level.name,
                             modifier = Modifier
                                 .padding(end = 8.dp)
                                 .height(28.dp)
-                        ) {
-                            Text(
-                                text = level.name,
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                            Icon(
-                                painter = painterResource(R.drawable.ic_clear_24),
-                                contentDescription = "",
-                                modifier = Modifier.size(16.dp)
-                            )
-                        }
+                        )
                     }
                 }
                 Divider(
@@ -321,34 +304,20 @@ fun PrintContent(
 
         Column(modifier = levelButtonListModifier) {
             if (isPortrait) {
-                Row(
+                LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .padding(top = 8.dp)
                         .fillMaxWidth()
                 ) {
-                    GameLevel.values().forEach { level ->
-                        OutlinedButton(
+                    items(GameLevel.values()) { level ->
+                        LevelButton(
+                            text = level.name,
                             onClick = { addGameLevel(level) },
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                            shape = MaterialTheme.shapes.medium,
-                            border = BorderStroke(
-                                1.dp, MaterialTheme.colorScheme.primaryContainer
-                            ),
                             modifier = Modifier
                                 .padding(end = 8.dp)
                                 .height(28.dp)
-                        ) {
-                            Text(
-                                text = level.name,
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                            Icon(
-                                painter = painterResource(R.drawable.ic_add_24),
-                                contentDescription = "",
-                                modifier = Modifier.size(16.dp)
-                            )
-                        }
+                        )
                     }
                 }
             } else {
@@ -357,28 +326,14 @@ fun PrintContent(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     items(GameLevel.values()) { level ->
-                        OutlinedButton(
+                        LevelButton(
+                            text = level.name,
                             onClick = { addGameLevel(level) },
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                            shape = MaterialTheme.shapes.medium,
-                            border = BorderStroke(
-                                1.dp, MaterialTheme.colorScheme.primaryContainer
-                            ),
                             modifier = Modifier
                                 .padding(bottom = 8.dp)
                                 .fillMaxWidth()
                                 .height(28.dp)
-                        ) {
-                            Text(
-                                text = level.name,
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                            Icon(
-                                painter = painterResource(R.drawable.ic_add_24),
-                                contentDescription = "",
-                                modifier = Modifier.size(16.dp)
-                            )
-                        }
+                        )
                     }
                 }
             }
@@ -418,98 +373,60 @@ fun PrintContent(
         ) {
             Text(stringResource(R.string.screen_print_generate_pdf))
         }
-
-//        Box(modifier = shareButtonModifier) {
-//            if (isPortrait) {
-//                Row(
-//                    modifier = Modifier
-//                        .padding(top = 8.dp)
-//                        .fillMaxWidth()
-//                ) {
-//                    Button(
-//                        onClick = {
-//                            if (pdfUiState is PdfUiState.Loaded) {
-//                                val file = pdfUiState.sudokuPdf.file
-//                                val shareIntent = Intent(Intent.ACTION_SEND)
-//                                shareIntent.putExtra(Intent.EXTRA_STREAM, file)
-//                                shareIntent.putExtra(
-//                                    Intent.EXTRA_STREAM,
-//                                    FileProvider.getUriForFile(
-//                                        context,
-//                                        "com.peter.azure.file_provider",
-//                                        file
-//                                    )
-//                                )
-//                                shareIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-//                                shareIntent.type = "application/pdf"
-//                                startActivity(context, shareIntent, null)
-//                            } else {
-//                                notShareable()
-//                            }
-//                        },
-//                        shape = MaterialTheme.shapes.medium,
-//                        modifier = Modifier.weight(1f).height(36.dp)
-//                    ) {
-//                        Text(stringResource(R.string.screen_print_share_pdf))
-//                    }
-//                    Spacer(modifier = Modifier.padding(horizontal = 4.dp))
-//                    Button(
-//                        onClick = generatePdf,
-//                        shape = MaterialTheme.shapes.medium,
-//                        modifier = Modifier.weight(1f).height(36.dp)
-//                    ) {
-//                        Text(stringResource(R.string.screen_print_generate_pdf))
-//                    }
-//                }
-//            } else {
-//                Column(
-//                    modifier = Modifier
-//                        .padding(top = 4.dp)
-//                        .fillMaxWidth()
-//                ) {
-//                    Button(
-//                        onClick = generatePdf,
-//                        shape = MaterialTheme.shapes.medium,
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .height(36.dp)
-//                    ) {
-//                        Text(stringResource(R.string.screen_print_generate_pdf))
-//                    }
-//                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
-//                    Button(
-//                        onClick = {
-//                            if (pdfUiState is PdfUiState.Loaded) {
-//                                val file = pdfUiState.sudokuPdf.file
-//                                val shareIntent = Intent(Intent.ACTION_SEND)
-//                                shareIntent.putExtra(Intent.EXTRA_STREAM, file)
-//                                shareIntent.putExtra(
-//                                    Intent.EXTRA_STREAM,
-//                                    FileProvider.getUriForFile(
-//                                        context,
-//                                        "com.peter.azure.file_provider",
-//                                        file
-//                                    )
-//                                )
-//                                shareIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-//                                shareIntent.type = "application/pdf"
-//                                startActivity(context, shareIntent, null)
-//                            } else {
-//                                notShareable()
-//                            }
-//                        },
-//                        shape = MaterialTheme.shapes.medium,
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .height(36.dp)
-//                    ) {
-//                        Text(stringResource(R.string.screen_print_share_pdf))
-//                    }
-//                }
-//            }
-//        }
     }
+}
 
+@Composable
+private fun LevelListItem(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier
+) {
+    OutlinedButton(
+        onClick = onClick,
+        shape = MaterialTheme.shapes.medium,
+        colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = MaterialTheme.colorScheme.primary
+        ),
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer),
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall
+        )
+        Icon(
+            painter = painterResource(R.drawable.ic_clear_24),
+            contentDescription = stringResource(R.string.icon_cd_remove_level, text),
+            modifier = Modifier.size(16.dp)
+        )
+    }
+}
+
+@Composable
+private fun LevelButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier
+) {
+    OutlinedButton(
+        onClick = onClick,
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+        shape = MaterialTheme.shapes.medium,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer),
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall
+        )
+        Icon(
+            painter = painterResource(R.drawable.ic_add_24),
+            contentDescription = stringResource(R.string.icon_cd_add_level, text),
+            modifier = Modifier.size(16.dp)
+        )
+    }
 }
 
 //@Preview(name = "Print Screen", showBackground = true)
