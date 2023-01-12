@@ -5,9 +5,12 @@
 
 package com.peter.azure.ui.help
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -20,7 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.data.entity.Help
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.ui.navigation.AzureTopBar
@@ -32,105 +38,171 @@ fun HelpScreen(
     viewModel: HelpViewModel,
     navigateToMainScreens: (String) -> Unit
 ) {
-    val navDialog = remember { mutableStateOf(false) }
+    val navDialogState = remember { mutableStateOf(false) }
+    val isPortrait = LocalConfiguration.current.orientation ==
+            Configuration.ORIENTATION_PORTRAIT
 
     HelpContent(
-        navDialogState = navDialog,
-        navigateToMainScreens = navigateToMainScreens,
-        uiState = viewModel.uiState.value
+        uiState = viewModel.uiState.value,
+        isPortrait = isPortrait,
+        navDialogState = navDialogState,
+        navigateToMainScreens = navigateToMainScreens
     )
 }
 
 @Composable
 fun HelpContent(
     uiState: HelpUiState,
+    isPortrait: Boolean,
     navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit
 ) {
-
-    Column(
+    ConstraintLayout(
         modifier = Modifier.azureScreen()
     ) {
-        AzureTopBar(
-            navDialogState = navDialogState,
-            destination = AzureDestination.Main.HELP,
-            navigateToMainScreens = navigateToMainScreens
-        )
+        val (topBar, helpContainer) = createRefs()
+        val topBarModifier: Modifier
+        val helpContainerModifier: Modifier
+
+        if (isPortrait) {
+            topBarModifier = Modifier.constrainAs(topBar) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+                width = Dimension.fillToConstraints
+            }
+            helpContainerModifier = Modifier.constrainAs(helpContainer) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                top.linkTo(topBar.bottom)
+                bottom.linkTo(parent.bottom)
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+            }
+        } else {
+            topBarModifier = Modifier.constrainAs(topBar) {
+                start.linkTo(parent.start)
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                height = Dimension.fillToConstraints
+            }
+            helpContainerModifier = Modifier.constrainAs(helpContainer) {
+                start.linkTo(topBar.end)
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+            }
+        }
+
+        Box(topBarModifier) {
+            AzureTopBar(
+                isPortrait = isPortrait,
+                navDialogState = navDialogState,
+                destination = AzureDestination.Main.HELP,
+                navigateToMainScreens = navigateToMainScreens
+            )
+        }
+
         Box(
-            modifier = Modifier.weight(1f)
+            contentAlignment = Alignment.Center,
+            modifier = helpContainerModifier
         ) {
             when (uiState) {
                 is HelpUiState.Error -> {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        ErrorNotice(uiState.code)
-                    }
+                    ErrorNotice(uiState.code)
                 }
                 is HelpUiState.Success -> {
-                    HelpList(uiState.helpMap)
+                    HelpList(isPortrait, uiState.helpMap)
                 }
                 is HelpUiState.Loading -> {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp, 24.dp)
-                        )
-                    }
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
                 }
             }
         }
+
     }
 }
 
 @Composable
 private fun HelpList(
+    isPortrait: Boolean,
     helpMap: Map<Help.Catalog, List<Help>>
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(helpMap.toList()) { (catalog, helpList) ->
-            val colorPair = getHelpItemColorPair(catalog)
-            Column(
-                modifier = Modifier
-                    .clip(MaterialTheme.shapes.medium)
-                    .background(colorPair.first)
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = catalog.name,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = colorPair.second.copy(alpha = 0.7f),
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                helpList.forEach { help ->
-                    Column(
-                        modifier = Modifier
-                            .padding(top = 4.dp, bottom = 4.dp)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = help.title,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = colorPair.second,
-                            modifier = Modifier.padding(top = 2.dp, bottom = 4.dp)
-                        )
-                        Text(
-                            text = help.text,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = colorPair.second,
-                            modifier = Modifier.padding(vertical = 2.dp)
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+    if (isPortrait) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            getHelpItems(true, helpMap)
+        }
+    } else {
+        LazyRow(
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .fillMaxSize()
+        ) {
+            getHelpItems(false, helpMap)
         }
     }
+}
+
+private fun LazyListScope.getHelpItems(
+    isPortrait: Boolean,
+    helpMap: Map<Help.Catalog, List<Help>>
+) = items(helpMap.toList()) { (catalog, helpList) ->
+    val colorPair = getHelpItemColorPair(catalog)
+    val itemModifier: Modifier
+    val spacerModifier: Modifier
+
+    if (isPortrait) {
+        itemModifier = Modifier
+            .clip(MaterialTheme.shapes.medium)
+            .background(colorPair.first)
+            .padding(16.dp)
+        spacerModifier = Modifier.padding(vertical = 8.dp)
+    } else {
+        itemModifier = Modifier
+            .clip(MaterialTheme.shapes.medium)
+            .background(colorPair.first)
+            .padding(16.dp)
+            .width(320.dp)
+            .fillMaxHeight()
+        spacerModifier = Modifier.padding(horizontal = 8.dp)
+    }
+
+    Column(modifier = itemModifier) {
+        Text(
+            text = catalog.name,
+            style = MaterialTheme.typography.titleLarge,
+            color = colorPair.second.copy(alpha = 0.7f),
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        helpList.forEach { help ->
+            Column(
+                modifier = Modifier
+                    .padding(top = 4.dp, bottom = 4.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = help.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = colorPair.second,
+                    modifier = Modifier.padding(top = 2.dp, bottom = 4.dp)
+                )
+                Text(
+                    text = help.text,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = colorPair.second,
+                    modifier = Modifier.padding(vertical = 2.dp)
+                )
+            }
+        }
+    }
+
+    Spacer(modifier = spacerModifier)
 }
 
 @Composable

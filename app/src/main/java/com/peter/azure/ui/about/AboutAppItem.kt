@@ -18,12 +18,11 @@ import androidx.compose.ui.unit.sp
 import com.peter.azure.ui.theme.AzureTheme
 
 @Composable
-fun AboutAppItem(heading: String, text: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-    ) {
+fun AboutAppItem(
+    heading: String, text: String,
+    modifier: Modifier
+) {
+    Column(modifier = modifier) {
         Text(
             text = heading,
             style = MaterialTheme.typography.titleMedium,
@@ -43,6 +42,12 @@ fun AboutAppItem(heading: String, text: String) {
 @Composable
 fun AboutAppItemPreview() {
     AzureTheme {
-        AboutAppItem("app name", "AzureSudoku")
+        AboutAppItem(
+            "app name",
+            "AzureSudoku",
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        )
     }
 }

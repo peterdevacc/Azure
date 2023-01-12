@@ -174,9 +174,11 @@ fun GreetingContent(
             modifier = Modifier.fillMaxWidth()
         ) {
             val (acceptButton, rejectButton, centerSpacer) = createRefs()
+
             val acceptButtonModifier: Modifier
             val rejectButtonModifier: Modifier
             val centerSpacerModifier: Modifier
+
             if (isPortrait) {
                 acceptButtonModifier = Modifier.constrainAs(acceptButton) {
                     start.linkTo(parent.start)
@@ -218,6 +220,7 @@ fun GreetingContent(
                     }
                     .padding(horizontal = 8.dp)
             }
+
             Button(
                 onClick = agreeContracts,
                 shape = MaterialTheme.shapes.medium,

@@ -19,13 +19,12 @@ import com.peter.azure.data.entity.Info
 @Composable
 fun AboutInfoItem(
     heading: Pair<String, Info.Type>,
-    navigateToInfo: (Info.Type) -> Unit
+    navigateToInfo: (Info.Type) -> Unit,
+    modifier: Modifier
 ) {
     OutlinedCard(
         onClick = { navigateToInfo(heading.second) },
-        modifier = Modifier
-            .padding(vertical = 6.dp)
-            .fillMaxWidth()
+        modifier = modifier
     ) {
         Row(
             modifier = Modifier.padding(vertical = 16.dp)

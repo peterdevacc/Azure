@@ -79,6 +79,7 @@ class GameViewModel @Inject constructor(
                 viewModelScope.launch {
                     puzzleRepository.updatePuzzle(updatePuzzle)
                 }
+
                 _gameUiState.value = uiState.copy(
                     puzzle = updatePuzzle
                 )
@@ -90,17 +91,18 @@ class GameViewModel @Inject constructor(
         writeNum(0)
     }
 
-    fun makeNote(mark: Mark) {
+    fun makeMark(mark: Mark) {
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
-            if (uiState.location.isNotDefault() && numState.value != 0) {
+            val currentNum = numState.value
+            if (uiState.location.isNotDefault() && currentNum != 0) {
                 val currentNote = noteListState.find {
                     it.location == uiState.location
                 }
                 if (currentNote != null) {
                     val currentNoteIndex = noteListState.indexOf(currentNote)
                     val markList = currentNote.markList.toMutableList()
-                    markList[numState.value - 1] = mark
+                    markList[currentNum - 1] = mark
                     val note = Note(currentNote.location, markList)
                     noteListState[currentNoteIndex] = note
 
@@ -120,6 +122,8 @@ class GameViewModel @Inject constructor(
                         puzzle = updatePuzzle,
                         markList = markList
                     )
+
+                    numState.value = 0
                 }
             }
         }
