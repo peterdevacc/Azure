@@ -27,22 +27,19 @@ fun AboutInfoItem(
         modifier = modifier
     ) {
         Row(
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             Text(
                 text = heading.first,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(start = 16.dp)
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 painter = painterResource(R.drawable.ic_arrow_forward_24),
                 contentDescription = stringResource(R.string.icon_cd_navigate_to, heading),
                 tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .padding(end = 16.dp)
-                    .size(24.dp)
+                modifier = Modifier.size(24.dp)
             )
         }
     }

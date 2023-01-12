@@ -179,31 +179,56 @@ private fun LazyListScope.getHelpItems(
             color = colorPair.second.copy(alpha = 0.7f),
             modifier = Modifier.padding(bottom = 8.dp)
         )
-        helpList.forEach { help ->
-            Column(
-                modifier = Modifier
-                    .padding(top = 4.dp, bottom = 4.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = help.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = colorPair.second,
-                    modifier = Modifier.padding(top = 2.dp, bottom = 4.dp)
-                )
-                Text(
-                    text = help.text,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = colorPair.second,
+        if (isPortrait) {
+            helpList.forEach { help ->
+                HelpItem(
+                    help = help,
+                    colorPair = colorPair,
                     modifier = Modifier
-                        .padding(vertical = 2.dp)
+                        .padding(top = 4.dp, bottom = 4.dp)
                         .fillMaxWidth()
                 )
+            }
+        } else {
+            LazyColumn {
+                items(helpList) { help ->
+                    HelpItem(
+                        help = help,
+                        colorPair = colorPair,
+                        modifier = Modifier
+                            .padding(top = 4.dp, bottom = 4.dp)
+                            .fillMaxWidth()
+                    )
+                }
             }
         }
     }
 
     Spacer(modifier = spacerModifier)
+}
+
+@Composable
+private fun HelpItem(
+    help: Help,
+    colorPair: Pair<Color, Color>,
+    modifier: Modifier
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = help.title,
+            style = MaterialTheme.typography.titleMedium,
+            color = colorPair.second,
+            modifier = Modifier.padding(top = 2.dp, bottom = 4.dp)
+        )
+        Text(
+            text = help.text,
+            style = MaterialTheme.typography.bodyLarge,
+            color = colorPair.second,
+            modifier = Modifier
+                .padding(vertical = 2.dp)
+                .fillMaxWidth()
+        )
+    }
 }
 
 @Composable

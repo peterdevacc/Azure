@@ -264,7 +264,7 @@ private fun GamePlayingContent(
                 height = Dimension.fillToConstraints
             }
             markBlockModifier = Modifier
-                .padding(top = 8.dp)
+                .padding(top = 16.dp)
                 .constrainAs(markBlock) {
                     start.linkTo(parent.start)
                     end.linkTo(portraitGuideline.first)
@@ -274,7 +274,7 @@ private fun GamePlayingContent(
                     height = Dimension.fillToConstraints
                 }
             numPadModifier = Modifier
-                .padding(top = 8.dp, start = 12.dp)
+                .padding(top = 16.dp, start = 16.dp)
                 .constrainAs(numPad) {
                     start.linkTo(portraitGuideline.first)
                     end.linkTo(parent.end)
@@ -295,23 +295,23 @@ private fun GamePlayingContent(
                     height = Dimension.fillToConstraints
                 }
             markBlockModifier = Modifier.constrainAs(markBlock) {
-                    start.linkTo(landscapeGuideline.first)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(landscapeGuideline.second)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                }
-            numPadModifier = Modifier
-                .padding(top = 16.dp)
-                .constrainAs(numPad) {
                 start.linkTo(landscapeGuideline.first)
                 end.linkTo(parent.end)
-                top.linkTo(landscapeGuideline.second)
-                bottom.linkTo(parent.bottom)
+                top.linkTo(parent.top)
+                bottom.linkTo(landscapeGuideline.second)
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
             }
+            numPadModifier = Modifier
+                .padding(top = 16.dp)
+                .constrainAs(numPad) {
+                    start.linkTo(landscapeGuideline.first)
+                    end.linkTo(parent.end)
+                    top.linkTo(landscapeGuideline.second)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
         }
 
         Box(modifier = boardModifier) {
