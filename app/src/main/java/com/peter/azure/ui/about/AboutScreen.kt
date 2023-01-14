@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,16 +34,17 @@ import com.peter.azure.ui.util.azureScreen
 
 @Composable
 fun AboutScreen(
+    navigateToContract: (Info.Type) -> Unit,
+    isPortrait: Boolean,
+    isCompact: Boolean,
     navigateToMainScreens: (String) -> Unit,
-    navigateToContract: (Info.Type) -> Unit
 ) {
     val navDialogState = remember { mutableStateOf(false) }
-    val isPortrait = LocalConfiguration.current.orientation ==
-            Configuration.ORIENTATION_PORTRAIT
 
     AboutContent(
         navigateToContract = navigateToContract,
         isPortrait = isPortrait,
+        isCompact = isCompact,
         navDialogState = navDialogState,
         navigateToMainScreens = navigateToMainScreens
     )
@@ -54,6 +54,7 @@ fun AboutScreen(
 fun AboutContent(
     navigateToContract: (Info.Type) -> Unit,
     isPortrait: Boolean,
+    isCompact: Boolean,
     navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit,
 ) {
@@ -95,7 +96,9 @@ fun AboutContent(
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
                 }
-            appItemSectionModifier = Modifier.constrainAs(appItemSection) {
+            appItemSectionModifier = Modifier
+                .padding(top = 12.dp)
+                .constrainAs(appItemSection) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
                 top.linkTo(motto.bottom)
@@ -168,9 +171,8 @@ fun AboutContent(
             )
         }
 
-        if (isPortrait) {
+        if (isPortrait && isCompact) {
             Column(modifier = appItemSectionModifier) {
-                Spacer(modifier = Modifier.padding(top = 12.dp))
                 val appItemModifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
@@ -254,6 +256,6 @@ fun AboutContent(
 fun AboutScreenPreview() {
     val navDialogState = remember { mutableStateOf(false) }
     AzureTheme {
-        AboutContent({}, true, navDialogState, {})
+        AboutContent({}, true, true, navDialogState, {})
     }
 }

@@ -5,7 +5,6 @@
 
 package com.peter.azure.ui.home
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -31,13 +30,13 @@ import com.peter.azure.ui.util.azureScreen
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    navigateToMainScreens: (String) -> Unit,
     navigateToNewGame: () -> Unit,
-    navigateToContinueGame: () -> Unit
+    navigateToContinueGame: () -> Unit,
+    isCompact: Boolean,
+    isPortrait: Boolean,
+    navigateToMainScreens: (String) -> Unit,
 ) {
     val navDialogState = remember { mutableStateOf(false) }
-    val isPortrait = LocalConfiguration.current.orientation ==
-            Configuration.ORIENTATION_PORTRAIT
 
     HomeContent(
         uiState = viewModel.uiState.value,
@@ -45,6 +44,7 @@ fun HomeScreen(
         navigateToNewGame = navigateToNewGame,
         navigateToContinueGame = navigateToContinueGame,
         isPortrait = isPortrait,
+        isCompact = isCompact,
         navDialogState = navDialogState,
         navigateToMainScreens = navigateToMainScreens,
     )
@@ -57,6 +57,7 @@ fun HomeContent(
     navigateToNewGame: () -> Unit,
     navigateToContinueGame: () -> Unit,
     isPortrait: Boolean,
+    isCompact: Boolean,
     navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit,
 ) {
@@ -69,11 +70,16 @@ fun HomeContent(
                 val (topBar, setting, button) = createRefs()
                 val screenWidthDp = LocalConfiguration.current.screenWidthDp.toFloat()
                 val screenHeightDp = LocalConfiguration.current.screenHeightDp.toFloat()
+                val minSide = minOf(screenWidthDp, screenHeightDp)
 
                 val topBarModifier: Modifier
                 val settingModifier: Modifier
                 val buttonModifier: Modifier
-                val dialSize: Int
+                val dialSize = if (isCompact) {
+                    (minSide * 0.78f).toInt()
+                } else {
+                    (minSide * 0.57f).toInt()
+                }
 
                 if (isPortrait) {
                     topBarModifier = Modifier.constrainAs(topBar) {
@@ -82,9 +88,10 @@ fun HomeContent(
                         top.linkTo(parent.top)
                         width = Dimension.fillToConstraints
                     }
-                    settingModifier = Modifier.constrainAs(setting) {
+                    settingModifier = Modifier
+                        .constrainAs(setting) {
                         top.linkTo(topBar.bottom)
-                        bottom.linkTo(button.bottom)
+                        bottom.linkTo(button.top)
                         centerHorizontallyTo(parent)
                         width = Dimension.fillToConstraints
                         height = Dimension.fillToConstraints
@@ -96,7 +103,6 @@ fun HomeContent(
                             centerHorizontallyTo(parent)
                             bottom.linkTo(parent.bottom)
                         }
-                    dialSize = (screenHeightDp / screenWidthDp * 192 * 0.76f).toInt()
                 } else {
                     topBarModifier = Modifier.constrainAs(topBar) {
                         start.linkTo(parent.start)
@@ -116,7 +122,6 @@ fun HomeContent(
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
                         }
-                    dialSize = (screenWidthDp / screenHeightDp * 192 * 0.68f).toInt()
                 }
 
                 Box(modifier = topBarModifier) {

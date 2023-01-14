@@ -5,7 +5,6 @@
 
 package com.peter.azure.ui.help
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -36,11 +34,10 @@ import com.peter.azure.ui.util.azureScreen
 @Composable
 fun HelpScreen(
     viewModel: HelpViewModel,
+    isPortrait: Boolean,
     navigateToMainScreens: (String) -> Unit
 ) {
     val navDialogState = remember { mutableStateOf(false) }
-    val isPortrait = LocalConfiguration.current.orientation ==
-            Configuration.ORIENTATION_PORTRAIT
 
     HelpContent(
         uiState = viewModel.uiState.value,

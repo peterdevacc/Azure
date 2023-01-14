@@ -5,7 +5,6 @@
 
 package com.peter.azure.ui.game
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -15,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -33,11 +31,10 @@ import com.peter.azure.ui.util.azureScreen
 @Composable
 fun GameScreen(
     viewModel: GameViewModel,
+    isPortrait: Boolean,
+    isCompact: Boolean,
     navigateUp: () -> Unit
 ) {
-    val isPortrait = LocalConfiguration.current.orientation ==
-            Configuration.ORIENTATION_PORTRAIT
-
     GameContent(
         uiState = viewModel.gameUiState.value,
         selectLocation = viewModel::selectLocation,
@@ -49,6 +46,7 @@ fun GameScreen(
         deleteGame = viewModel::deleteGame,
         closePlayingDialog = viewModel::closeDialog,
         isPortrait = isPortrait,
+        isCompact = isCompact,
         navigateUp = navigateUp
     )
 }
@@ -65,6 +63,7 @@ fun GameContent(
     requestDelete: () -> Unit,
     closePlayingDialog: () -> Unit,
     isPortrait: Boolean,
+    isCompact: Boolean,
     navigateUp: () -> Unit
 ) {
     ConstraintLayout(
@@ -173,7 +172,8 @@ fun GameContent(
                         blankLocation = blankLocation,
                         deleteGame = deleteGame,
                         closePlayingDialog = closePlayingDialog,
-                        isPortrait = isPortrait
+                        isPortrait = isPortrait,
+                        isCompact = isCompact
                     )
                 }
                 is GameUiState.Error -> {
@@ -204,6 +204,7 @@ private fun GamePlayingContent(
     deleteGame: () -> Unit,
     closePlayingDialog: () -> Unit,
     isPortrait: Boolean,
+    isCompact: Boolean
 ) {
 
     ConstraintLayout(
@@ -318,12 +319,16 @@ private fun GamePlayingContent(
             GameBoard(
                 puzzle = uiState.puzzle,
                 selectedLocation = uiState.location,
-                selectLocation = selectLocation
+                selectLocation = selectLocation,
+                isCompact = isCompact
             )
         }
 
         Box(modifier = markBlockModifier) {
-            GameMarkBlock(uiState.markList)
+            GameMarkBlock(
+                markList = uiState.markList,
+                isCompact = isCompact
+            )
         }
 
         Box(modifier = numPadModifier) {
@@ -331,6 +336,7 @@ private fun GamePlayingContent(
                 blank = blankLocation,
                 mark = makeNote,
                 write = writeNum,
+                isCompact = isCompact
             )
         }
 

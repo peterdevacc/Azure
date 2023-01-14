@@ -40,19 +40,19 @@ import com.peter.azure.ui.util.azureScreen
 fun GreetingScreen(
     viewModel: GreetingViewModel,
     navigateToHome: () -> Unit,
-    exitApp: () -> Unit
+    exitApp: () -> Unit,
+    isPortrait: Boolean,
+    isCompact: Boolean,
 ) {
-    val isPortrait = LocalConfiguration.current.orientation ==
-            Configuration.ORIENTATION_PORTRAIT
-
     GreetingContent(
         loadInfo = viewModel::loadInfo,
         greetingUiState = viewModel.uiState.value,
         dismissDialog = viewModel::dismissDialog,
         agreeContracts = viewModel::agreeContracts,
         isPortrait = isPortrait,
+        isCompact = isCompact,
         navigateToHome = navigateToHome,
-        exitApp = exitApp
+        exitApp = exitApp,
     )
 }
 
@@ -64,8 +64,9 @@ fun GreetingContent(
     dismissDialog: () -> Unit,
     agreeContracts: () -> Unit,
     isPortrait: Boolean,
+    isCompact: Boolean,
     navigateToHome: () -> Unit,
-    exitApp: () -> Unit
+    exitApp: () -> Unit,
 ) {
     when (greetingUiState) {
         is GreetingUiState.ContractsAgreed -> {
@@ -179,7 +180,7 @@ fun GreetingContent(
             val rejectButtonModifier: Modifier
             val centerSpacerModifier: Modifier
 
-            if (isPortrait) {
+            if (isPortrait && isCompact) {
                 acceptButtonModifier = Modifier.constrainAs(acceptButton) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
@@ -200,20 +201,24 @@ fun GreetingContent(
                         centerVerticallyTo(parent)
                     }
             } else {
-                acceptButtonModifier = Modifier.constrainAs(acceptButton) {
-                    start.linkTo(centerSpacer.end)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    width = Dimension.fillToConstraints
-                }
-                rejectButtonModifier = Modifier.constrainAs(rejectButton) {
-                    start.linkTo(parent.start)
-                    end.linkTo(centerSpacer.start)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    width = Dimension.fillToConstraints
-                }
+                acceptButtonModifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .constrainAs(acceptButton) {
+                        start.linkTo(centerSpacer.end)
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+                    }
+                rejectButtonModifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .constrainAs(rejectButton) {
+                        start.linkTo(parent.start)
+                        end.linkTo(centerSpacer.start)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+                    }
                 centerSpacerModifier = Modifier
                     .padding(horizontal = 8.dp)
                     .constrainAs(centerSpacer) {
@@ -267,6 +272,9 @@ fun AboutScreenPreview() {
     val isPortrait = LocalConfiguration.current.orientation ==
             Configuration.ORIENTATION_PORTRAIT
     AzureTheme {
-        GreetingContent({}, GreetingUiState.Default, {}, {}, isPortrait, {}, {})
+        GreetingContent(
+            {}, GreetingUiState.Default, {}, {},
+            isPortrait, true, {}, {}
+        )
     }
 }

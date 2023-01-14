@@ -5,15 +5,16 @@
 
 package com.peter.azure.ui.contract
 
-import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -26,11 +27,9 @@ import com.peter.azure.ui.util.azureScreen
 @Composable
 fun ContractScreen(
     viewModel: ContractViewModel,
+    isPortrait: Boolean,
     navigateUp: () -> Unit
 ) {
-    val isPortrait = LocalConfiguration.current.orientation ==
-            Configuration.ORIENTATION_PORTRAIT
-
     ContractContent(
         uiState = viewModel.uiState.value,
         isPortrait = isPortrait,

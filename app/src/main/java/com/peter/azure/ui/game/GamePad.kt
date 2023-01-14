@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.peter.azure.R
@@ -29,7 +30,21 @@ fun GamePad(
     blank: () -> Unit,
     mark: (Mark) -> Unit,
     write: (Int) -> Unit,
+    isCompact: Boolean
 ) {
+    val textStyle: TextStyle
+    val iconSize: Int
+
+    if (isCompact) {
+        textStyle = MaterialTheme.typography.bodyMedium
+            .copy(color = MaterialTheme.colorScheme.onSecondaryContainer)
+        iconSize = 20
+    } else {
+        textStyle = MaterialTheme.typography.bodyLarge
+            .copy(color = MaterialTheme.colorScheme.onSecondaryContainer)
+        iconSize = 24
+    }
+
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -42,6 +57,7 @@ fun GamePad(
             ActionIcon(
                 iconId = R.drawable.ic_clear_24,
                 iconCd = stringResource(R.string.icon_cd_clean),
+                iconSize = iconSize,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
@@ -54,6 +70,7 @@ fun GamePad(
             ActionIcon(
                 iconId = R.drawable.ic_star_24,
                 iconCd = stringResource(R.string.icon_cd_mark_potential),
+                iconSize = iconSize,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
@@ -66,6 +83,7 @@ fun GamePad(
             ActionIcon(
                 iconId = R.drawable.ic_cross_24,
                 iconCd = stringResource(R.string.icon_cd_mark_wrong),
+                iconSize = iconSize,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
@@ -78,6 +96,7 @@ fun GamePad(
             ActionIcon(
                 iconId = R.drawable.ic_mark_none_24,
                 iconCd = stringResource(R.string.icon_cd_mark_none),
+                iconSize = iconSize,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
@@ -109,7 +128,7 @@ fun GamePad(
                             ) {
                                 Text(
                                     text = "$num",
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    style = textStyle
                                 )
                             }
                         }
@@ -138,6 +157,7 @@ fun GamePad(
 private fun ActionIcon(
     iconId: Int,
     iconCd: String,
+    iconSize: Int,
     modifier: Modifier,
 ) {
     Box(
@@ -148,7 +168,7 @@ private fun ActionIcon(
             painter = painterResource(iconId),
             contentDescription = iconCd,
             tint = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(iconSize.dp)
         )
     }
 }
@@ -165,7 +185,7 @@ private fun ActionIcon(
 fun GamePadPreview() {
     AzureTheme {
         Box(modifier = Modifier.padding(16.dp)) {
-            GamePad({}, {}, {})
+            GamePad({}, {}, {}, true)
         }
     }
 }

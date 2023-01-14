@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.peter.azure.R
@@ -25,7 +26,21 @@ import com.peter.azure.data.entity.Mark
 @Composable
 fun GameMarkBlock(
     markList: List<Mark>,
+    isCompact: Boolean
 ) {
+    val textStyle: TextStyle
+    val iconArgs: Pair<Int, Int>
+
+    if (isCompact) {
+        textStyle = MaterialTheme.typography.bodyMedium
+            .copy(color = MaterialTheme.colorScheme.onTertiaryContainer)
+        iconArgs = 16 to 1
+    } else {
+        textStyle = MaterialTheme.typography.bodyLarge
+            .copy(color = MaterialTheme.colorScheme.onTertiaryContainer)
+        iconArgs = 20 to 2
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,7 +63,7 @@ fun GameMarkBlock(
                         val (text, icon) = createRefs()
                         Text(
                             text = "$num",
-                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                            style = textStyle,
                             modifier = Modifier.constrainAs(text) {
                                 centerVerticallyTo(parent)
                                 centerHorizontallyTo(parent)
@@ -59,7 +74,12 @@ fun GameMarkBlock(
                                 MarkIcon(
                                     R.drawable.ic_star_24,
                                     R.string.icon_cd_mark_potential,
-                                    Modifier.constrainAs(icon) {
+                                    Modifier
+                                        .padding(
+                                            end = iconArgs.second.dp, bottom = iconArgs.second.dp
+                                        )
+                                        .size(iconArgs.first.dp)
+                                        .constrainAs(icon) {
                                         end.linkTo(parent.end)
                                         bottom.linkTo(parent.bottom)
                                     }
@@ -69,7 +89,12 @@ fun GameMarkBlock(
                                 MarkIcon(
                                     R.drawable.ic_cross_24,
                                     R.string.icon_cd_mark_wrong,
-                                    Modifier.constrainAs(icon) {
+                                    Modifier
+                                        .padding(
+                                            end = iconArgs.second.dp, bottom = iconArgs.second.dp
+                                        )
+                                        .size(iconArgs.first.dp)
+                                        .constrainAs(icon) {
                                         end.linkTo(parent.end)
                                         bottom.linkTo(parent.bottom)
                                     }
@@ -120,11 +145,7 @@ private fun MarkIcon(
         painter = painterResource(markIconId),
         contentDescription = stringResource(markIconContentDescriptionId),
         tint = MaterialTheme.colorScheme.onTertiaryContainer,
-        modifier = modifier.then(
-            Modifier
-                .padding(end = 1.dp, bottom = 1.dp)
-                .size(16.dp)
-        )
+        modifier = modifier
     )
 }
 

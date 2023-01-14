@@ -26,7 +26,8 @@ import com.peter.azure.data.entity.Puzzle
 fun GameBoard(
     puzzle: Puzzle,
     selectedLocation: Location,
-    selectLocation: (Location, Int) -> Unit
+    selectLocation: (Location, Int) -> Unit,
+    isCompact: Boolean
 ) {
     Column(
         modifier = Modifier
@@ -42,6 +43,7 @@ fun GameBoard(
                         location = Location(i, j),
                         selectedLocation = selectedLocation,
                         select = selectLocation,
+                        isCompact = isCompact,
                         modifier = Modifier.weight(1f)
                     )
                     if (j != 8) {
@@ -70,6 +72,7 @@ private fun GameCell(
     location: Location,
     selectedLocation: Location,
     select: (Location, Int) -> Unit,
+    isCompact: Boolean,
     modifier: Modifier
 ) {
     val boxModifier = if (cell.type == Cell.Type.BLANK) {
@@ -88,6 +91,7 @@ private fun GameCell(
             .then(modifier)
             .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f))
     }
+
     val textColor = if (cell.type == Cell.Type.BLANK) {
         if (location == selectedLocation) {
             MaterialTheme.colorScheme.onSurfaceVariant
@@ -97,18 +101,26 @@ private fun GameCell(
     } else {
         MaterialTheme.colorScheme.onPrimaryContainer
     }
+
     val numString = if (cell.num != 0) {
         "${cell.num}"
     } else {
         ""
     }
+
+    val textStyle = if (isCompact) {
+        MaterialTheme.typography.bodyMedium.copy(color = textColor)
+    } else {
+        MaterialTheme.typography.bodyLarge.copy(color = textColor)
+    }
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = boxModifier.fillMaxSize()
     ) {
         Text(
             text = numString,
-            color = textColor
+            style = textStyle,
         )
     }
 

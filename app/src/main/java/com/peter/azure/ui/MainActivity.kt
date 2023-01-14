@@ -5,10 +5,16 @@
 
 package com.peter.azure.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
@@ -22,6 +28,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
 
@@ -37,10 +44,17 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AzureTheme {
+                val windowSizeClass = calculateWindowSizeClass(activity = this@MainActivity)
+                val isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
+                        windowSizeClass.heightSizeClass == WindowHeightSizeClass.Compact
+                val isPortrait = LocalConfiguration.current.orientation ==
+                        Configuration.ORIENTATION_PORTRAIT
                 val navHostController = rememberNavController()
 
                 MainContent(
                     uiState = mainViewModel.uiState.value,
+                    isPortrait = isPortrait,
+                    isCompact = isCompact,
                     navHostController = navHostController,
                     finish = this@MainActivity::finish
                 )

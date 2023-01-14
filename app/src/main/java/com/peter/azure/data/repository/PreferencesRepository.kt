@@ -14,7 +14,10 @@ import com.peter.azure.data.entity.DataResult
 import com.peter.azure.data.util.GAME_EXISTED_PREF_KEY
 import com.peter.azure.data.util.ON_BOARDING_PREF_KEY
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject

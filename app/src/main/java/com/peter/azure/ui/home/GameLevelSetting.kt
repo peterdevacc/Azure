@@ -47,7 +47,7 @@ fun GameLevelSetting(
         )
     }
     val indicator = @Composable {
-        Indicator(height = fullSize / 2.6f)
+        Indicator(height = fullSize / 2.8f)
     }
 
     Layout(
@@ -60,7 +60,7 @@ fun GameLevelSetting(
 
         val indicatorPlaceable = indicatorMeasure.first().measure(constraints)
         val indicatorX = (totalWidth - indicatorPlaceable.width) / 2f
-        val indicatorY = totalHeight / 2 - indicatorPlaceable.height * 0.8f
+        val indicatorY = totalHeight / 2 - indicatorPlaceable.height * 0.85f
 
         layout(totalWidth, totalHeight) {
 

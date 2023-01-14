@@ -28,44 +28,22 @@ import com.peter.azure.ui.print.PrintViewModel
 
 @Composable
 fun AzureNavigationGraph(
-    modifier: Modifier = Modifier,
+    isPortrait: Boolean,
+    isCompact: Boolean,
     navHostController: NavHostController,
     startDestination: String,
-    exitApp: () -> Unit
+    exitApp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     NavHost(
         modifier = modifier,
         navController = navHostController,
         startDestination = startDestination
     ) {
-        composable(AzureDestination.General.GREETING.route) {
-            val viewModel = hiltViewModel<GreetingViewModel>()
-            GreetingScreen(
-                viewModel = viewModel,
-                navigateToHome = {
-                    navHostController.navigate(AzureDestination.Main.HOME.route) {
-                        popUpTo(AzureDestination.General.GREETING.route) {
-                            inclusive = true
-                        }
-                        launchSingleTop = true
-                    }
-                },
-                exitApp = exitApp
-            )
-        }
         composable(AzureDestination.Main.HOME.route) {
             val viewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(
                 viewModel = viewModel,
-                navigateToMainScreens = {
-                    navHostController.navigate(it) {
-                        popUpTo(AzureDestination.Main.HOME.route) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
                 navigateToNewGame = {
                     val level = viewModel.getGameLevel()
                     level?.let {
@@ -92,13 +70,25 @@ fun AzureNavigationGraph(
                             restoreState = true
                         }
                     }
-                }
+                },
+                isPortrait = isPortrait,
+                isCompact = isCompact,
+                navigateToMainScreens = {
+                    navHostController.navigate(it) {
+                        popUpTo(AzureDestination.Main.HOME.route) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
             )
         }
         composable(AzureDestination.Main.PRINT.route) {
             val viewModel = hiltViewModel<PrintViewModel>()
             PrintScreen(
                 viewModel = viewModel,
+                isPortrait = isPortrait,
                 navigateToMainScreens = {
                     navHostController.navigate(it) {
                         popUpTo(AzureDestination.Main.HOME.route) {
@@ -114,6 +104,7 @@ fun AzureNavigationGraph(
             val viewModel = hiltViewModel<HelpViewModel>()
             HelpScreen(
                 viewModel = viewModel,
+                isPortrait = isPortrait,
                 navigateToMainScreens = {
                     navHostController.navigate(it) {
                         popUpTo(AzureDestination.Main.HOME.route) {
@@ -127,6 +118,15 @@ fun AzureNavigationGraph(
         }
         composable(AzureDestination.Main.ABOUT.route) {
             AboutScreen(
+                navigateToContract = {
+                    navHostController.navigate(
+                        AzureDestination.Main.ABOUT.getNavContractRoute(it)
+                    ) {
+                        launchSingleTop = true
+                    }
+                },
+                isPortrait = isPortrait,
+                isCompact = isCompact,
                 navigateToMainScreens = {
                     navHostController.navigate(it) {
                         popUpTo(AzureDestination.Main.HOME.route) {
@@ -134,13 +134,6 @@ fun AzureNavigationGraph(
                         }
                         launchSingleTop = true
                         restoreState = true
-                    }
-                },
-                navigateToContract = {
-                    navHostController.navigate(
-                        AzureDestination.Main.ABOUT.getNavContractRoute(it)
-                    ) {
-                        launchSingleTop = true
                     }
                 }
             )
@@ -152,6 +145,8 @@ fun AzureNavigationGraph(
             val viewModel = hiltViewModel<GameViewModel>()
             GameScreen(
                 viewModel = viewModel,
+                isPortrait = isPortrait,
+                isCompact = isCompact,
                 navigateUp = {
                     navHostController.navigateUp()
                 }
@@ -161,11 +156,28 @@ fun AzureNavigationGraph(
             val viewModel = hiltViewModel<ContractViewModel>()
             ContractScreen(
                 viewModel = viewModel,
+                isPortrait = isPortrait,
                 navigateUp = {
                     navHostController.navigateUp()
                 }
             )
         }
-
+        composable(AzureDestination.General.GREETING.route) {
+            val viewModel = hiltViewModel<GreetingViewModel>()
+            GreetingScreen(
+                viewModel = viewModel,
+                navigateToHome = {
+                    navHostController.navigate(AzureDestination.Main.HOME.route) {
+                        popUpTo(AzureDestination.General.GREETING.route) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                },
+                exitApp = exitApp,
+                isPortrait = isPortrait,
+                isCompact = isCompact,
+            )
+        }
     }
 }

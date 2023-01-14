@@ -20,15 +20,19 @@ import com.peter.azure.ui.util.ErrorNotice
 @Composable
 fun MainContent(
     uiState: MainUiState,
+    isPortrait: Boolean,
+    isCompact: Boolean,
     navHostController: NavHostController,
     finish: () -> Unit
 ) {
     when (uiState) {
         is MainUiState.Success -> {
             AzureNavigationGraph(
+                isPortrait = isPortrait,
+                isCompact = isCompact,
                 navHostController = navHostController,
                 startDestination = uiState.startDestination,
-                exitApp = { finish() }
+                exitApp = finish
             )
         }
         is MainUiState.Error -> {

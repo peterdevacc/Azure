@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,9 +21,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -32,86 +29,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.ui.theme.AzureTheme
-
-@Composable
-fun AzureNavigationDialog(
-    currentMainDestination: AzureDestination.Main,
-    navigateToMainScreens: (String) -> Unit,
-    onDismiss: () -> Unit
-) {
-    val mainDestinationList = AzureDestination
-        .Main
-        .getNavigationList(currentMainDestination)
-
-    Dialog(
-        onDismissRequest = onDismiss
-    ) {
-        LazyColumn(
-            contentPadding = PaddingValues(4.dp),
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .background(Color.Transparent)
-        ) {
-            items(mainDestinationList) { destination ->
-                Surface(
-                    color = MaterialTheme.colorScheme.surface
-                        .copy(alpha = 0.8f),
-                    shape = MaterialTheme.shapes.medium,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxWidth()
-                        .height(108.dp)
-                        .clip(MaterialTheme.shapes.medium)
-                        .clickable {
-                            onDismiss()
-                            navigateToMainScreens(destination.route)
-                        }
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxSize()
-                    ) {
-                        Column(
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Icon(
-                                painter = painterResource(destination.imageId),
-                                contentDescription = stringResource(
-                                    destination.imageContentDescriptionId
-                                ),
-                                tint = MaterialTheme.colorScheme.onTertiary,
-                                modifier = Modifier
-                                    .background(MaterialTheme.colorScheme.tertiary)
-                                    .padding(bottom = 2.dp)
-                                    .weight(1f)
-                                    .fillMaxSize()
-                            )
-                            Text(
-                                text = stringResource(destination.textId),
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .weight(2.5f)
-                        ) {
-                            Text(
-                                text = stringResource(destination.descriptionId),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -124,7 +41,6 @@ fun AzureNavigationDialog(
     val mainDestinationList = AzureDestination.Main
         .getNavigationList(currentMainDestination)
 
-    val itemSize = 256 to 138
     Dialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         onDismissRequest = onDismiss
@@ -133,10 +49,10 @@ fun AzureNavigationDialog(
             LazyColumn(
                 modifier = Modifier
                     .background(Color.Transparent)
-                    .fillMaxHeight(0.5f)
+                    .heightIn(156.dp, 456.dp)
             ) {
                 getMainDestinationListItems(
-                    itemSize = itemSize,
+                    itemSize = 256 to 138,
                     mainDestinationList = mainDestinationList,
                     navigateToMainScreens = navigateToMainScreens,
                     onDismiss = onDismiss
@@ -147,10 +63,10 @@ fun AzureNavigationDialog(
                 contentPadding = PaddingValues(4.dp),
                 modifier = Modifier
                     .background(Color.Transparent)
-                    .fillMaxWidth(0.8f)
+                    .widthIn(288.dp, 636.dp)
             ) {
                 getMainDestinationListItems(
-                    itemSize = itemSize,
+                    itemSize = 198 to 208,
                     mainDestinationList = mainDestinationList,
                     navigateToMainScreens = navigateToMainScreens,
                     onDismiss = onDismiss
@@ -223,7 +139,10 @@ fun AzureNavigationDialogPreview() {
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            AzureNavigationDialog(AzureDestination.Main.HOME, {}, {})
+            AzureNavigationDialog(
+                true,
+                AzureDestination.Main.HOME, {}, {}
+            )
         }
     }
 }

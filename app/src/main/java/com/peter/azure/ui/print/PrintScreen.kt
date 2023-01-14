@@ -6,7 +6,6 @@
 package com.peter.azure.ui.print
 
 import android.content.Intent
-import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -20,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,11 +39,10 @@ import com.peter.azure.ui.util.azureScreen
 @Composable
 fun PrintScreen(
     viewModel: PrintViewModel,
+    isPortrait: Boolean,
     navigateToMainScreens: (String) -> Unit
 ) {
     val navDialogState = remember { mutableStateOf(false) }
-    val isPortrait = LocalConfiguration.current.orientation ==
-            Configuration.ORIENTATION_PORTRAIT
 
     PrintContent(
         pdfUiState = viewModel.pdfUiState.value,
@@ -117,15 +114,16 @@ fun PrintContent(
                     bottom.linkTo(levelButtonList.top)
                     width = Dimension.fillToConstraints
                 }
-            levelButtonListModifier = Modifier.constrainAs(levelButtonList) {
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(shareButton.top)
-                width = Dimension.fillToConstraints
-            }
+            levelButtonListModifier = Modifier
+                .padding(top = 8.dp)
+                .constrainAs(levelButtonList) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(shareButton.top)
+                    width = Dimension.fillToConstraints
+                }
             shareButtonModifier = Modifier
                 .padding(end = 4.dp, top = 16.dp)
-                .height(36.dp)
                 .constrainAs(shareButton) {
                     start.linkTo(parent.start)
                     end.linkTo(centerHorizontalGuideline)
@@ -134,7 +132,6 @@ fun PrintContent(
                 }
             generateButtonModifier = Modifier
                 .padding(start = 4.dp, top = 16.dp)
-                .height(36.dp)
                 .constrainAs(generateButton) {
                     start.linkTo(centerHorizontalGuideline)
                     end.linkTo(parent.end)
@@ -166,30 +163,27 @@ fun PrintContent(
                     bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
                 }
-            levelButtonListModifier = Modifier.constrainAs(levelButtonList) {
-                start.linkTo(horizontalGuideline)
-                end.linkTo(parent.end)
-                top.linkTo(parent.top)
-                bottom.linkTo(shareButton.top)
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            }
-            shareButtonModifier = Modifier
-                .padding(bottom = 4.dp)
-                .height(36.dp)
-                .constrainAs(shareButton) {
+            levelButtonListModifier = Modifier
+                .padding(top = 16.dp)
+                .constrainAs(levelButtonList) {
                     start.linkTo(horizontalGuideline)
                     end.linkTo(parent.end)
-                    bottom.linkTo(generateButton.top)
+                    top.linkTo(generateButton.bottom)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
+            shareButtonModifier = Modifier.constrainAs(shareButton) {
+                    start.linkTo(horizontalGuideline)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
                     width = Dimension.fillToConstraints
                 }
             generateButtonModifier = Modifier
-                .padding(top = 4.dp)
-                .height(36.dp)
                 .constrainAs(generateButton) {
                     start.linkTo(horizontalGuideline)
                     end.linkTo(parent.end)
-                    bottom.linkTo(parent.bottom)
+                    top.linkTo(shareButton.bottom)
                     width = Dimension.fillToConstraints
                 }
         }
@@ -212,7 +206,7 @@ fun PrintContent(
                     Icon(
                         painter = painterResource(R.drawable.ic_print_nav_24),
                         contentDescription = stringResource(R.string.icon_cd_screen_print),
-                        tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f),
+                        tint = MaterialTheme.colorScheme.tertiary,
                         modifier = Modifier.size(128.dp)
                     )
                 }
@@ -261,7 +255,7 @@ fun PrintContent(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(1.dp, MaterialTheme.colorScheme.primaryContainer)
+                    .border(1.dp, MaterialTheme.colorScheme.secondaryContainer)
             ) {
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
@@ -282,7 +276,7 @@ fun PrintContent(
                     }
                 }
                 Divider(
-                    color = MaterialTheme.colorScheme.primaryContainer,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .height(40.dp)
@@ -296,7 +290,7 @@ fun PrintContent(
                 ) {
                     Text(
                         text = "${gameLevelList.size} / $PDF_PAGE_SIZE",
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.secondary
                     )
                 }
             }
@@ -306,33 +300,27 @@ fun PrintContent(
             if (isPortrait) {
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth()
-                ) {
-                    items(GameLevel.values()) { level ->
-                        LevelButton(
-                            text = level.name,
-                            onClick = { addGameLevel(level) },
-                            modifier = Modifier
-                                .padding(end = 8.dp)
-                                .height(28.dp)
-                        )
-                    }
-                }
-            } else {
-                LazyColumn(
-                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     items(GameLevel.values()) { level ->
                         LevelButton(
                             text = level.name,
                             onClick = { addGameLevel(level) },
-                            modifier = Modifier
-                                .padding(bottom = 8.dp)
-                                .fillMaxWidth()
-                                .height(28.dp)
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+                    }
+                }
+            } else {
+                LazyColumn(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    reverseLayout = true,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(GameLevel.values()) { level ->
+                        LevelButton(
+                            text = level.name,
+                            onClick = { addGameLevel(level) },
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }
@@ -363,7 +351,10 @@ fun PrintContent(
             shape = MaterialTheme.shapes.medium,
             modifier = shareButtonModifier
         ) {
-            Text(stringResource(R.string.screen_print_share_pdf))
+            Text(
+                text = stringResource(R.string.screen_print_share_pdf),
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
 
         Button(
@@ -371,7 +362,10 @@ fun PrintContent(
             shape = MaterialTheme.shapes.medium,
             modifier = generateButtonModifier
         ) {
-            Text(stringResource(R.string.screen_print_generate_pdf))
+            Text(
+                text = stringResource(R.string.screen_print_generate_pdf),
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
@@ -386,15 +380,15 @@ private fun LevelListItem(
         onClick = onClick,
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = MaterialTheme.colorScheme.primary
+            contentColor = MaterialTheme.colorScheme.secondary
         ),
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondaryContainer),
         modifier = modifier
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.bodyMedium
         )
         Icon(
             painter = painterResource(R.drawable.ic_clear_24),
@@ -410,21 +404,24 @@ private fun LevelButton(
     onClick: () -> Unit,
     modifier: Modifier
 ) {
-    OutlinedButton(
+    FilledTonalButton(
         onClick = onClick,
-        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
         shape = MaterialTheme.shapes.medium,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer),
+        colors = ButtonDefaults.filledTonalButtonColors(
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        ),
         modifier = modifier
     ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodySmall
-        )
         Icon(
             painter = painterResource(R.drawable.ic_add_24),
             contentDescription = stringResource(R.string.icon_cd_add_level, text),
             modifier = Modifier.size(16.dp)
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.padding(start = 2.dp)
         )
     }
 }
