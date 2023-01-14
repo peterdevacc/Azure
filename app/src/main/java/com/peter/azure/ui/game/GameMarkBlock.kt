@@ -80,9 +80,9 @@ fun GameMarkBlock(
                                         )
                                         .size(iconArgs.first.dp)
                                         .constrainAs(icon) {
-                                        end.linkTo(parent.end)
-                                        bottom.linkTo(parent.bottom)
-                                    }
+                                            end.linkTo(parent.end)
+                                            bottom.linkTo(parent.bottom)
+                                        }
                                 )
                             }
                             Mark.WRONG -> {
@@ -95,9 +95,9 @@ fun GameMarkBlock(
                                         )
                                         .size(iconArgs.first.dp)
                                         .constrainAs(icon) {
-                                        end.linkTo(parent.end)
-                                        bottom.linkTo(parent.bottom)
-                                    }
+                                            end.linkTo(parent.end)
+                                            bottom.linkTo(parent.bottom)
+                                        }
                                 )
                             }
                             Mark.NONE -> {

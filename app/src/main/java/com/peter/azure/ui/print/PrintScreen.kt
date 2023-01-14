@@ -174,11 +174,11 @@ fun PrintContent(
                     height = Dimension.fillToConstraints
                 }
             shareButtonModifier = Modifier.constrainAs(shareButton) {
-                    start.linkTo(horizontalGuideline)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    width = Dimension.fillToConstraints
-                }
+                start.linkTo(horizontalGuideline)
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+                width = Dimension.fillToConstraints
+            }
             generateButtonModifier = Modifier
                 .constrainAs(generateButton) {
                     start.linkTo(horizontalGuideline)

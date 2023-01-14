@@ -99,11 +99,11 @@ fun AboutContent(
             appItemSectionModifier = Modifier
                 .padding(top = 12.dp)
                 .constrainAs(appItemSection) {
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                top.linkTo(motto.bottom)
-                width = Dimension.fillToConstraints
-            }
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(motto.bottom)
+                    width = Dimension.fillToConstraints
+                }
             infoItemSectionModifier = Modifier.constrainAs(infoItemSection) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)

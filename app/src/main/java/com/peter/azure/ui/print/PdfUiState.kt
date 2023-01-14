@@ -12,18 +12,18 @@ sealed interface PdfUiState {
 
     data class Loaded(
         val sudokuPdf: SudokuPdf
-    ): PdfUiState
+    ) : PdfUiState
 
-    object Processing: PdfUiState
+    object Processing : PdfUiState
 
-    object EmptyGameLevelList: PdfUiState
+    object EmptyGameLevelList : PdfUiState
 
-    object NotShareable: PdfUiState
+    object NotShareable : PdfUiState
 
-    object Default: PdfUiState
+    object Default : PdfUiState
 
     data class Error(
         val code: DataResult.Error.Code
-    ): PdfUiState
+    ) : PdfUiState
 
 }

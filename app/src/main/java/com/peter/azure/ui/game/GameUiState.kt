@@ -18,7 +18,7 @@ sealed interface GameUiState {
         val markList: List<Mark>,
         val dialog: Dialog,
         val isCorrect: Boolean,
-    ): GameUiState {
+    ) : GameUiState {
 
         enum class Dialog {
             Submit, Delete, Processing, None
@@ -26,12 +26,12 @@ sealed interface GameUiState {
 
     }
 
-    object GameEnded: GameUiState
+    object GameEnded : GameUiState
 
-    object Loading: GameUiState
+    object Loading : GameUiState
 
     data class Error(
         val code: DataResult.Error.Code
-    ): GameUiState
+    ) : GameUiState
 
 }

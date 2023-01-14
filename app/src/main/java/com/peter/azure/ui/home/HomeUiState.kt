@@ -12,12 +12,12 @@ sealed interface HomeUiState {
     data class Success(
         val gameExisted: Boolean,
         var dialAngle: Double,
-    ): HomeUiState
+    ) : HomeUiState
 
     data class Error(
         val code: DataResult.Error.Code
-    ): HomeUiState
+    ) : HomeUiState
 
-    object Loading: HomeUiState
+    object Loading : HomeUiState
 
 }

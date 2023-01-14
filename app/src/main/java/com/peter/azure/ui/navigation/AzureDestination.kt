@@ -17,13 +17,13 @@ sealed interface AzureDestination {
     val route: String
     val textId: Int
 
-    sealed interface Main: AzureDestination {
+    sealed interface Main : AzureDestination {
 
         val imageId: Int
         val imageContentDescriptionId: Int
         val descriptionId: Int
 
-        object HOME: Main {
+        object HOME : Main {
             override val route = "home"
             override val imageId = R.drawable.ic_home_nav_24
             override val imageContentDescriptionId = R.string.screen_home_img_cd
@@ -39,7 +39,7 @@ sealed interface AzureDestination {
             }
         }
 
-        object PRINT: Main {
+        object PRINT : Main {
             override val route = "print"
             override val imageId = R.drawable.ic_print_nav_24
             override val imageContentDescriptionId = R.string.screen_print_img_cd
@@ -47,7 +47,7 @@ sealed interface AzureDestination {
             override val descriptionId = R.string.screen_print_description
         }
 
-        object HELP: Main {
+        object HELP : Main {
             override val route = "help"
             override val imageId = R.drawable.ic_help_nav_24
             override val imageContentDescriptionId = R.string.screen_help_img_cd
@@ -55,7 +55,7 @@ sealed interface AzureDestination {
             override val descriptionId = R.string.screen_help_description
         }
 
-        object ABOUT: Main {
+        object ABOUT : Main {
             override val route = "about"
             override val imageId = R.drawable.ic_about_nav_24
             override val imageContentDescriptionId = R.string.screen_about_img_cd
@@ -77,9 +77,9 @@ sealed interface AzureDestination {
 
     }
 
-    sealed interface General: AzureDestination {
+    sealed interface General : AzureDestination {
 
-        object GAME: General {
+        object GAME : General {
             override val route = "game"
             override val textId = R.string.screen_game
 
@@ -91,14 +91,14 @@ sealed interface AzureDestination {
             )
         }
 
-        object CONTRACT: General {
+        object CONTRACT : General {
             override val route = "contract"
             override val textId = R.string.screen_contract
 
             val destRoute = "$route/{$INFO_TYPE_SAVED_KEY}"
         }
 
-        object GREETING: General {
+        object GREETING : General {
             override val route = "greeting"
             override val textId = R.string.screen_greeting
         }

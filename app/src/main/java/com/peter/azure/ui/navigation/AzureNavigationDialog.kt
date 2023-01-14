@@ -106,12 +106,14 @@ private fun LazyListScope.getMainDestinationListItems(
                 text = stringResource(destination.textId),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.constrainAs(title) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    width = Dimension.fillToConstraints
-                }.padding(bottom = 4.dp)
+                modifier = Modifier
+                    .constrainAs(title) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        width = Dimension.fillToConstraints
+                    }
+                    .padding(bottom = 4.dp)
             )
             Text(
                 text = stringResource(destination.descriptionId),

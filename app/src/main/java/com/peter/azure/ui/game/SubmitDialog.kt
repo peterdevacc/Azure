@@ -35,7 +35,7 @@ fun SubmitDialog(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Column (
+                Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(

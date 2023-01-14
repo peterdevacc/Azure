@@ -22,7 +22,7 @@ import com.peter.azure.R
 
 @Composable
 fun DeleteDialog(
-    delete:() -> Unit,
+    delete: () -> Unit,
     onDismiss: () -> Unit
 ) {
     Dialog(

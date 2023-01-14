@@ -11,12 +11,12 @@ sealed interface MainUiState {
 
     data class Success(
         val startDestination: String
-    ): MainUiState
+    ) : MainUiState
 
     data class Error(
         val code: DataResult.Error.Code
-    ): MainUiState
+    ) : MainUiState
 
-    object Loading: MainUiState
+    object Loading : MainUiState
 
 }

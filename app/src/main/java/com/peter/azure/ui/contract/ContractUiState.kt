@@ -10,14 +10,14 @@ import com.peter.azure.data.entity.Info
 
 sealed interface ContractUiState {
 
-    object Loading: ContractUiState
+    object Loading : ContractUiState
 
     data class Success(
         val info: Info
-    ): ContractUiState
+    ) : ContractUiState
 
     data class Error(
         val code: DataResult.Error.Code
-    ): ContractUiState
+    ) : ContractUiState
 
 }

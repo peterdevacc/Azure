@@ -90,12 +90,12 @@ fun HomeContent(
                     }
                     settingModifier = Modifier
                         .constrainAs(setting) {
-                        top.linkTo(topBar.bottom)
-                        bottom.linkTo(button.top)
-                        centerHorizontallyTo(parent)
-                        width = Dimension.fillToConstraints
-                        height = Dimension.fillToConstraints
-                    }
+                            top.linkTo(topBar.bottom)
+                            bottom.linkTo(button.top)
+                            centerHorizontallyTo(parent)
+                            width = Dimension.fillToConstraints
+                            height = Dimension.fillToConstraints
+                        }
                     buttonModifier = Modifier
                         .padding(bottom = 32.dp)
                         .width(208.dp)

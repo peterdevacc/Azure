@@ -12,16 +12,16 @@ sealed interface GreetingUiState {
 
     data class ContractDialogLoaded(
         val info: Info
-    ): GreetingUiState
+    ) : GreetingUiState
 
-    object Processing: GreetingUiState
+    object Processing : GreetingUiState
 
-    object ContractsAgreed: GreetingUiState
+    object ContractsAgreed : GreetingUiState
 
     data class Error(
         val code: DataResult.Error.Code
-    ): GreetingUiState
+    ) : GreetingUiState
 
-    object Default: GreetingUiState
+    object Default : GreetingUiState
 
 }

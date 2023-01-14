@@ -76,13 +76,13 @@ fun ContractContent(
             infoDocumentModifier = Modifier
                 .padding(start = 16.dp)
                 .constrainAs(infoDocument) {
-                start.linkTo(topBar.end)
-                end.linkTo(parent.end)
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            }
+                    start.linkTo(topBar.end)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
         }
 
         Box(topBarModifier) {
