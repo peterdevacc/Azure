@@ -125,7 +125,7 @@ class GameViewModelTest {
     }
 
     @Test
-    fun `make note`() = runBlocking {
+    fun `make mark`() = runBlocking {
         launch(Dispatchers.Main) {
             val num = 2
 
@@ -166,9 +166,20 @@ class GameViewModelTest {
             delay(magicNum)
             clearAllMocks()
 
+            // has selected location
             viewModel.makeMark(Mark.Potential)
             delay(magicNum)
             coVerify(exactly = 1) {
+                noteRepository.updateNote(updatedNote)
+                puzzleRepository.updatePuzzle(puzzle)
+            }
+            confirmVerified(noteRepository, puzzleRepository)
+            clearAllMocks()
+
+            // num has been reset to 0 after a successful invocation of makeMark
+            viewModel.makeMark(Mark.WRONG)
+            delay(magicNum)
+            coVerify(exactly = 0) {
                 noteRepository.updateNote(updatedNote)
                 puzzleRepository.updatePuzzle(puzzle)
             }
