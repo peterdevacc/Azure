@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.peter.azure.R
 import com.peter.azure.data.entity.Mark
@@ -37,7 +38,10 @@ fun GameMarkBlock(
         iconArgs = 16 to 1
     } else {
         textStyle = MaterialTheme.typography.bodyLarge
-            .copy(color = MaterialTheme.colorScheme.onTertiaryContainer)
+            .copy(
+                fontSize = 22.sp,
+                color = MaterialTheme.colorScheme.onTertiaryContainer
+            )
         iconArgs = 20 to 2
     }
 

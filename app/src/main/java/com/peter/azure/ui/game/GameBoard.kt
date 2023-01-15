@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.peter.azure.data.entity.Cell
 import com.peter.azure.data.entity.Location
 import com.peter.azure.data.entity.Puzzle
@@ -111,7 +112,10 @@ private fun GameCell(
     val textStyle = if (isCompact) {
         MaterialTheme.typography.bodyMedium.copy(color = textColor)
     } else {
-        MaterialTheme.typography.bodyLarge.copy(color = textColor)
+        MaterialTheme.typography.bodyLarge.copy(
+            fontSize = 22.sp,
+            color = textColor
+        )
     }
 
     Box(

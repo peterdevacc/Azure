@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.peter.azure.R
 import com.peter.azure.data.entity.Mark
 import com.peter.azure.ui.theme.AzureTheme
@@ -41,7 +42,10 @@ fun GamePad(
         iconSize = 20
     } else {
         textStyle = MaterialTheme.typography.bodyLarge
-            .copy(color = MaterialTheme.colorScheme.onSecondaryContainer)
+            .copy(
+                fontSize = 22.sp,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         iconSize = 24
     }
 
