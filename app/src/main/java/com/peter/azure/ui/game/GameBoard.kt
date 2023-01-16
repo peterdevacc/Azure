@@ -113,7 +113,7 @@ private fun GameCell(
         MaterialTheme.typography.bodyMedium.copy(color = textColor)
     } else {
         MaterialTheme.typography.bodyLarge.copy(
-            fontSize = 22.sp,
+            fontSize = 20.sp,
             color = textColor
         )
     }

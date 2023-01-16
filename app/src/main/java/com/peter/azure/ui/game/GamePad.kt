@@ -37,16 +37,16 @@ fun GamePad(
     val iconSize: Int
 
     if (isCompact) {
-        textStyle = MaterialTheme.typography.bodyMedium
+        textStyle = MaterialTheme.typography.bodyLarge
             .copy(color = MaterialTheme.colorScheme.onSecondaryContainer)
         iconSize = 20
     } else {
         textStyle = MaterialTheme.typography.bodyLarge
             .copy(
-                fontSize = 22.sp,
+                fontSize = 24.sp,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
-        iconSize = 24
+        iconSize = 26
     }
 
     Row(

@@ -33,13 +33,13 @@ fun GameMarkBlock(
     val iconArgs: Pair<Int, Int>
 
     if (isCompact) {
-        textStyle = MaterialTheme.typography.bodyMedium
+        textStyle = MaterialTheme.typography.bodyLarge
             .copy(color = MaterialTheme.colorScheme.onTertiaryContainer)
         iconArgs = 16 to 1
     } else {
         textStyle = MaterialTheme.typography.bodyLarge
             .copy(
-                fontSize = 22.sp,
+                fontSize = 24.sp,
                 color = MaterialTheme.colorScheme.onTertiaryContainer
             )
         iconArgs = 20 to 2
