@@ -48,7 +48,7 @@ fun GameMarkBlock(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.7f))
+            .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.6f))
             .border(1.dp, MaterialTheme.colorScheme.onBackground)
     ) {
         val times = 3
@@ -76,7 +76,7 @@ fun GameMarkBlock(
                         when (mark) {
                             Mark.Potential -> {
                                 MarkIcon(
-                                    R.drawable.ic_star_24,
+                                    R.drawable.ic_mark_potential_24,
                                     R.string.icon_cd_mark_potential,
                                     Modifier
                                         .padding(
@@ -91,7 +91,7 @@ fun GameMarkBlock(
                             }
                             Mark.WRONG -> {
                                 MarkIcon(
-                                    R.drawable.ic_cross_24,
+                                    R.drawable.ic_mark_wrong_24,
                                     R.string.icon_cd_mark_wrong,
                                     Modifier
                                         .padding(

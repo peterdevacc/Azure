@@ -6,9 +6,7 @@
 package com.peter.azure.ui.home
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -98,7 +96,7 @@ fun HomeContent(
                         }
                     buttonModifier = Modifier
                         .padding(bottom = 32.dp)
-                        .width(208.dp)
+                        .width((dialSize * 0.53f).toInt().dp)
                         .constrainAs(button) {
                             centerHorizontallyTo(parent)
                             bottom.linkTo(parent.bottom)
@@ -117,7 +115,7 @@ fun HomeContent(
                         height = Dimension.fillToConstraints
                     }
                     buttonModifier = Modifier
-                        .width(168.dp)
+                        .width((dialSize * 0.53f).toInt().dp)
                         .constrainAs(button) {
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
@@ -144,23 +142,38 @@ fun HomeContent(
                             dialAngle = uiState.dialAngle
                         )
                     } else {
-                        Spacer(modifier = Modifier.size(dialSize.dp))
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.size(dialSize.dp)
+                        ) {
+                            AzureBlock(fullSize = (dialSize * 0.76f).dp)
+                        }
                     }
                 }
 
                 val buttonText: String
                 val navigate: () -> Unit
+                val buttonColors: ButtonColors
                 if (uiState.gameExisted) {
                     buttonText = stringResource(R.string.screen_home_continue_game)
                     navigate = navigateToContinueGame
+                    buttonColors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
                 } else {
                     buttonText = stringResource(R.string.screen_home_start_game)
                     navigate = navigateToNewGame
+                    buttonColors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                        contentColor = MaterialTheme.colorScheme.onSecondary
+                    )
                 }
 
                 Button(
-                    contentPadding = PaddingValues(16.dp),
                     onClick = navigate,
+                    contentPadding = PaddingValues(16.dp),
+                    colors = buttonColors,
                     modifier = buttonModifier
                 ) {
                     Text(

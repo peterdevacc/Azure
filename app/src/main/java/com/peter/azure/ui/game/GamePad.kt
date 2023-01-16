@@ -52,7 +52,7 @@ fun GamePad(
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f))
+            .background(MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.6f))
             .border(1.dp, MaterialTheme.colorScheme.onBackground)
     ) {
         Column(
@@ -72,7 +72,7 @@ fun GamePad(
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             ActionIcon(
-                iconId = R.drawable.ic_star_24,
+                iconId = R.drawable.ic_mark_potential_24,
                 iconCd = stringResource(R.string.icon_cd_mark_potential),
                 iconSize = iconSize,
                 modifier = Modifier
@@ -85,7 +85,7 @@ fun GamePad(
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             ActionIcon(
-                iconId = R.drawable.ic_cross_24,
+                iconId = R.drawable.ic_mark_wrong_24,
                 iconCd = stringResource(R.string.icon_cd_mark_wrong),
                 iconSize = iconSize,
                 modifier = Modifier
