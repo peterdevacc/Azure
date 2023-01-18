@@ -12,6 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,18 +25,24 @@ fun AboutAppItem(
     heading: String, text: String,
     modifier: Modifier
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier
+            .clearAndSetSemantics {
+                this.text = AnnotatedString(
+                    text = "$heading, $text"
+                )
+            }
+    ) {
         Text(
             text = heading,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.outline,
+            color = MaterialTheme.colorScheme.outline
         )
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 20.sp,
-            modifier = Modifier.padding(top = 2.dp)
+            fontSize = 20.sp
         )
     }
 }

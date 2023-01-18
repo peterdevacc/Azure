@@ -99,6 +99,10 @@
     <string name="icon_cd_mark_wrong">mark wrong</string>
     <string name="icon_cd_mark_none">mark none</string>
 
+    <string name="navigate_to_contract_description">
+        Navigate to %1$s contract screen
+    </string>
+    
     <string name="navigation_dialog_item_description">
         %1$s screen destination
     </string>

@@ -5,8 +5,13 @@
 
 package com.peter.azure.ui.about
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -15,40 +20,39 @@ import androidx.compose.ui.unit.dp
 import com.peter.azure.R
 import com.peter.azure.data.entity.Info
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutInfoItem(
-    heading: Pair<String, Info.Type>,
+    infoType: Info.Type,
     navigateToInfo: (Info.Type) -> Unit,
     modifier: Modifier
 ) {
-    OutlinedCard(
+    val title = when (infoType) {
+        Info.Type.SERVICE -> stringResource(R.string.service_title)
+        Info.Type.PRIVACY -> stringResource(R.string.privacy_title)
+        Info.Type.ACKNOWLEDGEMENTS -> stringResource(R.string.acknowledgement_title)
+    }
+    val heading = title to infoType
+    val description = stringResource(
+        R.string.navigate_to_contract_description, heading.second.name
+    )
+
+    OutlinedButton(
         onClick = { navigateToInfo(heading.second) },
+        shape = MaterialTheme.shapes.medium,
+        contentPadding = PaddingValues(16.dp),
         modifier = modifier
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = heading.first,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Icon(
-                painter = painterResource(R.drawable.ic_arrow_forward_24),
-                contentDescription = stringResource(R.string.icon_cd_navigate_to, heading),
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.size(24.dp)
-            )
-        }
+        Text(
+            text = heading.first,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(
+            painter = painterResource(R.drawable.ic_arrow_forward_24),
+            contentDescription = description,
+            tint = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.size(24.dp)
+        )
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun AboutInfoItemPreview() {
-//    AzureTheme {
-//        AboutInfoItem() {}
-//    }
-//}

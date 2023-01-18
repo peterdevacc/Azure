@@ -215,21 +215,13 @@ fun AboutContent(
                     .padding(bottom = 8.dp)
                     .fillMaxWidth()
             }
-            AboutInfoItem(
-                heading = stringResource(R.string.service_title) to Info.Type.SERVICE,
-                navigateToInfo = navigateToContract,
-                modifier = infoItemModifier
-            )
-            AboutInfoItem(
-                heading = stringResource(R.string.privacy_title) to Info.Type.PRIVACY,
-                navigateToInfo = navigateToContract,
-                modifier = infoItemModifier
-            )
-            AboutInfoItem(
-                heading = stringResource(R.string.acknowledgement_title) to Info.Type.ACKNOWLEDGEMENTS,
-                navigateToInfo = navigateToContract,
-                modifier = infoItemModifier
-            )
+            Info.Type.values().forEach {
+                AboutInfoItem(
+                    infoType = it,
+                    navigateToInfo = navigateToContract,
+                    modifier = infoItemModifier
+                )
+            }
             Spacer(modifier = Modifier.weight(1f))
             SelectionContainer {
                 Text(
@@ -256,6 +248,6 @@ fun AboutContent(
 fun AboutScreenPreview() {
     val navDialogState = remember { mutableStateOf(false) }
     AzureTheme {
-        AboutContent({}, true, true, navDialogState, {})
+        AboutContent({}, isPortrait = true, isCompact = true, navDialogState, {})
     }
 }
