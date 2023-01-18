@@ -12,6 +12,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.peter.azure.R
@@ -41,6 +44,11 @@ fun AzureTopBar(
         Modifier.fillMaxHeight()
     }
 
+    val destinationText = stringResource(destination.textId)
+    val screenHeadingDescription = stringResource(
+        R.string.screen_heading_description, destinationText
+    )
+
     ConstraintLayout(
         modifier = containerModifier
     ) {
@@ -69,10 +77,12 @@ fun AzureTopBar(
         }
 
         Text(
-            text = stringResource(destination.textId),
+            text = destinationText,
             style = MaterialTheme.typography.displayLarge,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = headingModifier
+            modifier = headingModifier.semantics {
+                text = AnnotatedString(screenHeadingDescription)
+            }
         )
 
         FilledTonalIconButton(

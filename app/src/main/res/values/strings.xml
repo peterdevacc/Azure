@@ -82,14 +82,10 @@
     <string name="error_io">a IO error happened, \nplease try again.</string>
     <string name="error_unknown">a unknown error happened, \nplease try again.</string>
 
-    <string name="icon_cd_screen_home">Home page</string>
-    <string name="icon_cd_screen_print">Print page</string>
-    <string name="icon_cd_screen_help">Help page</string>
-    <string name="icon_cd_screen_about">About page</string>
-
     <string name="icon_cd_navigation_menu">Navigation menu</string>
     <string name="icon_cd_navigate_up">Navigate up</string>
     <string name="icon_cd_navigate_to">Navigate to %1$s</string>
+    <string name="icon_cd_screen_print">Print screen logo</string>
     <string name="icon_cd_add_level">Add level %1$s to the list</string>
     <string name="icon_cd_remove_level">Remove level %1$s from the list</string>
     <string name="icon_cd_delete_game">Delete game</string>
@@ -99,19 +95,17 @@
     <string name="icon_cd_mark_wrong">mark wrong</string>
     <string name="icon_cd_mark_none">mark none</string>
 
-    <string name="navigate_to_contract_description">
-        Navigate to %1$s contract screen
-    </string>
-    
-    <string name="navigation_dialog_item_description">
-        %1$s screen destination
-    </string>
+    <string name="screen_heading_description">%1$s Screen</string>
+    <string name="navigate_to_contract_description">Navigate to %1$s contract screen</string>
+    <string name="navigation_dialog_item_description">%1$s screen destination</string>
 
+    <string name="add_game_level_button">
+        Add level %1$s to the list
+    </string>
     <string name="game_level_setting_description">
         Game level setting wheel, current level is %1$s ,double click and then hold to spin
     </string>
     <string name="game_existed_description">A Sudoku game existed</string>
-
     <string name="game_board_blank_cell_description">
         Game board blank cell at %1$d row %2$d column with no number
     </string>

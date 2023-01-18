@@ -19,16 +19,12 @@ sealed interface AzureDestination {
 
     sealed interface Main : AzureDestination {
 
-        val imageId: Int
-        val imageContentDescriptionId: Int
-        val descriptionId: Int
+        val destinationDescriptionId: Int
 
         object HOME : Main {
             override val route = "home"
-            override val imageId = R.drawable.ic_home_nav_24
-            override val imageContentDescriptionId = R.string.screen_home_img_cd
             override val textId = R.string.screen_home
-            override val descriptionId = R.string.screen_home_description
+            override val destinationDescriptionId = R.string.screen_home_description
 
             fun getNavGameRoute(gameLevel: GameLevel? = null): String {
                 var route = "${General.GAME.route}?$GAME_LEVEL_SAVED_KEY=null"
@@ -41,26 +37,20 @@ sealed interface AzureDestination {
 
         object PRINT : Main {
             override val route = "print"
-            override val imageId = R.drawable.ic_print_nav_24
-            override val imageContentDescriptionId = R.string.screen_print_img_cd
             override val textId = R.string.screen_print
-            override val descriptionId = R.string.screen_print_description
+            override val destinationDescriptionId = R.string.screen_print_description
         }
 
         object HELP : Main {
             override val route = "help"
-            override val imageId = R.drawable.ic_help_nav_24
-            override val imageContentDescriptionId = R.string.screen_help_img_cd
             override val textId = R.string.screen_help
-            override val descriptionId = R.string.screen_help_description
+            override val destinationDescriptionId = R.string.screen_help_description
         }
 
         object ABOUT : Main {
             override val route = "about"
-            override val imageId = R.drawable.ic_about_nav_24
-            override val imageContentDescriptionId = R.string.screen_about_img_cd
             override val textId = R.string.screen_about
-            override val descriptionId = R.string.screen_about_description
+            override val destinationDescriptionId = R.string.screen_about_description
 
             fun getNavContractRoute(infoType: Info.Type): String {
                 return "${General.CONTRACT.route}/${infoType.name}"

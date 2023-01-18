@@ -6,7 +6,6 @@
 package com.peter.azure.ui.print
 
 import android.content.Intent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,6 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -266,7 +268,7 @@ fun PrintContent(
                         .height(40.dp)
                 ) {
                     items(gameLevelList) { level ->
-                        LevelListItem(
+                        PrintLevelListItem(
                             onClick = { removeGameLevel(level) },
                             text = level.name,
                             modifier = Modifier
@@ -288,9 +290,15 @@ fun PrintContent(
                         .padding(end = 8.dp)
                         .height(40.dp)
                 ) {
+                    val listText = "${gameLevelList.size} / $PDF_PAGE_SIZE"
                     Text(
-                        text = "${gameLevelList.size} / $PDF_PAGE_SIZE",
-                        color = MaterialTheme.colorScheme.secondary
+                        text = listText,
+                        color = MaterialTheme.colorScheme.secondary,
+                        modifier = Modifier.semantics {
+                            this.text = AnnotatedString(
+                                "Current print list: $listText"
+                            )
+                        }
                     )
                 }
             }
@@ -303,7 +311,7 @@ fun PrintContent(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     items(GameLevel.values()) { level ->
-                        LevelButton(
+                        PrintLevelButton(
                             text = level.name,
                             onClick = { addGameLevel(level) },
                             modifier = Modifier.padding(end = 8.dp)
@@ -317,7 +325,7 @@ fun PrintContent(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(GameLevel.values()) { level ->
-                        LevelButton(
+                        PrintLevelButton(
                             text = level.name,
                             onClick = { addGameLevel(level) },
                             modifier = Modifier.fillMaxWidth()
@@ -370,61 +378,6 @@ fun PrintContent(
     }
 }
 
-@Composable
-private fun LevelListItem(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier
-) {
-    OutlinedButton(
-        onClick = onClick,
-        shape = MaterialTheme.shapes.medium,
-        colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = MaterialTheme.colorScheme.secondary
-        ),
-        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondaryContainer),
-        modifier = modifier
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Icon(
-            painter = painterResource(R.drawable.ic_clear_24),
-            contentDescription = stringResource(R.string.icon_cd_remove_level, text),
-            modifier = Modifier.size(16.dp)
-        )
-    }
-}
-
-@Composable
-private fun LevelButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier
-) {
-    FilledTonalButton(
-        onClick = onClick,
-        shape = MaterialTheme.shapes.medium,
-        colors = ButtonDefaults.filledTonalButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-        ),
-        modifier = modifier
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.ic_add_24),
-            contentDescription = stringResource(R.string.icon_cd_add_level, text),
-            modifier = Modifier.size(16.dp)
-        )
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(start = 2.dp)
-        )
-    }
-}
 
 //@Preview(name = "Print Screen", showBackground = true)
 //@Preview(

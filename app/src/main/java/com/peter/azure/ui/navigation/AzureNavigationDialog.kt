@@ -130,7 +130,7 @@ private fun LazyListScope.getMainDestinationListItems(
                     }
             )
             Text(
-                text = stringResource(destination.descriptionId),
+                text = stringResource(destination.destinationDescriptionId),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier
