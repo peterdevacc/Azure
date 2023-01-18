@@ -99,6 +99,10 @@
     <string name="icon_cd_mark_wrong">mark wrong</string>
     <string name="icon_cd_mark_none">mark none</string>
 
+    <string name="navigation_dialog_item_description">
+        %1$s screen destination
+    </string>
+
     <string name="game_level_setting_description">
         Game level setting wheel, current level is %1$s ,double click and then hold to spin
     </string>

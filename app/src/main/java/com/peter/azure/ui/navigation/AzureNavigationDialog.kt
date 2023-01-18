@@ -22,6 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -29,6 +32,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.ui.theme.AzureTheme
+import com.peter.azure.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -82,6 +86,11 @@ private fun LazyListScope.getMainDestinationListItems(
     navigateToMainScreens: (String) -> Unit,
     onDismiss: () -> Unit
 ) = items(mainDestinationList) { destination ->
+    val destinationTitle = stringResource(destination.textId)
+    val destinationTitleDescription = stringResource(
+        R.string.navigation_dialog_item_description,
+        destinationTitle
+    )
     Surface(
         color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),
         shape = MaterialTheme.shapes.medium,
@@ -103,7 +112,7 @@ private fun LazyListScope.getMainDestinationListItems(
             val (title, text) = createRefs()
 
             Text(
-                text = stringResource(destination.textId),
+                text = destinationTitle,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
@@ -114,6 +123,11 @@ private fun LazyListScope.getMainDestinationListItems(
                         width = Dimension.fillToConstraints
                     }
                     .padding(bottom = 4.dp)
+                    .semantics {
+                        this.text = AnnotatedString(
+                            destinationTitleDescription
+                        )
+                    }
             )
             Text(
                 text = stringResource(destination.descriptionId),
