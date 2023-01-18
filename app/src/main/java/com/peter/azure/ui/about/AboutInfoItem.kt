@@ -16,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.peter.azure.R
 import com.peter.azure.data.entity.Info
@@ -45,7 +48,8 @@ fun AboutInfoItem(
         Text(
             text = heading.first,
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.semantics { text = AnnotatedString("") }
         )
         Spacer(modifier = Modifier.weight(1f))
         Icon(
