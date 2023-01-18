@@ -16,9 +16,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.peter.azure.R
 import com.peter.azure.data.entity.Cell
 import com.peter.azure.data.entity.Location
 import com.peter.azure.data.entity.Puzzle
@@ -76,8 +82,14 @@ private fun GameCell(
     isCompact: Boolean,
     modifier: Modifier
 ) {
-    val boxModifier = if (cell.type == Cell.Type.BLANK) {
-        Modifier
+    val row = location.x + 1
+    val column = location.y + 1
+    val boxModifier: Modifier
+    val cellDescription: String
+    val textColor: Color
+
+    if (cell.type == Cell.Type.BLANK) {
+        boxModifier = Modifier
             .then(modifier)
             .background(
                 color = if (location == selectedLocation) {
@@ -87,20 +99,35 @@ private fun GameCell(
                 }
             )
             .clickable { select(location, cell.num) }
-    } else {
-        Modifier
-            .then(modifier)
-            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f))
-    }
 
-    val textColor = if (cell.type == Cell.Type.BLANK) {
-        if (location == selectedLocation) {
+        cellDescription = if (cell.num != 0) {
+            stringResource(
+                R.string.game_board_blank_cell_with_num_description,
+                row, column, cell.num
+            )
+        } else {
+            stringResource(
+                R.string.game_board_blank_cell_description,
+                row, column
+            )
+        }
+
+        textColor = if (location == selectedLocation) {
             MaterialTheme.colorScheme.onSurfaceVariant
         } else {
             MaterialTheme.colorScheme.onSurface
         }
     } else {
-        MaterialTheme.colorScheme.onPrimaryContainer
+        boxModifier = Modifier
+            .then(modifier)
+            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f))
+
+        cellDescription = stringResource(
+            R.string.game_board_question_cell_description,
+            row, column, cell.num
+        )
+
+        textColor = MaterialTheme.colorScheme.onPrimaryContainer
     }
 
     val numString = if (cell.num != 0) {
@@ -120,7 +147,11 @@ private fun GameCell(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = boxModifier.fillMaxSize()
+        modifier = boxModifier
+            .fillMaxSize()
+            .clearAndSetSemantics {
+                text = AnnotatedString(cellDescription)
+            }
     ) {
         Text(
             text = numString,

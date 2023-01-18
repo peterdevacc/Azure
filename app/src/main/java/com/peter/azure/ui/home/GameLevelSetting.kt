@@ -22,6 +22,8 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -37,6 +39,7 @@ fun GameLevelSetting(
     fullSize: Dp,
     dialAngle: Double,
     setGameLevel: (Double) -> Unit,
+    semanticsDescription: String
 ) {
 
     val dial = @Composable {
@@ -52,6 +55,9 @@ fun GameLevelSetting(
 
     Layout(
         contents = listOf(dial, indicator),
+        modifier = Modifier.clearAndSetSemantics {
+            text = AnnotatedString(semanticsDescription)
+        }
     ) { (dialMeasure, indicatorMeasure), constraints ->
 
         val dialPlaceable = dialMeasure.first().measure(constraints)
@@ -323,8 +329,8 @@ fun GameLevelSettingPreview() {
             modifier = Modifier.fillMaxSize()
         ) {
             GameLevelSetting(
-                256.dp, angle.value
-            ) { angle.value = it }
+                256.dp, angle.value, { angle.value = it }, ""
+            )
         }
     }
 }

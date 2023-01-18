@@ -99,4 +99,27 @@
     <string name="icon_cd_mark_wrong">mark wrong</string>
     <string name="icon_cd_mark_none">mark none</string>
 
+    <string name="game_level_setting_description">
+        Game level setting wheel, current level is %1$s ,double click and then hold to spin
+    </string>
+    <string name="game_existed_description">A Sudoku game existed</string>
+
+    <string name="game_board_blank_cell_description">
+        Game board blank cell at %1$d row %2$d column with no number
+    </string>
+    <string name="game_board_blank_cell_with_num_description">
+        Game board blank cell at %1$d row %2$d column with number %3$d
+    </string>
+    <string name="game_board_question_cell_description">
+        Game board question cell at %1$d row %2$d column with number %3$d
+    </string>
+    <string name="mark_block_no_location_description">
+        Mark block no blank cell selected
+    </string>
+    <string name="mark_block_num_description">
+        Mark block number %1$d with mark %2$s at %3$d row %4$d column blank cell
+    </string>
+    <string name="game_pad_num_button_description">Game pad number %1$d button</string>
+    <string name="game_pad_icon_button_description">Game pad %1$s button</string>
+
 </resources>

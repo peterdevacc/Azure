@@ -32,19 +32,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getGameLevel(): GameLevel? {
-        if (homeUiState.value is HomeUiState.Success) {
-            val state = (homeUiState.value as HomeUiState.Success)
-            val level = if (state.dialAngle >= -120.0 && state.dialAngle < 0.0) {
-                GameLevel.HARD
-            } else if (state.dialAngle in 0.0..120.0) {
-                GameLevel.MODERATE
-            } else {
-                GameLevel.EASY
-            }
-            return level
+    fun getGameLevel(): GameLevel {
+        val state = (homeUiState.value as HomeUiState.Success)
+        val level = if (state.dialAngle >= -120.0 && state.dialAngle < 0.0) {
+            GameLevel.HARD
+        } else if (state.dialAngle in 0.0..120.0) {
+            GameLevel.MODERATE
+        } else {
+            GameLevel.EASY
         }
-        return null
+        return level
     }
 
     init {

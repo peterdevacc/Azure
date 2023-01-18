@@ -326,6 +326,7 @@ private fun GamePlayingContent(
 
         Box(modifier = markBlockModifier) {
             GameMarkBlock(
+                location = uiState.location,
                 markList = uiState.markList,
                 isCompact = isCompact
             )

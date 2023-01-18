@@ -17,15 +17,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.peter.azure.R
+import com.peter.azure.data.entity.Location
 import com.peter.azure.data.entity.Mark
 
 @Composable
 fun GameMarkBlock(
+    location: Location,
     markList: List<Mark>,
     isCompact: Boolean
 ) {
@@ -59,10 +64,23 @@ fun GameMarkBlock(
                 for (j in 0..2) {
                     val num = (j + 1) + (i * times)
                     val mark = markList[num - 1]
+                    val block = if (location.isNotDefault()) {
+                        stringResource(
+                            R.string.mark_block_num_description,
+                            num, mark.name, location.x + 1, location.y + 1
+                        )
+                    } else {
+                        stringResource(
+                            R.string.mark_block_no_location_description
+                        )
+                    }
                     ConstraintLayout(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxSize()
+                            .clearAndSetSemantics {
+                                text = AnnotatedString(block)
+                            }
                     ) {
                         val (text, icon) = createRefs()
                         Text(

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.R
+import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.ui.navigation.AzureTopBar
 import com.peter.azure.ui.util.ErrorNotice
@@ -38,7 +39,8 @@ fun HomeScreen(
 
     HomeContent(
         uiState = viewModel.uiState.value,
-        getGameLevel = viewModel::setGameLevel,
+        setGameLevel = viewModel::setGameLevel,
+        getGameLevel = viewModel::getGameLevel,
         navigateToNewGame = navigateToNewGame,
         navigateToContinueGame = navigateToContinueGame,
         isPortrait = isPortrait,
@@ -51,7 +53,8 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     uiState: HomeUiState,
-    getGameLevel: (Double) -> Unit,
+    setGameLevel: (Double) -> Unit,
+    getGameLevel: () -> GameLevel,
     navigateToNewGame: () -> Unit,
     navigateToContinueGame: () -> Unit,
     isPortrait: Boolean,
@@ -136,10 +139,16 @@ fun HomeContent(
                     modifier = settingModifier
                 ) {
                     if (!uiState.gameExisted) {
+                        val level = getGameLevel()
+                        val description = stringResource(
+                            R.string.game_level_setting_description,
+                            level.name
+                        )
                         GameLevelSetting(
                             fullSize = dialSize.dp,
-                            setGameLevel = getGameLevel,
-                            dialAngle = uiState.dialAngle
+                            dialAngle = uiState.dialAngle,
+                            setGameLevel = setGameLevel,
+                            semanticsDescription = description
                         )
                     } else {
                         Box(

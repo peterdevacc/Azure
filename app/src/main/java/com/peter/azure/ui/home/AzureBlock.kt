@@ -24,7 +24,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.drawText
@@ -43,8 +46,13 @@ fun AzureBlock(fullSize: Dp) {
         Block(fullSize = fullSize)
     }
 
+    val description = stringResource(R.string.game_existed_description)
+
     Layout(
         contents = listOf(block),
+        modifier = Modifier.clearAndSetSemantics {
+            text = AnnotatedString(description)
+        }
     ) { (blockMeasure), constraints ->
 
         val blockPlaceable = blockMeasure.first().measure(constraints)

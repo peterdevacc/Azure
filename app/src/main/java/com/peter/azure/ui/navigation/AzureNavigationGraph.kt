@@ -21,7 +21,6 @@ import com.peter.azure.ui.greeting.GreetingViewModel
 import com.peter.azure.ui.help.HelpScreen
 import com.peter.azure.ui.help.HelpViewModel
 import com.peter.azure.ui.home.HomeScreen
-import com.peter.azure.ui.home.HomeUiState
 import com.peter.azure.ui.home.HomeViewModel
 import com.peter.azure.ui.print.PrintScreen
 import com.peter.azure.ui.print.PrintViewModel
@@ -46,29 +45,25 @@ fun AzureNavigationGraph(
                 viewModel = viewModel,
                 navigateToNewGame = {
                     val level = viewModel.getGameLevel()
-                    level?.let {
-                        navHostController.navigate(
-                            AzureDestination.Main.HOME.getNavGameRoute(it)
-                        ) {
-                            popUpTo(AzureDestination.Main.HOME.route) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
+                    navHostController.navigate(
+                        AzureDestination.Main.HOME.getNavGameRoute(level)
+                    ) {
+                        popUpTo(AzureDestination.Main.HOME.route) {
+                            saveState = true
                         }
+                        launchSingleTop = true
+                        restoreState = true
                     }
                 },
                 navigateToContinueGame = {
-                    if (viewModel.uiState.value is HomeUiState.Success) {
-                        navHostController.navigate(
-                            AzureDestination.Main.HOME.getNavGameRoute()
-                        ) {
-                            popUpTo(AzureDestination.Main.HOME.route) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
+                    navHostController.navigate(
+                        AzureDestination.Main.HOME.getNavGameRoute()
+                    ) {
+                        popUpTo(AzureDestination.Main.HOME.route) {
+                            saveState = true
                         }
+                        launchSingleTop = true
+                        restoreState = true
                     }
                 },
                 isPortrait = isPortrait,

@@ -18,6 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -121,6 +125,9 @@ fun GamePad(
                 Row(modifier = Modifier.weight(1f)) {
                     for (j in 0..2) {
                         val num = (j + 1) + (i * times)
+                        val numDescription = stringResource(
+                            R.string.game_pad_num_button_description, num
+                        )
                         Box(
                             modifier = Modifier.weight(1f)
                         ) {
@@ -132,7 +139,10 @@ fun GamePad(
                             ) {
                                 Text(
                                     text = "$num",
-                                    style = textStyle
+                                    style = textStyle,
+                                    modifier = Modifier.semantics {
+                                        text = AnnotatedString(numDescription)
+                                    }
                                 )
                             }
                         }
@@ -164,6 +174,10 @@ private fun ActionIcon(
     iconSize: Int,
     modifier: Modifier,
 ) {
+    val buttonDescription = stringResource(
+        R.string.game_pad_icon_button_description,
+        iconCd
+    )
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
@@ -172,7 +186,11 @@ private fun ActionIcon(
             painter = painterResource(iconId),
             contentDescription = iconCd,
             tint = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier.size(iconSize.dp)
+            modifier = Modifier
+                .size(iconSize.dp)
+                .clearAndSetSemantics {
+                    text = AnnotatedString(buttonDescription)
+                }
         )
     }
 }
