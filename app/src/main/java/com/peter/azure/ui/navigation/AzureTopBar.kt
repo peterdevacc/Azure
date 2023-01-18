@@ -119,6 +119,11 @@ fun AzureTopBar(
         Modifier.fillMaxHeight()
     }
 
+    val destinationText = stringResource(destination.textId)
+    val screenHeadingDescription = stringResource(
+        R.string.screen_heading_description, destinationText
+    )
+
     ConstraintLayout(modifier = containerModifier) {
         val (icon, heading, leftSide) = createRefs()
 
@@ -169,7 +174,9 @@ fun AzureTopBar(
             text = stringResource(destination.textId),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = headingModifier
+            modifier = headingModifier.semantics {
+                text = AnnotatedString(screenHeadingDescription)
+            }
         )
 
         Box(modifier = leftSideModifier) {
