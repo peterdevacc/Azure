@@ -38,7 +38,7 @@ class HomeViewModelTest {
 
         delay(magicNum)
 
-        viewModel.setGameLevel(expected)
+        viewModel.setDialAngle(expected)
         val result = (viewModel.uiState.value as HomeUiState.Success).dialAngle
         val delta = 1e-15
         assertEquals(expected, result, delta)
@@ -56,15 +56,15 @@ class HomeViewModelTest {
 
         delay(magicNum)
 
-        viewModel.setGameLevel(-130.0)
+        viewModel.setDialAngle(-130.0)
         var level = viewModel.getGameLevel()
         assertEquals(GameLevel.EASY, level)
 
-        viewModel.setGameLevel(30.0)
+        viewModel.setDialAngle(30.0)
         level = viewModel.getGameLevel()
         assertEquals(GameLevel.MODERATE, level)
 
-        viewModel.setGameLevel(-30.0)
+        viewModel.setDialAngle(-30.0)
         level = viewModel.getGameLevel()
         assertEquals(GameLevel.HARD, level)
     }

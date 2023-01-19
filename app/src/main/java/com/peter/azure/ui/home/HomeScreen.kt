@@ -39,7 +39,7 @@ fun HomeScreen(
 
     HomeContent(
         uiState = viewModel.uiState.value,
-        setGameLevel = viewModel::setGameLevel,
+        setDialAngle = viewModel::setDialAngle,
         getGameLevel = viewModel::getGameLevel,
         navigateToNewGame = navigateToNewGame,
         navigateToContinueGame = navigateToContinueGame,
@@ -53,7 +53,7 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     uiState: HomeUiState,
-    setGameLevel: (Double) -> Unit,
+    setDialAngle: (Double) -> Unit,
     getGameLevel: () -> GameLevel,
     navigateToNewGame: () -> Unit,
     navigateToContinueGame: () -> Unit,
@@ -147,7 +147,7 @@ fun HomeContent(
                         GameLevelSetting(
                             fullSize = dialSize.dp,
                             dialAngle = uiState.dialAngle,
-                            setGameLevel = setGameLevel,
+                            setDialAngle = setDialAngle,
                             semanticsDescription = description
                         )
                     } else {

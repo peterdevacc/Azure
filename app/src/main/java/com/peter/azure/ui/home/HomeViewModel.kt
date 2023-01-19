@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
     private val homeUiState: MutableState<HomeUiState> = mutableStateOf(HomeUiState.Loading)
     val uiState: State<HomeUiState> = homeUiState
 
-    fun setGameLevel(angle: Double) {
+    fun setDialAngle(angle: Double) {
         if (homeUiState.value is HomeUiState.Success) {
             val state = (homeUiState.value as HomeUiState.Success)
             homeUiState.value = state.copy(dialAngle = angle)

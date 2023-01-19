@@ -38,7 +38,7 @@ import kotlin.math.*
 fun GameLevelSetting(
     fullSize: Dp,
     dialAngle: Double,
-    setGameLevel: (Double) -> Unit,
+    setDialAngle: (Double) -> Unit,
     semanticsDescription: String
 ) {
 
@@ -46,7 +46,7 @@ fun GameLevelSetting(
         Dial(
             fullSize = fullSize,
             dialAngle = dialAngle,
-            setGameLevel = setGameLevel
+            setDialAngle = setDialAngle
         )
     }
     val indicator = @Composable {
@@ -86,7 +86,7 @@ fun GameLevelSetting(
 private fun Dial(
     fullSize: Dp,
     dialAngle: Double,
-    setGameLevel: (Double) -> Unit,
+    setDialAngle: (Double) -> Unit,
 ) {
     var sizeParam = fullSize
     if (sizeParam < 192.dp) {
@@ -140,9 +140,7 @@ private fun Dial(
                             (x - centerX).toDouble(),
                             (centerY - y).toDouble()
                         )
-                        setGameLevel(
-                            viewRotation + newSpinRotation - spinRotation
-                        )
+                        setDialAngle(viewRotation + newSpinRotation - spinRotation)
                     }
                     MotionEvent.ACTION_UP -> {
                         spinRotation = 0.0
