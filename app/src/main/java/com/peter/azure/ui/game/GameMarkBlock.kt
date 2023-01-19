@@ -18,9 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -50,12 +52,43 @@ fun GameMarkBlock(
         iconArgs = 20 to 2
     }
 
+    val row = location.x + 1
+    val column = location.y + 1
+    val cellTitle = if (location.isNotDefault()) {
+        stringResource(
+            R.string.screen_game_mark_block_cell_title,
+            row, column
+        )
+    } else {
+        stringResource(R.string.screen_game_mark_block_cell_none_title)
+    }
+    val cellTitleDescription = stringResource(
+        R.string.mark_block_cell_title_description,
+        cellTitle
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.6f))
             .border(1.dp, MaterialTheme.colorScheme.onBackground)
     ) {
+        Text(
+            text = cellTitle,
+            style = textStyle,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(vertical = 2.dp)
+                .fillMaxWidth()
+                .semantics {
+                    text = AnnotatedString(cellTitleDescription)
+                }
+        )
+        Divider(
+            thickness = 1.dp,
+            color = MaterialTheme.colorScheme.onTertiaryContainer
+        )
         val times = 3
         for (i in 0..2) {
             Row(
@@ -67,11 +100,11 @@ fun GameMarkBlock(
                     val block = if (location.isNotDefault()) {
                         stringResource(
                             R.string.mark_block_num_description,
-                            num, mark.name, location.x + 1, location.y + 1
+                            num, mark.name, row, column
                         )
                     } else {
                         stringResource(
-                            R.string.mark_block_no_location_description
+                            R.string.mark_block_location_none_description
                         )
                     }
                     ConstraintLayout(

@@ -56,6 +56,8 @@
     </string>
     <string name="screen_game_submit_dialog_finish">Finish</string>
     <string name="screen_game_submit_dialog_cancel">Cancel</string>
+    <string name="screen_game_mark_block_cell_title">Cell - r%1$d, w%2$d</string>
+    <string name="screen_game_mark_block_cell_none_title">Cell - None</string>
 
     <string name="screen_contract">Contract</string>
     <string name="screen_greeting">Greeting</string>
@@ -105,17 +107,21 @@
     <string name="game_level_setting_description">
         Game level setting wheel, current level is %1$s ,double click and then hold to spin
     </string>
+
     <string name="game_existed_description">A Sudoku game existed</string>
     <string name="game_board_blank_cell_description">
-        Game board blank cell at %1$d row %2$d column with no number
+        Game board blank cell r%1$d c%2$d with no number
     </string>
     <string name="game_board_blank_cell_with_num_description">
-        Game board blank cell at %1$d row %2$d column with number %3$d
+        Game board blank cell r%1$d c%2$d with number %3$d
     </string>
     <string name="game_board_question_cell_description">
-        Game board question cell at %1$d row %2$d column with number %3$d
+        Game board question cell r%1$d c%2$d with number %3$d
     </string>
-    <string name="mark_block_no_location_description">
+    <string name="mark_block_cell_title_description">
+        Mark block current selected blank %1$s
+    </string>
+    <string name="mark_block_location_none_description">
         Mark block no blank cell selected
     </string>
     <string name="mark_block_num_description">
