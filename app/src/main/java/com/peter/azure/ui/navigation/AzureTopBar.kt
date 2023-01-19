@@ -12,6 +12,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
@@ -82,6 +84,7 @@ fun AzureTopBar(
             color = MaterialTheme.colorScheme.onBackground,
             modifier = headingModifier.semantics {
                 text = AnnotatedString(screenHeadingDescription)
+                liveRegion = LiveRegionMode.Assertive
             }
         )
 
@@ -176,6 +179,7 @@ fun AzureTopBar(
             color = MaterialTheme.colorScheme.onBackground,
             modifier = headingModifier.semantics {
                 text = AnnotatedString(screenHeadingDescription)
+                liveRegion = LiveRegionMode.Assertive
             }
         )
 

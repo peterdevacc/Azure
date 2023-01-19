@@ -41,9 +41,11 @@ fun PrintLevelButton(
         Text(
             text = text,
             style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(start = 2.dp).semantics {
-                this.text = AnnotatedString("")
-            }
+            modifier = Modifier
+                .padding(start = 2.dp)
+                .semantics {
+                    this.text = AnnotatedString("")
+                }
         )
     }
 }

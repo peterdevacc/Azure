@@ -148,7 +148,7 @@ private fun Block(fullSize: Dp) {
         }
 
         for (i in 1..2) {
-            val start = Offset(lineGap * i,  strokeWidth * 0.5f)
+            val start = Offset(lineGap * i, strokeWidth * 0.5f)
             val end = Offset(lineGap * i, fullSizePx - strokeWidth * 0.5f)
             drawLine(
                 brush = frameBrush,

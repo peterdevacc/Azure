@@ -15,9 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.text
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
@@ -37,10 +37,8 @@ fun PrintMessageDialog(
                 .clip(MaterialTheme.shapes.large)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
                 .padding(16.dp)
-                .clearAndSetSemantics {
-                    this.text = AnnotatedString(
-                        "$title, $text"
-                    )
+                .semantics {
+                    liveRegion = LiveRegionMode.Assertive
                 }
         ) {
             Text(

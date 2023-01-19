@@ -31,8 +31,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.peter.azure.ui.theme.AzureTheme
 import com.peter.azure.R
+import com.peter.azure.ui.theme.AzureTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
