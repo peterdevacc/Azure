@@ -26,7 +26,7 @@ class HomeViewModelTest {
     private val magicNum = 600L
 
     @Test
-    fun `set game level`() = runBlocking {
+    fun `set dial angle`() = runBlocking {
         val expected = 30.0
         coEvery {
             preferencesRepository.getGameExistedState()
