@@ -14,6 +14,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun LegalLinkedText(
@@ -23,7 +24,8 @@ fun LegalLinkedText(
     Text(
         text = text,
         style = MaterialTheme.typography.bodyLarge,
-        color = MaterialTheme.colorScheme.primary.copy(0.7f),
+        color = MaterialTheme.colorScheme.primary,
+        fontSize = 18.sp,
         textDecoration = TextDecoration.Underline,
         modifier = Modifier.clickable { onclick() }
     )
@@ -33,8 +35,9 @@ fun LegalLinkedText(
 fun LegalGeneralText(text: String) {
     Text(
         text = text,
-        color = MaterialTheme.colorScheme.onBackground,
         style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.onBackground,
+        fontSize = 18.sp,
         modifier = Modifier.semantics {
             this.text = AnnotatedString(
                 "Please read our service terms, privacy policy and acknowledgements."

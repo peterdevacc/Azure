@@ -70,7 +70,7 @@ private fun LazyListScope.getHelpItems(
         Text(
             text = catalog.name,
             style = MaterialTheme.typography.titleLarge,
-            color = colorPair.second.copy(alpha = 0.7f),
+            color = colorPair.second.copy(alpha = 0.68f),
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
@@ -107,11 +107,11 @@ private fun LazyListScope.getHelpItems(
 private fun getHelpItemColorPair(catalog: Help.Catalog): Pair<Color, Color> {
     return when (catalog) {
         Help.Catalog.FAQ -> Pair(
-            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.72f),
             MaterialTheme.colorScheme.onPrimaryContainer
         )
         Help.Catalog.TUTORIAL -> Pair(
-            MaterialTheme.colorScheme.secondaryContainer,
+            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.72f),
             MaterialTheme.colorScheme.onSecondaryContainer
         )
     }

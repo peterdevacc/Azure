@@ -197,7 +197,7 @@ fun AboutContent(
                 )
                 AboutAppItem(
                     heading = stringResource(R.string.app_last_update_title),
-                    text = stringResource(id = R.string.app_last_update),
+                    text = stringResource(R.string.app_last_update),
                     modifier = appItemModifier
                 )
             }

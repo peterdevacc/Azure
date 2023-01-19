@@ -36,12 +36,12 @@ fun AboutAppItem(
         Text(
             text = heading,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.outline
+            color = MaterialTheme.colorScheme.onBackground
         )
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.outline,
             fontSize = 20.sp
         )
     }
