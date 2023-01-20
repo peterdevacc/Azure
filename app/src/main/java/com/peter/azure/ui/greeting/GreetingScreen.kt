@@ -59,7 +59,7 @@ fun GreetingScreen(
     )
 }
 
-@OptIn(ExperimentalTextApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalTextApi::class)
 @Composable
 fun GreetingContent(
     loadInfo: (Info.Type) -> Unit,
@@ -135,26 +135,12 @@ fun GreetingContent(
                 textAlign = TextAlign.Center,
             )
         }
-        FlowRow(
-            modifier = Modifier.padding(bottom = 16.dp)
-        ) {
-            LegalGeneralText(text = "Please read our ")
-            LegalLinkedText(
-                text = "service terms",
-                onclick = { loadInfo(Info.Type.SERVICE) }
-            )
-            LegalGeneralText(text = ", ")
-            LegalLinkedText(
-                text = "privacy policy",
-                onclick = { loadInfo(Info.Type.PRIVACY) }
-            )
-            LegalGeneralText(text = " and ")
-            LegalLinkedText(
-                text = "acknowledgements",
-                onclick = { loadInfo(Info.Type.ACKNOWLEDGEMENTS) }
-            )
-            LegalGeneralText(text = ".")
-        }
+
+        LegalText(
+            isCompact =  isCompact,
+            loadInfo =  loadInfo
+        )
+
         ConstraintLayout(
             modifier = Modifier.fillMaxWidth()
         ) {
