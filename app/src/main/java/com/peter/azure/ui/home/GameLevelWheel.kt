@@ -35,7 +35,7 @@ import com.peter.azure.ui.theme.AzureTheme
 import kotlin.math.*
 
 @Composable
-fun GameLevelSetting(
+fun GameLevelWheel(
     fullSize: Dp,
     dialAngle: Double,
     setDialAngle: (Double) -> Unit,
@@ -114,10 +114,11 @@ private fun Dial(
     var viewRotation = remember { 0.0 }
     var spinRotation = remember { 0.0 }
 
-    val primaryColor = MaterialTheme.colorScheme.primary
-    val primaryContainerColor = MaterialTheme.colorScheme.primaryContainer
-    val gradientBrush = Brush.linearGradient(
-        listOf(primaryColor, primaryContainerColor)
+    val frameBrush = Brush.linearGradient(
+        listOf(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.primaryContainer
+        )
     )
 
     Canvas(
@@ -155,7 +156,7 @@ private fun Dial(
     ) {
 
         drawCircle(
-            brush = gradientBrush, radius = radius, center = centerOffset,
+            brush = frameBrush, radius = radius, center = centerOffset,
             style = Stroke(dialStrokeWidth)
         )
 
@@ -176,7 +177,7 @@ private fun Dial(
                     radius = radius
                 )
                 drawLine(
-                    brush = gradientBrush,
+                    brush = frameBrush,
                     strokeWidth = divideStrokeWidth,
                     start = centerOffset,
                     end = Offset(x = dot.first, y = dot.second)
@@ -273,12 +274,8 @@ private fun Indicator(
         )
 
         drawText(
-            textMeasurer = textMeasurer,
-            text = "A",
-            style = TextStyle(
-                fontSize = fontSize.sp,
-                color = coreColor
-            ),
+            textLayoutResult = textLayoutResult,
+            color = coreColor,
             topLeft = Offset(
                 x = (widthPx - textSize.width) / 2f + 0.1f,
                 y = bottomHeight * 0.88f - textSize.height
@@ -326,7 +323,7 @@ fun GameLevelSettingPreview() {
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            GameLevelSetting(
+            GameLevelWheel(
                 256.dp, angle.value, { angle.value = it }, ""
             )
         }

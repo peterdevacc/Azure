@@ -144,7 +144,7 @@ fun HomeContent(
                             R.string.game_level_setting_description,
                             level.name
                         )
-                        GameLevelSetting(
+                        GameLevelWheel(
                             fullSize = dialSize.dp,
                             dialAngle = uiState.dialAngle,
                             setDialAngle = setDialAngle,
