@@ -39,7 +39,7 @@ fun HelpScreen(
 }
 
 @Composable
-fun HelpContent(
+private fun HelpContent(
     uiState: HelpUiState,
     isPortrait: Boolean,
     navDialogState: MutableState<Boolean>,

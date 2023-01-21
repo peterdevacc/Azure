@@ -62,7 +62,7 @@ fun PrintScreen(
 }
 
 @Composable
-fun PrintContent(
+private fun PrintContent(
     pdfUiState: PdfUiState,
     generatePdf: () -> Unit,
     notShareable: () -> Unit,

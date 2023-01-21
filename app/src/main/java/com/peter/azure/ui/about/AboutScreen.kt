@@ -51,7 +51,7 @@ fun AboutScreen(
 }
 
 @Composable
-fun AboutContent(
+private fun AboutContent(
     navigateToContract: (Info.Type) -> Unit,
     isPortrait: Boolean,
     isCompact: Boolean,

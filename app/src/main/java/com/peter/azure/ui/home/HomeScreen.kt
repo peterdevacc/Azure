@@ -51,7 +51,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeContent(
+private fun HomeContent(
     uiState: HomeUiState,
     setDialAngle: (Double) -> Unit,
     getGameLevel: () -> GameLevel,

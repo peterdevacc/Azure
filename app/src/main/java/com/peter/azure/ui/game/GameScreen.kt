@@ -52,7 +52,7 @@ fun GameScreen(
 }
 
 @Composable
-fun GameContent(
+private fun GameContent(
     uiState: GameUiState,
     deleteGame: () -> Unit,
     selectLocation: (Location, Int) -> Unit,

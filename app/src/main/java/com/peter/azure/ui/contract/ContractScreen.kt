@@ -38,7 +38,7 @@ fun ContractScreen(
 }
 
 @Composable
-fun ContractContent(
+private fun ContractContent(
     uiState: ContractUiState,
     isPortrait: Boolean,
     navigateUp: () -> Unit

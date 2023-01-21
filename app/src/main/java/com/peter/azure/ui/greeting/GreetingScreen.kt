@@ -61,7 +61,7 @@ fun GreetingScreen(
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-fun GreetingContent(
+private fun GreetingContent(
     loadInfo: (Info.Type) -> Unit,
     greetingUiState: GreetingUiState,
     dismissDialog: () -> Unit,
@@ -238,7 +238,7 @@ fun GreetingContent(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-fun AboutScreenPreview() {
+fun GreetingScreenPreview() {
     val isPortrait = LocalConfiguration.current.orientation ==
             Configuration.ORIENTATION_PORTRAIT
     AzureTheme {

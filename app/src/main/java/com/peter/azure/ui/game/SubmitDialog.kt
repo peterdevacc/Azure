@@ -94,7 +94,7 @@ fun SubmitDialog(
 }
 
 @Composable
-fun SubmitDialogContent(
+private fun SubmitDialogContent(
     onDismiss: () -> Unit,
     content: @Composable () -> Unit
 ) {
