@@ -82,7 +82,7 @@
     <string name="icon_cd_navigate_up">Navigate up</string>
     <string name="icon_cd_screen_print">Print screen logo</string>
     <string name="icon_cd_add_level">Add level %1$s to the list</string>
-    <string name="icon_cd_remove_level">Remove level %1$s from the list</string>
+    <string name="icon_cd_remove_level">Remove position %1$s level %2$s from the list</string>
     <string name="icon_cd_delete_game">Delete game dialog</string>
     <string name="icon_cd_submit_answer">Submit answer dialog</string>
     <string name="icon_cd_clean">clean</string>

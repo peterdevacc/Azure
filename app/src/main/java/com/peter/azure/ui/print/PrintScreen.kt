@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -267,10 +268,11 @@ fun PrintContent(
                         .weight(1f)
                         .height(40.dp)
                 ) {
-                    items(gameLevelList) { level ->
+                    itemsIndexed(gameLevelList) { index, level ->
                         PrintLevelListItem(
-                            onClick = { removeGameLevel(level) },
                             text = level.name,
+                            index = index,
+                            onClick = { removeGameLevel(level) },
                             modifier = Modifier
                                 .padding(end = 8.dp)
                                 .height(28.dp)

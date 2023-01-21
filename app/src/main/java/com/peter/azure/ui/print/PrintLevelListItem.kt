@@ -23,8 +23,10 @@ import com.peter.azure.R
 fun PrintLevelListItem(
     text: String,
     onClick: () -> Unit,
+    index: Int,
     modifier: Modifier
 ) {
+    val position = index + 1
     OutlinedButton(
         onClick = onClick,
         shape = MaterialTheme.shapes.medium,
@@ -44,7 +46,10 @@ fun PrintLevelListItem(
         )
         Icon(
             painter = painterResource(R.drawable.ic_clear_24),
-            contentDescription = stringResource(R.string.icon_cd_remove_level, text),
+            contentDescription = stringResource(
+                R.string.icon_cd_remove_level,
+                position,text
+            ),
             modifier = Modifier.size(16.dp)
         )
     }
