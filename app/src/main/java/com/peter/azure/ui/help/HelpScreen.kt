@@ -49,6 +49,7 @@ private fun HelpContent(
         modifier = Modifier.azureScreen()
     ) {
         val (topBar, helpContainer) = createRefs()
+
         val topBarModifier: Modifier
         val helpContainerModifier: Modifier
 
@@ -84,7 +85,7 @@ private fun HelpContent(
             }
         }
 
-        Box(topBarModifier) {
+        Box(modifier = topBarModifier) {
             AzureTopBar(
                 isPortrait = isPortrait,
                 navDialogState = navDialogState,
@@ -113,17 +114,3 @@ private fun HelpContent(
         }
     }
 }
-
-//@Preview(name = "Help Screen", showBackground = true)
-//@Preview(
-//    name = "Help Screen (dark)", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun HelpScreenPreview() {
-//    val viewModel = HelpViewModel()
-//    val navHostController = rememberNavController()
-//    AzureTheme {
-//        HelpScreen(viewModel, navHostController)
-//    }
-//}

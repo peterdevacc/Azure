@@ -5,9 +5,9 @@
 
 package com.peter.azure.data.repository
 
+import com.peter.azure.data.entity.Cell
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.entity.PrintGame
-import com.peter.azure.data.entity.Puzzle
 import com.peter.common.Sudoku
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,7 +19,7 @@ class SudokuRepository @Inject constructor(
     private val sudoku: Sudoku
 ) {
 
-    suspend fun getBoard(gameLevel: GameLevel): List<List<Int>> =
+    suspend fun getPuzzleBoard(gameLevel: GameLevel): List<List<Int>> =
         withContext(Dispatchers.Default) {
             return@withContext sudoku.createSudoku(gameLevel.num)
         }
@@ -27,6 +27,7 @@ class SudokuRepository @Inject constructor(
     suspend fun getPrintGameList(gameLevelList: List<GameLevel>): List<PrintGame> =
         withContext(Dispatchers.Default) {
             val printGameList = mutableListOf<PrintGame>()
+
             gameLevelList.forEach { level ->
                 printGameList.add(
                     PrintGame(level, sudoku.createSudoku(level.num))
@@ -36,10 +37,10 @@ class SudokuRepository @Inject constructor(
             return@withContext printGameList.toList()
         }
 
-    suspend fun checkAnswer(puzzle: Puzzle): Boolean =
+    suspend fun checkBoardAnswer(board: List<List<Cell>>): Boolean =
         withContext(Dispatchers.Default) {
             return@withContext sudoku.verifySudokuAnswer(
-                puzzle.board.map { row ->
+                board.map { row ->
                     row.map {
                         it.num
                     }

@@ -56,6 +56,7 @@
     <string name="screen_game_mark_block_cell_none_title">Cell - None</string>
 
     <string name="screen_contract">Contract</string>
+
     <string name="screen_greeting">Greeting</string>
     <string name="screen_greeting_accept">ACCEPT AND CONTINUE</string>
     <string name="screen_greeting_reject">REJECT AND EXIT</string>
@@ -75,8 +76,8 @@
     </string-array>
 
     <string name="icon_error">Error icon</string>
-    <string name="error_io">a IO error happened, \nplease try again.</string>
-    <string name="error_unknown">a unknown error happened, \nplease try again.</string>
+    <string name="error_io">A IO error happened, \nplease try again.</string>
+    <string name="error_unknown">A unknown error happened, \nplease try again.</string>
 
     <string name="icon_cd_navigation_menu">Navigation menu</string>
     <string name="icon_cd_navigate_up">Navigate up</string>
@@ -85,10 +86,10 @@
     <string name="icon_cd_remove_level">Remove position %1$s level %2$s from the list</string>
     <string name="icon_cd_delete_game">Delete game dialog</string>
     <string name="icon_cd_submit_answer">Submit answer dialog</string>
-    <string name="icon_cd_clean">clean</string>
-    <string name="icon_cd_mark_potential">mark potential</string>
-    <string name="icon_cd_mark_wrong">mark wrong</string>
-    <string name="icon_cd_mark_none">mark none</string>
+    <string name="icon_cd_clean">Clean</string>
+    <string name="icon_cd_mark_potential">Mark potential</string>
+    <string name="icon_cd_mark_wrong">Mark wrong</string>
+    <string name="icon_cd_mark_none">Mark none</string>
 
     <string name="screen_heading_description">%1$s Screen</string>
     <string name="navigate_to_contract_description">Navigate to %1$s contract screen</string>

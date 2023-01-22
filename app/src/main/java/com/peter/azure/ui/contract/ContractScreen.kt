@@ -85,7 +85,7 @@ private fun ContractContent(
                 }
         }
 
-        Box(topBarModifier) {
+        Box(modifier = topBarModifier) {
             AzureTopBar(
                 isPortrait = isPortrait,
                 destination = AzureDestination.General.CONTRACT,
@@ -118,15 +118,3 @@ private fun ContractContent(
         }
     }
 }
-
-//@Preview(name = "Contract Screen", showBackground = true)
-//@Preview(
-//    name = "Contract Screen", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun ContractScreenPreview() {
-//    AzureTheme {
-//
-//    }
-//}

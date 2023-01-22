@@ -379,21 +379,3 @@ private fun PrintContent(
         }
     }
 }
-
-
-//@Preview(name = "Print Screen", showBackground = true)
-//@Preview(
-//    name = "Print Screen", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun PrintScreenPreview() {
-//    val navDialog = remember { mutableStateOf(false) }
-//
-//    AzureTheme {
-//        PrintContent(
-//            navDialog, PdfUiState.Default,
-//            {}, {}, {}, emptyList(), {}, {}, {}
-//        )
-//    }
-//}

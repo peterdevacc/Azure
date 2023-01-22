@@ -136,7 +136,7 @@ class GameViewModel @Inject constructor(
                 dialog = GameUiState.Playing.Dialog.Processing
             )
             val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
-                val isCorrect = sudokuRepository.checkAnswer(uiState.puzzle)
+                val isCorrect = sudokuRepository.checkBoardAnswer(uiState.puzzle.board)
                 _gameUiState.value = uiState.copy(
                     isCorrect = isCorrect,
                     dialog = GameUiState.Playing.Dialog.Submit
@@ -214,7 +214,7 @@ class GameViewModel @Inject constructor(
                             savedStateHandle[GAME_LEVEL_SAVED_KEY]
                         )
                         val level = GameLevel.valueOf(gameLevel)
-                        val sudoku = sudokuRepository.getBoard(level)
+                        val sudoku = sudokuRepository.getPuzzleBoard(level)
                         noteList = mutableListOf()
                         val markList = Mark.getDefaultList()
                         val board = sudoku.mapIndexed { y, row ->

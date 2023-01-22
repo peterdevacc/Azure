@@ -319,7 +319,7 @@ private fun GamePlayingContent(
             GameBoard(
                 puzzle = uiState.puzzle,
                 selectedLocation = uiState.location,
-                selectLocation = selectLocation,
+                select = selectLocation,
                 isCompact = isCompact
             )
         }
@@ -344,17 +344,3 @@ private fun GamePlayingContent(
     }
 
 }
-
-//@Preview(
-//    name = "GameScreen",
-//    showBackground = true
-//)
-//@Preview(
-//    name = "GameScreen", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun GameScreenPreview() {
-//    AzureTheme {
-//    }
-//}

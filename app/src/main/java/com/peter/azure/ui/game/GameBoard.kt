@@ -5,7 +5,6 @@
 
 package com.peter.azure.ui.game
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.peter.azure.R
@@ -33,7 +31,7 @@ import com.peter.azure.data.entity.Puzzle
 fun GameBoard(
     puzzle: Puzzle,
     selectedLocation: Location,
-    selectLocation: (Location, Int) -> Unit,
+    select: (Location, Int) -> Unit,
     isCompact: Boolean
 ) {
     Column(
@@ -49,7 +47,7 @@ fun GameBoard(
                         cell = cell,
                         location = Location(i, j),
                         selectedLocation = selectedLocation,
-                        select = selectLocation,
+                        select = select,
                         isCompact = isCompact,
                         modifier = Modifier.weight(1f)
                     )
@@ -159,27 +157,4 @@ private fun GameCell(
         )
     }
 
-}
-
-@Preview(
-    name = "GameBoard",
-    showBackground = true
-)
-@Preview(
-    name = "GameBoard", showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-@Composable
-fun GameBoardPreview() {
-//    val boardInputStream = LocalContext.current.assets
-//        .open("puzzle.json")
-//    val boardJsonString = boardInputStream.bufferedReader().readText()
-//    val board = Json.decodeFromString<List<List<Cell>>>(boardJsonString)
-//    val puzzle = Puzzle(board = board)
-//    AzureTheme {
-//        GameBoard(
-//            puzzle = puzzle,
-//            selectLocation = {}
-//        )
-//    }
 }

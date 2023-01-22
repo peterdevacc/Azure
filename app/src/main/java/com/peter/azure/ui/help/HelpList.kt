@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -29,7 +30,10 @@ fun HelpList(
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            getHelpItems(true, helpMap)
+            getHelpItems(
+                isPortrait = true,
+                helpMap = helpMap
+            )
         }
     } else {
         LazyRow(
@@ -37,7 +41,10 @@ fun HelpList(
                 .padding(start = 16.dp)
                 .fillMaxSize()
         ) {
-            getHelpItems(false, helpMap)
+            getHelpItems(
+                isPortrait = false,
+                helpMap = helpMap
+            )
         }
     }
 }
@@ -67,14 +74,19 @@ private fun LazyListScope.getHelpItems(
     }
 
     Column(modifier = itemModifier) {
-        Text(
-            text = catalog.name,
-            style = MaterialTheme.typography.titleLarge,
-            color = colorPair.second.copy(alpha = 0.68f),
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
-        )
+        ) {
+            Text(
+                text = catalog.name,
+                style = MaterialTheme.typography.titleLarge,
+                color = colorPair.second.copy(alpha = 0.68f),
+                modifier = Modifier.weight(1f)
+            )
+        }
         if (isPortrait) {
             helpList.forEach { help ->
                 HelpItem(

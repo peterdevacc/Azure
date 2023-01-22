@@ -122,7 +122,9 @@ fun GamePad(
         ) {
             val times = 3
             for (i in 0..2) {
-                Row(modifier = Modifier.weight(1f)) {
+                Row(
+                    modifier = Modifier.weight(1f)
+                ) {
                     for (j in 0..2) {
                         val num = (j + 1) + (i * times)
                         val numDescription = stringResource(
