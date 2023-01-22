@@ -47,7 +47,7 @@ class GameViewModelTest {
                 preferencesRepository.getGameExistedStateLatest()
             } returns DataResult.Success(false)
             coEvery {
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
             } returns board
             coEvery {
                 preferencesRepository.setGameExistedState(true)
@@ -79,7 +79,7 @@ class GameViewModelTest {
                 preferencesRepository.getGameExistedStateLatest()
             } returns DataResult.Success(false)
             coEvery {
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
             } returns board
             coEvery {
                 preferencesRepository.setGameExistedState(true)
@@ -133,7 +133,7 @@ class GameViewModelTest {
                 preferencesRepository.getGameExistedStateLatest()
             } returns DataResult.Success(false)
             coEvery {
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
             } returns board
             coEvery {
                 preferencesRepository.setGameExistedState(true)
@@ -195,7 +195,7 @@ class GameViewModelTest {
                 preferencesRepository.getGameExistedStateLatest()
             } returns DataResult.Success(false)
             coEvery {
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
             } returns board
             coEvery {
                 preferencesRepository.setGameExistedState(true)
@@ -211,12 +211,12 @@ class GameViewModelTest {
             clearAllMocks()
 
             coEvery {
-                sudokuRepository.checkAnswer(puzzle)
+                sudokuRepository.checkBoardAnswer(puzzle.board)
             } returns true
             viewModel.submitAnswer()
             delay(magicNum)
             coVerify(exactly = 1) {
-                sudokuRepository.checkAnswer(puzzle)
+                sudokuRepository.checkBoardAnswer(puzzle.board)
             }
             confirmVerified(sudokuRepository)
         }
@@ -230,7 +230,7 @@ class GameViewModelTest {
                 preferencesRepository.getGameExistedStateLatest()
             } returns DataResult.Success(false)
             coEvery {
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
             } returns board
             coEvery {
                 preferencesRepository.setGameExistedState(true)
@@ -267,7 +267,7 @@ class GameViewModelTest {
                 preferencesRepository.getGameExistedStateLatest()
             } returns DataResult.Success(false)
             coEvery {
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
             } returns board
             coEvery {
                 preferencesRepository.setGameExistedState(true)
@@ -282,7 +282,7 @@ class GameViewModelTest {
             delay(magicNum)
             coVerify(exactly = 1) {
                 preferencesRepository.getGameExistedStateLatest()
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
                 noteRepository.insertNoteList(listOf(note))
                 puzzleRepository.insertPuzzle(puzzle)
                 preferencesRepository.setGameExistedState(true)
@@ -324,7 +324,7 @@ class GameViewModelTest {
                 preferencesRepository.getGameExistedStateLatest()
             } returns DataResult.Success(false)
             coEvery {
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
             } returns board
             coEvery {
                 preferencesRepository.setGameExistedState(true)
@@ -339,7 +339,7 @@ class GameViewModelTest {
             delay(magicNum)
             coVerify(exactly = 1) {
                 preferencesRepository.getGameExistedStateLatest()
-                sudokuRepository.getBoard(GameLevel.EASY)
+                sudokuRepository.getPuzzleBoard(GameLevel.EASY)
                 noteRepository.insertNoteList(listOf(note))
                 puzzleRepository.insertPuzzle(puzzle)
                 preferencesRepository.setGameExistedState(true)

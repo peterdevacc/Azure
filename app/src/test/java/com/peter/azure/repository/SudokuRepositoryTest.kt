@@ -29,7 +29,7 @@ class SudokuRepositoryTest {
 
     @Test
     fun `get board`() = runBlocking {
-        sudokuRepository.getBoard(gameLevelList.first())
+        sudokuRepository.getPuzzleBoard(gameLevelList.first())
 
         coVerify(exactly = 1) {
             sudoku.createSudoku(gameLevelList.first().num)
@@ -52,8 +52,8 @@ class SudokuRepositoryTest {
     }
 
     @Test
-    fun `check answer`() = runBlocking {
-        sudokuRepository.checkAnswer(puzzle)
+    fun `check board answer`() = runBlocking {
+        sudokuRepository.checkBoardAnswer(puzzle.board)
 
         coVerify(exactly = 1) {
             sudoku.verifySudokuAnswer(
