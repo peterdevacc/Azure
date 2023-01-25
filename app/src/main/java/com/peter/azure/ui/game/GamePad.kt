@@ -60,7 +60,7 @@ fun GamePad(
             .border(1.dp, MaterialTheme.colorScheme.onBackground)
     ) {
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1.2f)
         ) {
             ActionIcon(
                 iconId = R.drawable.ic_clear_24,
@@ -118,7 +118,7 @@ fun GamePad(
                 .width(1.dp)
         )
         Column(
-            modifier = Modifier.weight(4f)
+            modifier = Modifier.weight(3.8f)
         ) {
             val times = 3
             for (i in 0..2) {
