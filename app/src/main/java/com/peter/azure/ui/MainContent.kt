@@ -6,7 +6,6 @@
 package com.peter.azure.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -16,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.peter.azure.ui.navigation.AzureNavigationGraph
 import com.peter.azure.ui.util.ErrorNotice
+import com.peter.azure.ui.util.azureScreen
 
 @Composable
 fun MainContent(
@@ -38,7 +38,7 @@ fun MainContent(
         is MainUiState.Error -> {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.azureScreen()
             ) {
                 ErrorNotice(uiState.code)
             }
@@ -46,7 +46,7 @@ fun MainContent(
         MainUiState.Loading -> {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.azureScreen()
             ) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(24.dp, 24.dp)
