@@ -121,7 +121,7 @@ private fun GreetingContent(
                 .fillMaxWidth()
         ) {
             Text(
-                text = stringResource(R.string.screen_about_slogan),
+                text = stringResource(R.string.screen_greeting_slogan),
                 style = MaterialTheme.typography.headlineLarge.copy(
                     fontWeight = FontWeight.Bold,
                     brush = Brush.horizontalGradient(

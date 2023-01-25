@@ -3,9 +3,8 @@
     <string name="app_version_title">version</string>
     <string name="app_version">1.0</string>
     <string name="app_last_update_title">last update</string>
-    <string name="app_last_update">Jan 19 2023</string>
-    <string name="app_website">https://github.com/peterdevacc/AzureNum</string>
-    <string name="app_motto">Build and improve \nyour own judgement.</string>
+    <string name="app_last_update">Jan 25 2023</string>
+    <string name="app_motto">Build and improve your own judgement.</string>
 
     <string name="screen_home">Home</string>
     <string name="screen_home_description">a Sudoku game is start from here.</string>
@@ -34,7 +33,7 @@
     <string name="screen_about_description">
         Our information and legal files are list in here.
     </string>
-    <string name="screen_about_slogan">AzureNum\nGood Sudoku App</string>
+    <string name="screen_about_app_full_name">AzureNum\nSudoku</string>
 
     <string name="screen_game">Game</string>
     <string name="screen_game_delete_dialog_title">Delete game</string>
@@ -58,6 +57,7 @@
     <string name="screen_contract">Contract</string>
 
     <string name="screen_greeting">Greeting</string>
+    <string name="screen_greeting_slogan">AzureNum\nPlay&amp;Print Sudoku</string>
     <string name="screen_greeting_accept">ACCEPT AND CONTINUE</string>
     <string name="screen_greeting_reject">REJECT AND EXIT</string>
 
