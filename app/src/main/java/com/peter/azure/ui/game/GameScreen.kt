@@ -235,7 +235,7 @@ private fun GamePlayingContent(
                 ) {
                     when (uiState.dialog) {
                         GameUiState.Playing.Dialog.Submit -> {
-                            SubmitDialog(
+                            ResultDialog(
                                 isCorrect = uiState.isCorrect,
                                 endGame = deleteGame,
                                 onDismiss = closePlayingDialog

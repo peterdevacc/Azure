@@ -24,79 +24,27 @@ import androidx.compose.ui.window.Dialog
 import com.peter.azure.R
 
 @Composable
-fun SubmitDialog(
+fun ResultDialog(
     isCorrect: Boolean,
     endGame: () -> Unit,
     onDismiss: () -> Unit
 ) {
     if (isCorrect) {
-        val result = stringResource(R.string.screen_game_submit_dialog_correct_result)
-        SubmitDialogContent(
-            onDismiss = onDismiss,
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        text = result,
-                        modifier = Modifier
-                            .padding(vertical = 16.dp)
-                            .fillMaxWidth()
-                    )
-                    Row {
-                        Button(
-                            onClick = onDismiss,
-                            shape = MaterialTheme.shapes.medium,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.error
-                            ),
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Text(
-                                color = MaterialTheme.colorScheme.onError,
-                                text = stringResource(R.string.screen_game_submit_dialog_cancel)
-                            )
-                        }
-                        Spacer(modifier = Modifier.padding(horizontal = 4.dp))
-                        Button(
-                            onClick = endGame,
-                            shape = MaterialTheme.shapes.medium,
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(
-                                color = MaterialTheme.colorScheme.onPrimary,
-                                text = stringResource(R.string.screen_game_submit_dialog_finish)
-                            )
-                        }
-                    }
-                }
-            }
-        }
+        CorrectContent(
+            endGame = endGame,
+            onDismiss = onDismiss
+        )
     } else {
-        val result = stringResource(R.string.screen_game_submit_dialog_wrong_result)
-        SubmitDialogContent(
-            onDismiss = onDismiss,
-        ) {
-            Text(
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                text = result,
-                modifier = Modifier.padding(vertical = 12.dp),
-            )
-        }
+        WrongContent(
+            onDismiss = onDismiss
+        )
     }
 }
 
 @Composable
-private fun SubmitDialogContent(
+private fun CorrectContent(
     onDismiss: () -> Unit,
-    content: @Composable () -> Unit
+    endGame: () -> Unit,
 ) {
     Dialog(
         onDismissRequest = onDismiss,
@@ -113,11 +61,103 @@ private fun SubmitDialogContent(
                 }
         ) {
             Text(
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                text = stringResource(R.string.screen_game_submit_dialog_title),
+                text = stringResource(R.string.screen_game_result_dialog_title),
             )
-            content()
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        text = stringResource(R.string.screen_game_result_dialog_correct),
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .fillMaxWidth()
+                    )
+                    Row {
+                        Button(
+                            onClick = onDismiss,
+                            shape = MaterialTheme.shapes.medium,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error
+                            ),
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(
+                                color = MaterialTheme.colorScheme.onError,
+                                text = stringResource(R.string.screen_game_result_dialog_cancel)
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(horizontal = 4.dp))
+                        Button(
+                            onClick = endGame,
+                            shape = MaterialTheme.shapes.medium,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                text = stringResource(R.string.screen_game_result_dialog_finish)
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
+
+@Composable
+private fun WrongContent(
+    onDismiss: () -> Unit
+) {
+    Dialog(
+        onDismissRequest = onDismiss
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.large)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .padding(16.dp)
+                .fillMaxWidth()
+                .semantics {
+                    liveRegion = LiveRegionMode.Assertive
+                }
+        ) {
+            Text(
+                text = stringResource(R.string.screen_game_result_dialog_title),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            Text(
+                text = stringResource(R.string.screen_game_result_dialog_wrong),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+            Button(
+                onClick = onDismiss,
+                shape = MaterialTheme.shapes.small,
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.onSecondary,
+                    containerColor = MaterialTheme.colorScheme.secondary
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.screen_game_result_dialog_ok),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+    }
+}
+
+

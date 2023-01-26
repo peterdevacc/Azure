@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.peter.azure.data.entity.Info
@@ -22,13 +23,16 @@ import com.peter.azure.data.entity.Info
 @Composable
 fun InfoDocument(
     info: Info,
+    contentPadding: PaddingValues = PaddingValues(16.dp),
+    textColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     modifier: Modifier
 ) {
     LazyColumn(
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = contentPadding,
         modifier = modifier
             .then(Modifier)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(backgroundColor)
     ) {
         itemsIndexed(info.data) { key, data ->
             when (data.type) {
@@ -41,7 +45,7 @@ fun InfoDocument(
                     Text(
                         text = data.text,
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = textColor,
                         modifier = Modifier
                             .padding(paddingValues)
                             .fillMaxWidth()
@@ -51,7 +55,7 @@ fun InfoDocument(
                     Text(
                         text = data.text,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = textColor,
                         modifier = Modifier
                             .padding(vertical = 4.dp)
                             .fillMaxWidth()
@@ -61,7 +65,7 @@ fun InfoDocument(
                     Text(
                         text = data.text,
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = textColor,
                         modifier = Modifier
                             .padding(top = 32.dp, bottom = 8.dp)
                             .fillMaxWidth(),

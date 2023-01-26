@@ -10,12 +10,17 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.peter.azure.R
 import com.peter.azure.data.entity.Info
 
 @Composable
@@ -31,18 +36,19 @@ fun LegalText(
     }
     val linkedStyle = SpanStyle(
         color = MaterialTheme.colorScheme.primary,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        textDecoration = TextDecoration.Underline
     )
 
     val annotatedText = buildAnnotatedString {
-        append("Please read our ")
+        append("Please read the ")
 
         pushStringAnnotation(
             tag = infoTypeTag,
             annotation = Info.Type.SERVICE.name
         )
         withStyle(style = linkedStyle) {
-            append("service terms")
+            append(stringResource(R.string.service_title))
         }
         pop()
 
@@ -50,10 +56,10 @@ fun LegalText(
 
         pushStringAnnotation(
             tag = infoTypeTag,
-            annotation = Info.Type.SERVICE.name
+            annotation = Info.Type.PRIVACY.name
         )
         withStyle(style = linkedStyle) {
-            append("private policy")
+            append(stringResource(R.string.privacy_title))
         }
         pop()
 
@@ -61,15 +67,19 @@ fun LegalText(
 
         pushStringAnnotation(
             tag = infoTypeTag,
-            annotation = Info.Type.SERVICE.name
+            annotation = Info.Type.ACKNOWLEDGEMENTS.name
         )
         withStyle(style = linkedStyle) {
-            append("acknowledgements")
+            append(stringResource(R.string.acknowledgement_title))
         }
         pop()
 
         append(".")
     }
+
+    val contractDescription = stringResource(
+        R.string.legal_text_description
+    )
 
     ClickableText(
         text = annotatedText,
@@ -84,7 +94,11 @@ fun LegalText(
                 loadInfo(Info.Type.valueOf(annotation.item))
             }
         },
-        modifier = Modifier.padding(bottom = 16.dp)
+        modifier = Modifier
+            .padding(bottom = 16.dp)
+            .semantics {
+                contentDescription = contractDescription
+            }
     )
 
 }

@@ -19,9 +19,10 @@
     <string name="screen_print_not_shareable_pdf_dialog_msg">
         You need to generate Sudoku PDF first.
     </string>
+    <string name="screen_print_not_shareable_pdf_dialog_ok">OK</string>
     <string name="screen_print_empty_game_level_list_dialog_title">Game Level List</string>
     <string name="screen_print_empty_game_level_list_dialog_msg">
-        You need to add at least one game level \nin the list.
+        You need to add at least one game level in the list.
     </string>
 
     <string name="screen_help">Help</string>
@@ -42,15 +43,16 @@
     </string>
     <string name="screen_game_delete_dialog_confirm">Confirm</string>
     <string name="screen_game_delete_dialog_cancel">Cancel</string>
-    <string name="screen_game_submit_dialog_title">Result</string>
-    <string name="screen_game_submit_dialog_correct_result">
+    <string name="screen_game_result_dialog_title">Result</string>
+    <string name="screen_game_result_dialog_correct">
         Excellent! The answer is correct.
     </string>
-    <string name="screen_game_submit_dialog_wrong_result">
+    <string name="screen_game_result_dialog_finish">Finish</string>
+    <string name="screen_game_result_dialog_cancel">Cancel</string>
+    <string name="screen_game_result_dialog_wrong">
         The Answer is wrong.
     </string>
-    <string name="screen_game_submit_dialog_finish">Finish</string>
-    <string name="screen_game_submit_dialog_cancel">Cancel</string>
+    <string name="screen_game_result_dialog_ok">OKay</string>
     <string name="screen_game_mark_block_cell_title">Cell - r%1$d, w%2$d</string>
     <string name="screen_game_mark_block_cell_none_title">Cell - None</string>
 
@@ -60,6 +62,8 @@
     <string name="screen_greeting_slogan">AzureNum\nPlay&amp;Print Sudoku</string>
     <string name="screen_greeting_accept">ACCEPT AND CONTINUE</string>
     <string name="screen_greeting_reject">REJECT AND EXIT</string>
+    <string name="screen_greeting_contract_dialog_title">AzureNum Contract</string>
+    <string name="screen_greeting_contract_dialog_cancel">Cancel</string>
 
     <string name="service_title">service terms</string>
     <string name="privacy_title">privacy policy</string>
@@ -120,5 +124,13 @@
     </string>
     <string name="game_pad_num_button_description">Game pad number %1$d button</string>
     <string name="game_pad_icon_button_description">Game pad %1$s button</string>
+
+    <string name="legal_text_description">
+        Please read AzureNum service terms, privacy policy and acknowledgements.
+        Double tap to activate, then hold to select
+    </string>
+    <string name="contract_dialog_title_description">
+        AzureNum Contract Dialog
+    </string>
 
 </resources>
