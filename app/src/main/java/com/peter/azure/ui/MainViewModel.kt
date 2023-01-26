@@ -10,7 +10,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.util.azureSchedule

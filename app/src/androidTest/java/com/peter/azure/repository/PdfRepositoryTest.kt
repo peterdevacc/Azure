@@ -2,7 +2,7 @@ package com.peter.azure.repository
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.repository.PdfRepository
 import com.peter.azure.data.repository.SudokuRepository

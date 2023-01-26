@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.peter.azure.R
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.ui.theme.AzureTheme
 
 @Composable

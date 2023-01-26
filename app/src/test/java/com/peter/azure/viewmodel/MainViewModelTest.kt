@@ -1,6 +1,6 @@
 package com.peter.azure.viewmodel
 
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.ui.MainUiState
 import com.peter.azure.ui.MainViewModel

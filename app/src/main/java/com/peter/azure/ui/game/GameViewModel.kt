@@ -17,6 +17,7 @@ import com.peter.azure.data.repository.NoteRepository
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.data.repository.PuzzleRepository
 import com.peter.azure.data.repository.SudokuRepository
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.util.GAME_LEVEL_SAVED_KEY
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel

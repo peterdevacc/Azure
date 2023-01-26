@@ -51,7 +51,7 @@ fun GreetingScreen(
         loadInfo = viewModel::loadInfo,
         greetingUiState = viewModel.uiState.value,
         dismissDialog = viewModel::dismissDialog,
-        agreeContracts = viewModel::agreeContracts,
+        agreeContracts = viewModel::acceptContracts,
         isPortrait = isPortrait,
         isCompact = isCompact,
         navigateToHome = navigateToHome,
@@ -72,7 +72,7 @@ private fun GreetingContent(
     exitApp: () -> Unit,
 ) {
     when (greetingUiState) {
-        is GreetingUiState.ContractsAgreed -> {
+        is GreetingUiState.ContractsAccepted -> {
             LaunchedEffect(Unit) {
                 navigateToHome()
             }

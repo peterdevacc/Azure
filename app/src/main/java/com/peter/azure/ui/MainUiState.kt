@@ -5,7 +5,7 @@
 
 package com.peter.azure.ui
 
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 
 sealed interface MainUiState {
 

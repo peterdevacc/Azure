@@ -5,7 +5,7 @@
 
 package com.peter.azure.ui.contract
 
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 
 sealed interface ContractUiState {

@@ -5,7 +5,7 @@
 
 package com.peter.azure.ui.home
 
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 
 sealed interface HomeUiState {
 

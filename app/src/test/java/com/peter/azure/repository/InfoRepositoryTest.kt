@@ -1,7 +1,7 @@
 package com.peter.azure.repository
 
 import android.content.res.AssetManager
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
 import io.mockk.*

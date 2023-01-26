@@ -3,6 +3,7 @@ package com.peter.azure.viewmodel
 import com.peter.azure.data.entity.*
 import com.peter.azure.data.repository.PdfRepository
 import com.peter.azure.data.repository.SudokuRepository
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.ui.print.PdfUiState
 import com.peter.azure.ui.print.PrintViewModel
 import io.mockk.*

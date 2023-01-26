@@ -10,7 +10,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
 import com.peter.azure.data.repository.PreferencesRepository
@@ -57,7 +57,7 @@ class GreetingViewModel @Inject constructor(
         greetingUiState.value = GreetingUiState.Default
     }
 
-    fun agreeContracts() {
+    fun acceptContracts() {
         greetingUiState.value = GreetingUiState.Processing
         val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
             when (val boardingResult = preferencesRepository.setOnBoardingState(true)) {
@@ -67,7 +67,7 @@ class GreetingViewModel @Inject constructor(
                 }
                 is DataResult.Success -> {
                     greetingUiState.value = GreetingUiState
-                        .ContractsAgreed
+                        .ContractsAccepted
                 }
             }
             task?.cancel()

@@ -1,7 +1,7 @@
 package com.peter.azure.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
 import com.peter.azure.data.util.INFO_TYPE_SAVED_KEY

@@ -3,6 +3,7 @@ package com.peter.azure.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import com.peter.azure.data.entity.*
 import com.peter.azure.data.repository.*
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.util.GAME_LEVEL_SAVED_KEY
 import com.peter.azure.ui.game.GameUiState
 import com.peter.azure.ui.game.GameViewModel

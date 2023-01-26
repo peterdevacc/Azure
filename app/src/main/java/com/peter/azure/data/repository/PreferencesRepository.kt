@@ -10,7 +10,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.util.GAME_EXISTED_PREF_KEY
 import com.peter.azure.data.util.ON_BOARDING_PREF_KEY
 import kotlinx.coroutines.Dispatchers

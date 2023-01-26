@@ -1,6 +1,6 @@
 package com.peter.azure.viewmodel
 
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
 import com.peter.azure.data.repository.PreferencesRepository
@@ -91,7 +91,7 @@ class GreetingViewModelTest {
                 preferencesRepository.setOnBoardingState(true)
             } returns DataResult.Success("")
 
-            viewModel.agreeContracts()
+            viewModel.acceptContracts()
 
             delay(magicNum)
 
@@ -99,7 +99,7 @@ class GreetingViewModelTest {
                 preferencesRepository.setOnBoardingState(true)
             }
             confirmVerified(preferencesRepository)
-            assertTrue(viewModel.uiState.value is GreetingUiState.ContractsAgreed)
+            assertTrue(viewModel.uiState.value is GreetingUiState.ContractsAccepted)
         }
         Unit
     }
@@ -111,7 +111,7 @@ class GreetingViewModelTest {
                 preferencesRepository.setOnBoardingState(true)
             } returns DataResult.Error(DataResult.Error.Code.UNKNOWN)
 
-            viewModel.agreeContracts()
+            viewModel.acceptContracts()
 
             delay(magicNum)
 

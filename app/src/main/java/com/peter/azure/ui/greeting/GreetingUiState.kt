@@ -5,7 +5,7 @@
 
 package com.peter.azure.ui.greeting
 
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 
 sealed interface GreetingUiState {
@@ -16,7 +16,7 @@ sealed interface GreetingUiState {
 
     object Processing : GreetingUiState
 
-    object ContractsAgreed : GreetingUiState
+    object ContractsAccepted : GreetingUiState
 
     data class Error(
         val code: DataResult.Error.Code

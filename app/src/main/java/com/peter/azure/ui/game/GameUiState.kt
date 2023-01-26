@@ -5,7 +5,7 @@
 
 package com.peter.azure.ui.game
 
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Location
 import com.peter.azure.data.entity.Mark
 import com.peter.azure.data.entity.Puzzle

@@ -1,6 +1,6 @@
 package com.peter.azure.viewmodel
 
-import com.peter.azure.data.entity.DataResult
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Help
 import com.peter.azure.data.repository.HelpRepository
 import com.peter.azure.ui.help.HelpUiState
