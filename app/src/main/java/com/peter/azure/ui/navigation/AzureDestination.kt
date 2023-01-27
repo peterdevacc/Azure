@@ -58,10 +58,10 @@ sealed interface AzureDestination {
         }
 
         companion object {
-            private val topList = listOf(HOME, PRINT, HELP, ABOUT)
+            private val mainList = listOf(HOME, PRINT, HELP, ABOUT)
 
             fun getNavigationList(currentMainDestination: Main): List<Main> {
-                return topList.filter { it != currentMainDestination }
+                return mainList.filter { it != currentMainDestination }
             }
         }
 

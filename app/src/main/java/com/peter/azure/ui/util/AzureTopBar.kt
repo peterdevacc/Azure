@@ -3,7 +3,7 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
  */
 
-package com.peter.azure.ui.navigation
+package com.peter.azure.ui.util
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -20,6 +20,8 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.peter.azure.R
+import com.peter.azure.ui.navigation.AzureDestination
+import com.peter.azure.ui.navigation.AzureNavigationDialog
 import com.peter.azure.ui.theme.azureShapes
 
 @Composable

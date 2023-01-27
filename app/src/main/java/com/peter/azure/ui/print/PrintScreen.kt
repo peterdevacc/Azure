@@ -34,7 +34,7 @@ import com.peter.azure.R
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.util.PDF_PAGE_SIZE
 import com.peter.azure.ui.navigation.AzureDestination
-import com.peter.azure.ui.navigation.AzureTopBar
+import com.peter.azure.ui.util.AzureTopBar
 import com.peter.azure.ui.util.ErrorDialog
 import com.peter.azure.ui.util.ProcessingDialog
 import com.peter.azure.ui.util.azureScreen

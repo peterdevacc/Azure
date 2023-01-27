@@ -125,10 +125,6 @@
     <string name="game_pad_num_button_description">Game pad number %1$d button</string>
     <string name="game_pad_icon_button_description">Game pad %1$s button</string>
 
-    <string name="legal_text_description">
-        Please read AzureNum service terms, privacy policy and acknowledgements.
-        Double tap to activate, then hold to select
-    </string>
     <string name="contract_dialog_title_description">
         AzureNum Contract Dialog
     </string>

@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.R
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.ui.navigation.AzureDestination
-import com.peter.azure.ui.navigation.AzureTopBar
+import com.peter.azure.ui.util.AzureTopBar
 import com.peter.azure.ui.util.ErrorNotice
 import com.peter.azure.ui.util.azureScreen
 

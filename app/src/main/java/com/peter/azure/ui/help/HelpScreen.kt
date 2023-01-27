@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.ui.navigation.AzureDestination
-import com.peter.azure.ui.navigation.AzureTopBar
+import com.peter.azure.ui.util.AzureTopBar
 import com.peter.azure.ui.util.ErrorNotice
 import com.peter.azure.ui.util.azureScreen
 
