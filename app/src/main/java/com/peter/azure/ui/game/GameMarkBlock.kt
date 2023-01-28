@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -36,15 +37,26 @@ fun GameMarkBlock(
     markList: List<Mark>,
     isCompact: Boolean
 ) {
-    val textStyle: TextStyle
+    val locationTextStyle: TextStyle
+    val markTextStyle: TextStyle
     val iconArgs: Pair<Int, Int>
 
     if (isCompact) {
-        textStyle = MaterialTheme.typography.bodyLarge
-            .copy(color = MaterialTheme.colorScheme.onTertiaryContainer)
+        locationTextStyle = MaterialTheme.typography.bodyMedium
+            .copy(color = MaterialTheme.colorScheme.onPrimaryContainer)
+        markTextStyle = MaterialTheme.typography.bodyLarge
+            .copy(
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.onTertiaryContainer
+            )
         iconArgs = 16 to 1
     } else {
-        textStyle = MaterialTheme.typography.bodyLarge
+        locationTextStyle = MaterialTheme.typography.bodyLarge
+            .copy(
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        markTextStyle = MaterialTheme.typography.bodyLarge
             .copy(
                 fontSize = 24.sp,
                 color = MaterialTheme.colorScheme.onTertiaryContainer
@@ -69,26 +81,28 @@ fun GameMarkBlock(
 
     Column(
         modifier = Modifier
+            .clip(MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.tertiaryContainer)
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.6f))
-            .border(1.dp, MaterialTheme.colorScheme.onBackground)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = MaterialTheme.shapes.medium
+            )
     ) {
         Text(
             text = cellTitle,
-            style = textStyle,
-            fontSize = 14.sp,
+            style = locationTextStyle,
             textAlign = TextAlign.Center,
             modifier = Modifier
+                .background(MaterialTheme.colorScheme.primaryContainer)
                 .padding(vertical = 2.dp)
                 .fillMaxWidth()
                 .semantics {
                     text = AnnotatedString(cellTitleDescription)
                 }
         )
-        Divider(
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.onTertiaryContainer
-        )
+        GameMarkHorizontalDivider()
         val times = 3
         for (i in 0..2) {
             Row(
@@ -118,7 +132,7 @@ fun GameMarkBlock(
                         val (text, icon) = createRefs()
                         Text(
                             text = "$num",
-                            style = textStyle,
+                            style = markTextStyle,
                             modifier = Modifier.constrainAs(text) {
                                 centerVerticallyTo(parent)
                                 centerHorizontallyTo(parent)
@@ -126,7 +140,7 @@ fun GameMarkBlock(
                         )
                         when (mark) {
                             Mark.Potential -> {
-                                MarkIcon(
+                                GameMarkIcon(
                                     R.drawable.ic_mark_potential_24,
                                     R.string.icon_cd_mark_potential,
                                     Modifier
@@ -141,7 +155,7 @@ fun GameMarkBlock(
                                 )
                             }
                             Mark.WRONG -> {
-                                MarkIcon(
+                                GameMarkIcon(
                                     R.drawable.ic_mark_wrong_24,
                                     R.string.icon_cd_mark_wrong,
                                     Modifier
@@ -169,20 +183,12 @@ fun GameMarkBlock(
                         }
                     }
                     if (j != 2) {
-                        Divider(
-                            color = MaterialTheme.colorScheme.onTertiaryContainer,
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .width(1.dp)
-                        )
+                        GameMarkVerticalDivider()
                     }
                 }
             }
             if (i != 2) {
-                Divider(
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer
-                )
+                GameMarkHorizontalDivider()
             }
         }
     }
@@ -190,7 +196,7 @@ fun GameMarkBlock(
 }
 
 @Composable
-private fun MarkIcon(
+private fun GameMarkIcon(
     @DrawableRes
     markIconId: Int,
     markIconContentDescriptionId: Int,
@@ -204,3 +210,20 @@ private fun MarkIcon(
     )
 }
 
+@Composable
+private fun GameMarkHorizontalDivider() {
+    Divider(
+        thickness = 1.dp,
+        color = MaterialTheme.colorScheme.outline
+    )
+}
+
+@Composable
+private fun GameMarkVerticalDivider() {
+    Divider(
+        color = MaterialTheme.colorScheme.outline,
+        modifier = Modifier
+            .fillMaxHeight()
+            .width(1.dp)
+    )
+}

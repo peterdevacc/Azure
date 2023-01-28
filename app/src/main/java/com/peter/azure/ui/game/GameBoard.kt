@@ -37,7 +37,7 @@ fun GameBoard(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .border(1.dp, MaterialTheme.colorScheme.onBackground)
+            .border(1.dp, MaterialTheme.colorScheme.outline)
     ) {
         for (i in 0..8) {
             Row(modifier = Modifier.weight(1f)) {
@@ -53,7 +53,7 @@ fun GameBoard(
                     )
                     if (j != 8) {
                         Divider(
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.outline,
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .width(1.dp)
@@ -64,7 +64,7 @@ fun GameBoard(
             if (i != 8) {
                 Divider(
                     thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.colorScheme.outline
                 )
             }
         }
@@ -91,7 +91,7 @@ private fun GameCell(
             .then(modifier)
             .background(
                 color = if (location == selectedLocation) {
-                    MaterialTheme.colorScheme.surfaceVariant
+                    MaterialTheme.colorScheme.primaryContainer
                 } else {
                     MaterialTheme.colorScheme.surface
                 }
@@ -111,21 +111,21 @@ private fun GameCell(
         }
 
         textColor = if (location == selectedLocation) {
-            MaterialTheme.colorScheme.onSurfaceVariant
+            MaterialTheme.colorScheme.onPrimaryContainer
         } else {
             MaterialTheme.colorScheme.onSurface
         }
     } else {
         boxModifier = Modifier
             .then(modifier)
-            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f))
+            .background(MaterialTheme.colorScheme.surfaceVariant)
 
         cellDescription = stringResource(
             R.string.game_board_question_cell_description,
             row, column, cell.num
         )
 
-        textColor = MaterialTheme.colorScheme.onPrimaryContainer
+        textColor = MaterialTheme.colorScheme.onSurfaceVariant
     }
 
     val numString = if (cell.num != 0) {
@@ -135,7 +135,9 @@ private fun GameCell(
     }
 
     val textStyle = if (isCompact) {
-        MaterialTheme.typography.bodyMedium.copy(color = textColor)
+        MaterialTheme.typography.bodyLarge.copy(
+            color = textColor
+        )
     } else {
         MaterialTheme.typography.bodyLarge.copy(
             fontSize = 20.sp,
@@ -153,7 +155,7 @@ private fun GameCell(
     ) {
         Text(
             text = numString,
-            style = textStyle,
+            style = textStyle
         )
     }
 

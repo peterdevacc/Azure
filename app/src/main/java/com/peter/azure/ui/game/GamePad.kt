@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -42,7 +43,10 @@ fun GamePad(
 
     if (isCompact) {
         textStyle = MaterialTheme.typography.bodyLarge
-            .copy(color = MaterialTheme.colorScheme.onSecondaryContainer)
+            .copy(
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         iconSize = 20
     } else {
         textStyle = MaterialTheme.typography.bodyLarge
@@ -55,9 +59,14 @@ fun GamePad(
 
     Row(
         modifier = Modifier
+            .clip(MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.secondaryContainer)
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.6f))
-            .border(1.dp, MaterialTheme.colorScheme.onBackground)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = MaterialTheme.shapes.medium
+            )
     ) {
         Column(
             modifier = Modifier.weight(1.2f)
@@ -71,10 +80,7 @@ fun GamePad(
                     .fillMaxSize()
                     .clickable(onClick = blank)
             )
-            Divider(
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
+            GamePadHorizontalDivider()
             ActionIcon(
                 iconId = R.drawable.ic_mark_potential_24,
                 iconCd = stringResource(R.string.icon_cd_mark_potential),
@@ -84,10 +90,7 @@ fun GamePad(
                     .fillMaxSize()
                     .clickable { mark(Mark.Potential) }
             )
-            Divider(
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
+            GamePadHorizontalDivider()
             ActionIcon(
                 iconId = R.drawable.ic_mark_wrong_24,
                 iconCd = stringResource(R.string.icon_cd_mark_wrong),
@@ -97,10 +100,7 @@ fun GamePad(
                     .fillMaxSize()
                     .clickable { mark(Mark.WRONG) }
             )
-            Divider(
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
+            GamePadHorizontalDivider()
             ActionIcon(
                 iconId = R.drawable.ic_mark_none_24,
                 iconCd = stringResource(R.string.icon_cd_mark_none),
@@ -111,12 +111,7 @@ fun GamePad(
                     .clickable { mark(Mark.NONE) }
             )
         }
-        Divider(
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(1.dp)
-        )
+        GamePadVerticalDivider()
         Column(
             modifier = Modifier.weight(3.8f)
         ) {
@@ -149,20 +144,12 @@ fun GamePad(
                             }
                         }
                         if (j != 2) {
-                            Divider(
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(1.dp)
-                            )
+                            GamePadVerticalDivider()
                         }
                     }
                 }
                 if (i != 2) {
-                    Divider(
-                        thickness = 1.dp,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer
-                    )
+                    GamePadHorizontalDivider()
                 }
             }
         }
@@ -195,6 +182,24 @@ private fun ActionIcon(
                 }
         )
     }
+}
+
+@Composable
+private fun GamePadHorizontalDivider() {
+    Divider(
+        thickness = 1.dp,
+        color = MaterialTheme.colorScheme.outline
+    )
+}
+
+@Composable
+private fun GamePadVerticalDivider() {
+    Divider(
+        color = MaterialTheme.colorScheme.outline,
+        modifier = Modifier
+            .fillMaxHeight()
+            .width(1.dp)
+    )
 }
 
 @Preview(
