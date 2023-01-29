@@ -5,6 +5,7 @@
 
 package com.peter.azure.ui.print
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
@@ -31,6 +32,7 @@ fun PrintLevelButton(
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
         ),
+        contentPadding = PaddingValues(8.dp),
         modifier = modifier
     ) {
         Icon(

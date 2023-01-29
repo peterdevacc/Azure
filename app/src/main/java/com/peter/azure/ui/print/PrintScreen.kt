@@ -337,7 +337,8 @@ private fun PrintContent(
             }
         }
 
-        Button(
+        PrintActionButton(
+            textId = R.string.screen_print_share_pdf,
             onClick = {
                 if (pdfUiState is PdfUiState.Loaded) {
                     val file = pdfUiState.sudokuPdf.file
@@ -358,24 +359,13 @@ private fun PrintContent(
                     notShareable()
                 }
             },
-            shape = MaterialTheme.shapes.medium,
             modifier = shareButtonModifier
-        ) {
-            Text(
-                text = stringResource(R.string.screen_print_share_pdf),
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
+        )
 
-        Button(
+        PrintActionButton(
+            textId = R.string.screen_print_generate_pdf,
             onClick = generatePdf,
-            shape = MaterialTheme.shapes.medium,
             modifier = generateButtonModifier
-        ) {
-            Text(
-                text = stringResource(R.string.screen_print_generate_pdf),
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
+        )
     }
 }
