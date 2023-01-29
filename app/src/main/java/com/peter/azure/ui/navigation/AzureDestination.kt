@@ -52,7 +52,7 @@ sealed interface AzureDestination {
             override val textId = R.string.screen_about
             override val destinationDescriptionId = R.string.screen_about_description
 
-            fun getNavContractRoute(infoType: Info.Type): String {
+            fun getNavInfoRoute(infoType: Info.Type): String {
                 return "${General.INFO.route}/${infoType.name}"
             }
         }

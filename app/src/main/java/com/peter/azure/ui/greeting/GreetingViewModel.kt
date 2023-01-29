@@ -44,7 +44,7 @@ class GreetingViewModel @Inject constructor(
                 }
                 is DataResult.Success -> {
                     greetingUiState.value = GreetingUiState
-                        .ContractDialogLoaded(infoResult.result)
+                        .InfoDialogLoaded(infoResult.result)
                 }
             }
             task?.cancel()
@@ -67,7 +67,7 @@ class GreetingViewModel @Inject constructor(
                 }
                 is DataResult.Success -> {
                     greetingUiState.value = GreetingUiState
-                        .ContractsAccepted
+                        .InfoAccepted
                 }
             }
             task?.cancel()

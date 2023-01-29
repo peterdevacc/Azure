@@ -10,13 +10,13 @@ import com.peter.azure.data.entity.Info
 
 sealed interface GreetingUiState {
 
-    data class ContractDialogLoaded(
+    data class InfoDialogLoaded(
         val info: Info
     ) : GreetingUiState
 
     object Processing : GreetingUiState
 
-    object ContractsAccepted : GreetingUiState
+    object InfoAccepted : GreetingUiState
 
     data class Error(
         val code: DataResult.Error.Code

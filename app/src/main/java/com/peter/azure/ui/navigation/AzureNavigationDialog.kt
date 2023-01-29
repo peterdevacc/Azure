@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,14 +25,12 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.R
-import com.peter.azure.ui.theme.AzureTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -144,22 +141,6 @@ private fun LazyListScope.getMainDestinationListItems(
                         width = Dimension.fillToConstraints
                         height = Dimension.fillToConstraints
                     }
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AzureNavigationDialogPreview() {
-    AzureTheme {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            AzureNavigationDialog(
-                true,
-                AzureDestination.Main.HOME, {}, {}
             )
         }
     }

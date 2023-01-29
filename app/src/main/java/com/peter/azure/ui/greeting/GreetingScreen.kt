@@ -72,7 +72,7 @@ private fun GreetingContent(
     exitApp: () -> Unit,
 ) {
     when (greetingUiState) {
-        is GreetingUiState.ContractsAccepted -> {
+        is GreetingUiState.InfoAccepted -> {
             LaunchedEffect(Unit) {
                 navigateToHome()
             }
@@ -83,7 +83,7 @@ private fun GreetingContent(
                 onDismiss = dismissDialog
             )
         }
-        is GreetingUiState.ContractDialogLoaded -> {
+        is GreetingUiState.InfoDialogLoaded -> {
             InfoDialog(
                 info = greetingUiState.info,
                 isPortrait = isPortrait,

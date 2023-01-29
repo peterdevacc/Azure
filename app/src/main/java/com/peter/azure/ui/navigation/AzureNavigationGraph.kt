@@ -115,7 +115,7 @@ fun AzureNavigationGraph(
             AboutScreen(
                 navigateToContract = {
                     navHostController.navigate(
-                        AzureDestination.Main.ABOUT.getNavContractRoute(it)
+                        AzureDestination.Main.ABOUT.getNavInfoRoute(it)
                     ) {
                         launchSingleTop = true
                     }
