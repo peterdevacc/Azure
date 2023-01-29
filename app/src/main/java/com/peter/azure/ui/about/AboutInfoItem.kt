@@ -32,7 +32,7 @@ fun AboutInfoItem(
     val title = when (infoType) {
         Info.Type.SERVICE -> stringResource(R.string.service_title)
         Info.Type.PRIVACY -> stringResource(R.string.privacy_title)
-        Info.Type.ACKNOWLEDGEMENTS -> stringResource(R.string.acknowledgement_title)
+        Info.Type.CREDIT -> stringResource(R.string.credit_title)
     }
     val heading = title to infoType
     val description = stringResource(

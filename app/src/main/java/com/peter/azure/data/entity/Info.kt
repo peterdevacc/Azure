@@ -12,7 +12,7 @@ data class Info(
 ) {
 
     enum class Type {
-        SERVICE, PRIVACY, ACKNOWLEDGEMENTS;
+        SERVICE, PRIVACY, CREDIT;
 
         fun getFileName(): String {
             return "${name.lowercase()}.json"

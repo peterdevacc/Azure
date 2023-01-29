@@ -53,7 +53,7 @@ sealed interface AzureDestination {
             override val destinationDescriptionId = R.string.screen_about_description
 
             fun getNavContractRoute(infoType: Info.Type): String {
-                return "${General.CONTRACT.route}/${infoType.name}"
+                return "${General.INFO.route}/${infoType.name}"
             }
         }
 
@@ -81,9 +81,9 @@ sealed interface AzureDestination {
             )
         }
 
-        object CONTRACT : General {
-            override val route = "contract"
-            override val textId = R.string.screen_contract
+        object INFO : General {
+            override val route = "info"
+            override val textId = R.string.screen_info
 
             val destRoute = "$route/{$INFO_TYPE_SAVED_KEY}"
         }

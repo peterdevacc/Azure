@@ -88,7 +88,7 @@ fun GamePad(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
-                    .clickable { mark(Mark.Potential) }
+                    .clickable { mark(Mark.POTENTIAL) }
             )
             GamePadHorizontalDivider()
             ActionIcon(

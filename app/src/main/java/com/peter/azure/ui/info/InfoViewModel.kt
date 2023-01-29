@@ -3,7 +3,7 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
  */
 
-package com.peter.azure.ui.contract
+package com.peter.azure.ui.info
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -24,20 +24,19 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class ContractViewModel @Inject constructor(
+class InfoViewModel @Inject constructor(
     private val infoRepository: InfoRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val contractUiState: MutableState<ContractUiState> =
-        mutableStateOf(ContractUiState.Loading)
-    val uiState: State<ContractUiState> = contractUiState
+    private val infoUiState: MutableState<InfoUiState> = mutableStateOf(InfoUiState.Loading)
+    val uiState: State<InfoUiState> = infoUiState
 
     private var task: TimerTask? = null
 
     private fun scheduleLimit(job: Job) = azureSchedule {
-        if (contractUiState.value is ContractUiState.Loading) {
-            contractUiState.value = ContractUiState.Error(
+        if (infoUiState.value is InfoUiState.Loading) {
+            infoUiState.value = InfoUiState.Error(
                 DataResult.Error.Code.UNKNOWN
             )
             job.cancel()
@@ -50,11 +49,11 @@ class ContractViewModel @Inject constructor(
         val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
             when (val infoResult = infoRepository.getInfo(type)) {
                 is DataResult.Error -> {
-                    contractUiState.value = ContractUiState
+                    infoUiState.value = InfoUiState
                         .Error(infoResult.code)
                 }
                 is DataResult.Success -> {
-                    contractUiState.value = ContractUiState
+                    infoUiState.value = InfoUiState
                         .Success(infoResult.result)
                 }
             }

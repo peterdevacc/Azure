@@ -84,7 +84,7 @@ private fun GreetingContent(
             )
         }
         is GreetingUiState.ContractDialogLoaded -> {
-            ContractDialog(
+            InfoDialog(
                 info = greetingUiState.info,
                 isPortrait = isPortrait,
                 onDismiss = dismissDialog

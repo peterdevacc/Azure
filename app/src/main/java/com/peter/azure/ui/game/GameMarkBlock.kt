@@ -139,7 +139,7 @@ fun GameMarkBlock(
                             }
                         )
                         when (mark) {
-                            Mark.Potential -> {
+                            Mark.POTENTIAL -> {
                                 GameMarkIcon(
                                     R.drawable.ic_mark_potential_24,
                                     R.string.icon_cd_mark_potential,

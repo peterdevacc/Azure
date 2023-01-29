@@ -39,7 +39,7 @@ fun LegalText(
     )
 
     val annotatedText = buildAnnotatedString {
-        append("Please read the ")
+        append("The ")
 
         pushStringAnnotation(
             tag = infoTypeTag,
@@ -50,7 +50,7 @@ fun LegalText(
         }
         pop()
 
-        append(", ")
+        append(" and ")
 
         pushStringAnnotation(
             tag = infoTypeTag,
@@ -58,17 +58,6 @@ fun LegalText(
         )
         withStyle(style = linkedStyle) {
             append(stringResource(R.string.privacy_title))
-        }
-        pop()
-
-        append(" and ")
-
-        pushStringAnnotation(
-            tag = infoTypeTag,
-            annotation = Info.Type.ACKNOWLEDGEMENTS.name
-        )
-        withStyle(style = linkedStyle) {
-            append(stringResource(R.string.acknowledgement_title))
         }
         pop()
 

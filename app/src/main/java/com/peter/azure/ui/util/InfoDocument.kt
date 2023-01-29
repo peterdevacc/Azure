@@ -44,7 +44,7 @@ fun InfoDocument(
                     }
                     Text(
                         text = data.text,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleSmall,
                         color = textColor,
                         modifier = Modifier
                             .padding(paddingValues)

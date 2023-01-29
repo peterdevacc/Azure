@@ -12,8 +12,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.peter.azure.ui.about.AboutScreen
-import com.peter.azure.ui.contract.ContractScreen
-import com.peter.azure.ui.contract.ContractViewModel
+import com.peter.azure.ui.info.InfoScreen
+import com.peter.azure.ui.info.InfoViewModel
 import com.peter.azure.ui.game.GameScreen
 import com.peter.azure.ui.game.GameViewModel
 import com.peter.azure.ui.greeting.GreetingScreen
@@ -147,9 +147,9 @@ fun AzureNavigationGraph(
                 }
             )
         }
-        composable(AzureDestination.General.CONTRACT.destRoute) {
-            val viewModel = hiltViewModel<ContractViewModel>()
-            ContractScreen(
+        composable(AzureDestination.General.INFO.destRoute) {
+            val viewModel = hiltViewModel<InfoViewModel>()
+            InfoScreen(
                 viewModel = viewModel,
                 isPortrait = isPortrait,
                 navigateUp = {

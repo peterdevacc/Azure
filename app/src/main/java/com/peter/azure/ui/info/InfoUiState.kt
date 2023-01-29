@@ -3,21 +3,21 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
  */
 
-package com.peter.azure.ui.contract
+package com.peter.azure.ui.info
 
 import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 
-sealed interface ContractUiState {
+sealed interface InfoUiState {
 
-    object Loading : ContractUiState
+    object Loading : InfoUiState
 
     data class Success(
         val info: Info
-    ) : ContractUiState
+    ) : InfoUiState
 
     data class Error(
         val code: DataResult.Error.Code
-    ) : ContractUiState
+    ) : InfoUiState
 
 }

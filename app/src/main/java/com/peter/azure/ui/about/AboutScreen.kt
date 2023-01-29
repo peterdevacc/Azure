@@ -8,6 +8,7 @@ package com.peter.azure.ui.about
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -163,7 +164,7 @@ private fun AboutContent(
             modifier = mottoModifier
         ) {
             Text(
-                text = stringResource(R.string.screen_about_app_full_name),
+                text = stringResource(R.string.screen_about_motto),
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onPrimary,
                 letterSpacing = 1.sp,
@@ -224,13 +225,15 @@ private fun AboutContent(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = stringResource(id = R.string.app_motto),
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.outline,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
+            SelectionContainer {
+                Text(
+                    text = stringResource(id = R.string.screen_about_website),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.outline,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }

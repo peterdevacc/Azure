@@ -3,7 +3,7 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
  */
 
-package com.peter.azure.ui.contract
+package com.peter.azure.ui.info
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,12 +25,12 @@ import com.peter.azure.ui.util.InfoDocument
 import com.peter.azure.ui.util.azureScreen
 
 @Composable
-fun ContractScreen(
-    viewModel: ContractViewModel,
+fun InfoScreen(
+    viewModel: InfoViewModel,
     isPortrait: Boolean,
     navigateUp: () -> Unit
 ) {
-    ContractContent(
+    InfoContent(
         uiState = viewModel.uiState.value,
         isPortrait = isPortrait,
         navigateUp = navigateUp
@@ -38,8 +38,8 @@ fun ContractScreen(
 }
 
 @Composable
-private fun ContractContent(
-    uiState: ContractUiState,
+private fun InfoContent(
+    uiState: InfoUiState,
     isPortrait: Boolean,
     navigateUp: () -> Unit
 ) {
@@ -88,7 +88,7 @@ private fun ContractContent(
         Box(modifier = topBarModifier) {
             AzureTopBar(
                 isPortrait = isPortrait,
-                destination = AzureDestination.General.CONTRACT,
+                destination = AzureDestination.General.INFO,
                 navigateUp = navigateUp
             )
         }
@@ -98,10 +98,10 @@ private fun ContractContent(
             modifier = infoDocumentModifier
         ) {
             when (uiState) {
-                is ContractUiState.Error -> {
+                is InfoUiState.Error -> {
                     ErrorNotice(uiState.code)
                 }
-                is ContractUiState.Success -> {
+                is InfoUiState.Success -> {
                     InfoDocument(
                         info = uiState.info,
                         modifier = Modifier
@@ -109,7 +109,7 @@ private fun ContractContent(
                             .clip(MaterialTheme.shapes.large)
                     )
                 }
-                is ContractUiState.Loading -> {
+                is InfoUiState.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp, 24.dp)
                     )

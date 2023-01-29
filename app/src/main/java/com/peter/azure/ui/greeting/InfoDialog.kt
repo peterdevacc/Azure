@@ -27,13 +27,13 @@ import com.peter.azure.ui.util.InfoDocument
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ContractDialog(
+fun InfoDialog(
     info: Info,
     isPortrait: Boolean,
     onDismiss: () -> Unit
 ) {
     val widthFraction = if (isPortrait) 0.8f else 0.65f
-    val titleDescription = stringResource(R.string.contract_dialog_title_description)
+    val titleDescription = stringResource(R.string.info_dialog_title_description)
 
     Dialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
@@ -43,18 +43,22 @@ fun ContractDialog(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium)
                 .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth(widthFraction)
                 .fillMaxHeight(0.65f)
-        ) {
-            Text(
-                text = stringResource(R.string.screen_greeting_contract_dialog_title),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.semantics {
+                .semantics {
                     contentDescription = titleDescription
                     liveRegion = LiveRegionMode.Assertive
                 }
+        ) {
+            Text(
+                text = stringResource(
+                    R.string.screen_greeting_info_dialog_title,
+                    info.type.name
+                ),
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.padding(vertical = 16.dp)
             )
             InfoDocument(
                 info = info,
@@ -62,13 +66,13 @@ fun ContractDialog(
                 backgroundColor = MaterialTheme.colorScheme.background,
                 textColor = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
-                    .padding(vertical = 16.dp)
                     .weight(1f)
                     .fillMaxWidth()
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
+                    .padding(vertical = 8.dp)
                     .fillMaxWidth()
             ) {
                 Spacer(modifier = Modifier.weight(1f))
@@ -76,7 +80,7 @@ fun ContractDialog(
                     onClick = onDismiss
                 ) {
                     Text(
-                        text = stringResource(R.string.screen_greeting_contract_dialog_cancel),
+                        text = stringResource(R.string.screen_greeting_info_dialog_cancel),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
                     )
