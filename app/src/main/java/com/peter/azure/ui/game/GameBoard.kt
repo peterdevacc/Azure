@@ -37,7 +37,7 @@ fun GameBoard(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .border(1.dp, MaterialTheme.colorScheme.outline)
+            .border(1.dp, MaterialTheme.colorScheme.onBackground)
     ) {
         for (i in 0..8) {
             Row(modifier = Modifier.weight(1f)) {
@@ -53,7 +53,7 @@ fun GameBoard(
                     )
                     if (j != 8) {
                         Divider(
-                            color = MaterialTheme.colorScheme.outline,
+                            color = MaterialTheme.colorScheme.onBackground,
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .width(1.dp)
@@ -64,7 +64,7 @@ fun GameBoard(
             if (i != 8) {
                 Divider(
                     thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.outline
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
         }
@@ -118,14 +118,14 @@ private fun GameCell(
     } else {
         boxModifier = Modifier
             .then(modifier)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(MaterialTheme.colorScheme.surfaceVariant.copy(0.7f))
 
         cellDescription = stringResource(
             R.string.game_board_question_cell_description,
             row, column, cell.num
         )
 
-        textColor = MaterialTheme.colorScheme.onSurfaceVariant
+        textColor = MaterialTheme.colorScheme.onBackground
     }
 
     val numString = if (cell.num != 0) {

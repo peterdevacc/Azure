@@ -8,6 +8,7 @@ package com.peter.azure.ui.game
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -17,19 +18,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.peter.azure.R
 import com.peter.azure.data.entity.Mark
-import com.peter.azure.ui.theme.AzureTheme
 
 @Composable
 fun GamePad(
@@ -38,33 +37,35 @@ fun GamePad(
     write: (Int) -> Unit,
     isCompact: Boolean
 ) {
-    val textStyle: TextStyle
+    val contentColor: Color
+    val backgroundColor: Color
+    if (isSystemInDarkTheme()) {
+        contentColor = MaterialTheme.colorScheme.secondary
+        backgroundColor = MaterialTheme.colorScheme.background
+    } else {
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+        backgroundColor = MaterialTheme.colorScheme.secondaryContainer
+    }
+
+    val textSize: Int
     val iconSize: Int
 
     if (isCompact) {
-        textStyle = MaterialTheme.typography.bodyLarge
-            .copy(
-                fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
+        textSize = 18
         iconSize = 20
     } else {
-        textStyle = MaterialTheme.typography.bodyLarge
-            .copy(
-                fontSize = 24.sp,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
+        textSize = 24
         iconSize = 26
     }
 
     Row(
         modifier = Modifier
             .clip(MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .background(backgroundColor)
             .fillMaxSize()
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
+                color = contentColor,
                 shape = MaterialTheme.shapes.medium
             )
     ) {
@@ -73,45 +74,47 @@ fun GamePad(
         ) {
             ActionIcon(
                 iconId = R.drawable.ic_clear_24,
-                iconCd = stringResource(R.string.icon_cd_clean),
+                iconCd = R.string.icon_cd_clean,
                 iconSize = iconSize,
+                tint = contentColor,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxSize()
                     .clickable(onClick = blank)
             )
-            GamePadHorizontalDivider()
-            ActionIcon(
-                iconId = R.drawable.ic_mark_potential_24,
-                iconCd = stringResource(R.string.icon_cd_mark_potential),
-                iconSize = iconSize,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
-                    .clickable { mark(Mark.POTENTIAL) }
-            )
-            GamePadHorizontalDivider()
-            ActionIcon(
-                iconId = R.drawable.ic_mark_wrong_24,
-                iconCd = stringResource(R.string.icon_cd_mark_wrong),
-                iconSize = iconSize,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
-                    .clickable { mark(Mark.WRONG) }
-            )
-            GamePadHorizontalDivider()
-            ActionIcon(
-                iconId = R.drawable.ic_mark_none_24,
-                iconCd = stringResource(R.string.icon_cd_mark_none),
-                iconSize = iconSize,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
-                    .clickable { mark(Mark.NONE) }
-            )
+            Mark.values().forEach { mark ->
+                val iconId: Int
+                val iconCd: Int
+
+                when (mark) {
+                    Mark.POTENTIAL -> {
+                        iconId = R.drawable.ic_mark_potential_24
+                        iconCd = R.string.icon_cd_mark_potential
+                    }
+                    Mark.WRONG -> {
+                        iconId = R.drawable.ic_mark_wrong_24
+                        iconCd = R.string.icon_cd_mark_wrong
+                    }
+                    Mark.NONE -> {
+                        iconId = R.drawable.ic_mark_none_24
+                        iconCd = R.string.icon_cd_mark_none
+                    }
+                }
+
+                GamePadHorizontalDivider(contentColor)
+                ActionIcon(
+                    iconId = iconId,
+                    iconCd = iconCd,
+                    iconSize = iconSize,
+                    tint = contentColor,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize()
+                        .clickable { mark(mark) }
+                )
+            }
         }
-        GamePadVerticalDivider()
+        GamePadVerticalDivider(contentColor)
         Column(
             modifier = Modifier.weight(3.8f)
         ) {
@@ -136,7 +139,9 @@ fun GamePad(
                             ) {
                                 Text(
                                     text = "$num",
-                                    style = textStyle,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = contentColor,
+                                    fontSize = textSize.sp,
                                     modifier = Modifier.semantics {
                                         text = AnnotatedString(numDescription)
                                     }
@@ -144,12 +149,12 @@ fun GamePad(
                             }
                         }
                         if (j != 2) {
-                            GamePadVerticalDivider()
+                            GamePadVerticalDivider(contentColor)
                         }
                     }
                 }
                 if (i != 2) {
-                    GamePadHorizontalDivider()
+                    GamePadHorizontalDivider(contentColor)
                 }
             }
         }
@@ -159,13 +164,14 @@ fun GamePad(
 @Composable
 private fun ActionIcon(
     iconId: Int,
-    iconCd: String,
+    iconCd: Int,
     iconSize: Int,
+    tint: Color,
     modifier: Modifier,
 ) {
     val buttonDescription = stringResource(
         R.string.game_pad_icon_button_description,
-        iconCd
+        stringResource(iconCd)
     )
     Box(
         contentAlignment = Alignment.Center,
@@ -173,8 +179,8 @@ private fun ActionIcon(
     ) {
         Icon(
             painter = painterResource(iconId),
-            contentDescription = iconCd,
-            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+            contentDescription = "",
+            tint = tint,
             modifier = Modifier
                 .size(iconSize.dp)
                 .clearAndSetSemantics {
@@ -185,36 +191,19 @@ private fun ActionIcon(
 }
 
 @Composable
-private fun GamePadHorizontalDivider() {
+private fun GamePadHorizontalDivider(color: Color) {
     Divider(
         thickness = 1.dp,
-        color = MaterialTheme.colorScheme.outline
+        color = color
     )
 }
 
 @Composable
-private fun GamePadVerticalDivider() {
+private fun GamePadVerticalDivider(color: Color) {
     Divider(
-        color = MaterialTheme.colorScheme.outline,
+        color = color,
         modifier = Modifier
             .fillMaxHeight()
             .width(1.dp)
     )
-}
-
-@Preview(
-    name = "Game Pad",
-    showBackground = true
-)
-//@Preview(
-//    name = "Game Pad", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-@Composable
-fun GamePadPreview() {
-    AzureTheme {
-        Box(modifier = Modifier.padding(16.dp)) {
-            GamePad({}, {}, {}, true)
-        }
-    }
 }
