@@ -150,7 +150,7 @@ class GameViewModelTest {
             clearAllMocks()
 
             // has not selected location
-            viewModel.makeMark(Mark.Potential)
+            viewModel.makeMark(Mark.POTENTIAL)
             coVerify(exactly = 0) {
                 noteRepository.updateNote(note)
                 puzzleRepository.updatePuzzle(puzzle)
@@ -160,7 +160,7 @@ class GameViewModelTest {
 
             // has selected location
             val updatedMarkList = note.markList.toMutableList()
-            updatedMarkList[num - 1] = Mark.Potential
+            updatedMarkList[num - 1] = Mark.POTENTIAL
             val updatedNote = Note(note.location, updatedMarkList)
             viewModel.selectLocation(updatedNote.location, num)
             viewModel.writeNum(num)
@@ -168,7 +168,7 @@ class GameViewModelTest {
             clearAllMocks()
 
             // has selected location
-            viewModel.makeMark(Mark.Potential)
+            viewModel.makeMark(Mark.POTENTIAL)
             delay(magicNum)
             coVerify(exactly = 1) {
                 noteRepository.updateNote(updatedNote)

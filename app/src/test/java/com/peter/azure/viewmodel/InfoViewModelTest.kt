@@ -5,8 +5,8 @@ import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
 import com.peter.azure.data.util.INFO_TYPE_SAVED_KEY
-import com.peter.azure.ui.contract.ContractUiState
-import com.peter.azure.ui.contract.ContractViewModel
+import com.peter.azure.ui.info.InfoUiState
+import com.peter.azure.ui.info.InfoViewModel
 import io.mockk.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
@@ -16,7 +16,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class ContractViewModelTest {
+class InfoViewModelTest {
 
     private val infoRepository = mockk<InfoRepository>(relaxed = true)
 
@@ -45,11 +45,11 @@ class ContractViewModelTest {
             val savedStateHandle = SavedStateHandle(
                 mapOf(INFO_TYPE_SAVED_KEY to type.name)
             )
-            val viewModel = ContractViewModel(infoRepository, savedStateHandle)
+            val viewModel = InfoViewModel(infoRepository, savedStateHandle)
 
             delay(magicNum)
 
-            assertTrue(viewModel.uiState.value is ContractUiState.Success)
+            assertTrue(viewModel.uiState.value is InfoUiState.Success)
             coVerify(exactly = 1) {
                 infoRepository.getInfo(type)
             }
@@ -68,9 +68,9 @@ class ContractViewModelTest {
             val savedStateHandle = SavedStateHandle(
                 mapOf(INFO_TYPE_SAVED_KEY to type.name)
             )
-            val viewModel = ContractViewModel(infoRepository, savedStateHandle)
+            val viewModel = InfoViewModel(infoRepository, savedStateHandle)
             delay(magicNum)
-            assertTrue(viewModel.uiState.value is ContractUiState.Error)
+            assertTrue(viewModel.uiState.value is InfoUiState.Error)
             coVerify(exactly = 1) {
                 infoRepository.getInfo(type)
             }
