@@ -57,7 +57,7 @@ class GreetingViewModelTest {
                 infoRepository.getInfo(type)
             }
             confirmVerified(infoRepository)
-            assertTrue(viewModel.uiState.value is GreetingUiState.ContractDialogLoaded)
+            assertTrue(viewModel.uiState.value is GreetingUiState.InfoDialogLoaded)
         }
         Unit
     }
@@ -85,7 +85,7 @@ class GreetingViewModelTest {
     }
 
     @Test
-    fun `agree contracts success`() = runBlocking {
+    fun `agree info success`() = runBlocking {
         launch(Dispatchers.Main) {
             coEvery {
                 preferencesRepository.setOnBoardingState(true)
@@ -99,13 +99,13 @@ class GreetingViewModelTest {
                 preferencesRepository.setOnBoardingState(true)
             }
             confirmVerified(preferencesRepository)
-            assertTrue(viewModel.uiState.value is GreetingUiState.ContractsAccepted)
+            assertTrue(viewModel.uiState.value is GreetingUiState.InfoAccepted)
         }
         Unit
     }
 
     @Test
-    fun `agree contracts error`() = runBlocking {
+    fun `agree info error`() = runBlocking {
         launch(Dispatchers.Main) {
             coEvery {
                 preferencesRepository.setOnBoardingState(true)
