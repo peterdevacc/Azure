@@ -1,9 +1,9 @@
 {
-  "type": "ACKNOWLEDGEMENTS",
+  "type": "CREDIT",
   "data": [
     {
       "type": "TITLE",
-      "text": "开源软件致谢\nOpen Source Software Acknowledgements"
+      "text": "开源软件致谢\nOpen Source Software Credit"
     },
     {
       "type": "TEXT",
