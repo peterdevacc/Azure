@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun PrintActionButton(
@@ -31,8 +30,7 @@ fun PrintActionButton(
     ) {
         Text(
             text = stringResource(textId),
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Medium
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
