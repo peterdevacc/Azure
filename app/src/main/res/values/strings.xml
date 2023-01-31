@@ -59,7 +59,7 @@
     <string name="screen_info">Info</string>
 
     <string name="screen_greeting">Greeting</string>
-    <string name="screen_greeting_slogan">AzureNum\nPlay&amp;Print Sudoku</string>
+    <string name="screen_greeting_slogan">Play&amp;Print Sudoku\n</string>
     <string name="screen_greeting_accept">ACCEPT AND CONTINUE</string>
     <string name="screen_greeting_reject">REJECT AND EXIT</string>
     <string name="screen_greeting_info_dialog_title">%1$s INFO</string>

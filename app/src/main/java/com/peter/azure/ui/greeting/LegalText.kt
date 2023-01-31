@@ -33,13 +33,13 @@ fun LegalText(
         18
     }
     val linkedStyle = SpanStyle(
-        color = MaterialTheme.colorScheme.primary,
+        color = MaterialTheme.colorScheme.secondary,
         fontWeight = FontWeight.Bold,
         textDecoration = TextDecoration.Underline
     )
 
     val annotatedText = buildAnnotatedString {
-        append("The ")
+        append(stringResource(R.string.screen_greeting_slogan))
 
         pushStringAnnotation(
             tag = infoTypeTag,
@@ -61,7 +61,6 @@ fun LegalText(
         }
         pop()
 
-        append(".")
     }
 
     ClickableText(

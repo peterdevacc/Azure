@@ -7,10 +7,7 @@ package com.peter.azure.ui.greeting
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -121,7 +118,7 @@ private fun GreetingContent(
                 .fillMaxWidth()
         ) {
             Text(
-                text = stringResource(R.string.screen_greeting_slogan),
+                text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.headlineLarge.copy(
                     fontWeight = FontWeight.Bold,
                     brush = Brush.horizontalGradient(
