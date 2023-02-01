@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,8 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.peter.azure.data.entity.Help
+import com.peter.azure.R
 
 @Composable
 fun HelpList(
@@ -54,6 +57,11 @@ private fun LazyListScope.getHelpItems(
     helpMap: Map<Help.Catalog, List<Help>>
 ) = items(helpMap.toList()) { (catalog, helpList) ->
     val colorPair = getHelpItemColorPair(catalog)
+    val catalogIconId = when (catalog) {
+        Help.Catalog.FAQ -> R.drawable.ic_faq_24
+        Help.Catalog.TUTORIAL -> R.drawable.ic_tutorial_24
+    }
+
     val itemModifier: Modifier
     val spacerModifier: Modifier
 
@@ -80,6 +88,12 @@ private fun LazyListScope.getHelpItems(
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
         ) {
+            Icon(
+                painter = painterResource(catalogIconId),
+                contentDescription = "",
+                tint = colorPair.second.copy(alpha = 0.68f),
+            )
+            Spacer(modifier = Modifier.padding(horizontal = 6.dp))
             Text(
                 text = catalog.name,
                 style = MaterialTheme.typography.titleLarge,
