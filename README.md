@@ -1,6 +1,8 @@
 # AzureNum
 
-AzureNum is a Sudoku game, it also let you create and share a Sudoku PDF file.
+The AzureNum is a simplistic design Sudoku game. It offer clean and refreshing Sudoku gaming experience, also gives you the ability to create a Sudoku PDF file which could be printed or shared.
+
+AzureNum is free and does not have any Ads and hidden charges.
 
 check out on [Google Play](https://www.example.com)
 
@@ -11,6 +13,7 @@ check out on [Google Play](https://www.example.com)
 * Sudoku PDF (Maybe you could print with your workplace A4 paper)
 * Tutorial (Explain how to play Sudoku)
 * Support most screen size
+* Doesn't collect user data
 * Run without network
 
 ## License
