@@ -91,6 +91,7 @@ private fun LazyListScope.getHelpItems(
             Icon(
                 painter = painterResource(catalogIconId),
                 contentDescription = "",
+                modifier = Modifier.size(26.dp),
                 tint = colorPair.second.copy(alpha = 0.68f),
             )
             Spacer(modifier = Modifier.padding(horizontal = 6.dp))
