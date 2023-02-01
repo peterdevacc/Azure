@@ -6,7 +6,17 @@
   },
   {
     "catalog": "FAQ",
-    "title": "Is the Sudoku always has only one correct answer?",
+    "title": "Does AzureNum collect user data?",
+    "text": "No, It doesn't collect any user data."
+  },
+  {
+    "catalog": "FAQ",
+    "title": "Do I need internet to run AzureNum?",
+    "text": "No, You don't. AzureNum is a offline app."
+  },
+  {
+    "catalog": "FAQ",
+    "title": "Is AzureNum Sudoku always has only one correct answer?",
     "text": "Not really, sometimes it has multiple correct answers."
   },
   {
