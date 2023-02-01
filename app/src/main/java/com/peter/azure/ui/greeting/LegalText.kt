@@ -41,6 +41,14 @@ fun LegalText(
     val annotatedText = buildAnnotatedString {
         append(stringResource(R.string.screen_greeting_slogan))
 
+        if (isCompact) {
+            appendLine()
+        } else {
+            append(" ")
+        }
+
+        append("My ")
+
         pushStringAnnotation(
             tag = infoTypeTag,
             annotation = Info.Type.SERVICE.name
@@ -61,6 +69,7 @@ fun LegalText(
         }
         pop()
 
+        append(".")
     }
 
     ClickableText(
