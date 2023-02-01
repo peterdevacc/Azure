@@ -359,12 +359,14 @@ private fun PrintContent(
                     notShareable()
                 }
             },
+            uiState = pdfUiState,
             modifier = shareButtonModifier
         )
 
         PrintActionButton(
             textId = R.string.screen_print_generate_pdf,
             onClick = generatePdf,
+            uiState = pdfUiState,
             modifier = generateButtonModifier
         )
     }

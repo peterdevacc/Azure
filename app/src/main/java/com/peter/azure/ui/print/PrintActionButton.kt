@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 fun PrintActionButton(
     textId: Int,
     onClick: () -> Unit,
+    uiState: PdfUiState,
     modifier: Modifier
 ) {
     Button(
@@ -26,6 +27,7 @@ fun PrintActionButton(
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
+        enabled = uiState != PdfUiState.Processing,
         modifier = modifier
     ) {
         Text(
