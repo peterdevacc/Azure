@@ -103,7 +103,7 @@ private fun HelpContent(
                     ErrorNotice(uiState.code)
                 }
                 is HelpUiState.Success -> {
-                    HelpList(isPortrait, uiState.helpMap)
+                    HelpSectionList(isPortrait, uiState.helpMap)
                 }
                 is HelpUiState.Loading -> {
                     CircularProgressIndicator(

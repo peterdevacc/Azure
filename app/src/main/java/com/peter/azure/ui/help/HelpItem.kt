@@ -41,7 +41,7 @@ fun HelpItem(
         Text(
             text = help.text,
             style = MaterialTheme.typography.bodyLarge,
-            color = colorPair.second,
+            color = colorPair.second.copy(0.9f),
             modifier = Modifier
                 .padding(vertical = 2.dp)
                 .fillMaxWidth()

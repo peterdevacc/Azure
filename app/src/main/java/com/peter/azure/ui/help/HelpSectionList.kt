@@ -11,21 +11,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.peter.azure.data.entity.Help
 import com.peter.azure.R
+import com.peter.azure.data.entity.Help
 
 @Composable
-fun HelpList(
+fun HelpSectionList(
     isPortrait: Boolean,
     helpMap: Map<Help.Catalog, List<Help>>
 ) {
@@ -33,7 +29,7 @@ fun HelpList(
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            getHelpItems(
+            getHelpSectionItems(
                 isPortrait = true,
                 helpMap = helpMap
             )
@@ -44,7 +40,7 @@ fun HelpList(
                 .padding(start = 16.dp)
                 .fillMaxSize()
         ) {
-            getHelpItems(
+            getHelpSectionItems(
                 isPortrait = false,
                 helpMap = helpMap
             )
@@ -52,7 +48,7 @@ fun HelpList(
     }
 }
 
-private fun LazyListScope.getHelpItems(
+private fun LazyListScope.getHelpSectionItems(
     isPortrait: Boolean,
     helpMap: Map<Help.Catalog, List<Help>>
 ) = items(helpMap.toList()) { (catalog, helpList) ->
@@ -82,26 +78,14 @@ private fun LazyListScope.getHelpItems(
     }
 
     Column(modifier = itemModifier) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        HelpCatalogItem(
+            catalogName = catalog.name,
+            catalogIconId = catalogIconId,
+            color = colorPair.second.copy(alpha = 0.62f),
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
-        ) {
-            Icon(
-                painter = painterResource(catalogIconId),
-                contentDescription = "",
-                modifier = Modifier.size(26.dp),
-                tint = colorPair.second.copy(alpha = 0.68f),
-            )
-            Spacer(modifier = Modifier.padding(horizontal = 6.dp))
-            Text(
-                text = catalog.name,
-                style = MaterialTheme.typography.titleLarge,
-                color = colorPair.second.copy(alpha = 0.68f),
-                modifier = Modifier.weight(1f)
-            )
-        }
+        )
         if (isPortrait) {
             helpList.forEach { help ->
                 HelpItem(
