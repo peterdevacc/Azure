@@ -81,7 +81,7 @@ private fun LazyListScope.getHelpSectionItems(
         HelpCatalogItem(
             catalogName = catalog.name,
             catalogIconId = catalogIconId,
-            color = colorPair.second.copy(alpha = 0.62f),
+            color = colorPair.second.copy(alpha = 0.66f),
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
