@@ -75,9 +75,9 @@ private fun Block(fullSize: Dp) {
     val fullSizePx = with(density) { fullSize.toPx() }
     val frameBrush = Brush.linearGradient(
         listOf(
-            MaterialTheme.colorScheme.primary,
-            MaterialTheme.colorScheme.secondary,
             MaterialTheme.colorScheme.tertiary,
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.primary,
         )
     )
     val markColor = MaterialTheme.colorScheme.secondary
