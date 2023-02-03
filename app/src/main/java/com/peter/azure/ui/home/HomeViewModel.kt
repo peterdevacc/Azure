@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val preferencesRepository: PreferencesRepository,
+    preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
     private val homeUiState: MutableState<HomeUiState> = mutableStateOf(HomeUiState.Loading)
@@ -45,8 +45,8 @@ class HomeViewModel @Inject constructor(
     }
 
     init {
+        val gameExistedFlow = preferencesRepository.getGameExistedState()
         viewModelScope.launch {
-            val gameExistedFlow = preferencesRepository.getGameExistedState()
             gameExistedFlow.collect { prefResult ->
                 when (prefResult) {
                     is DataResult.Success -> {
