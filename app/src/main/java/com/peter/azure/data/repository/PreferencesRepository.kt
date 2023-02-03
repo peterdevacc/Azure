@@ -61,7 +61,7 @@ class PreferencesRepository @Inject constructor(
             }
         }
 
-    suspend fun getGameExistedState(): Flow<DataResult<Boolean>> {
+    fun getGameExistedState(): Flow<DataResult<Boolean>> {
         return dataStore.data
             .catch {
                 emit(emptyPreferences())
