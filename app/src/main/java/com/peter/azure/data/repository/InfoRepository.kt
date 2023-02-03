@@ -6,8 +6,8 @@
 package com.peter.azure.data.repository
 
 import android.content.res.AssetManager
-import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
+import com.peter.azure.data.util.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString

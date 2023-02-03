@@ -5,8 +5,8 @@
 
 package com.peter.azure.ui.help
 
-import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Help
+import com.peter.azure.data.util.DataResult
 
 sealed interface HelpUiState {
 

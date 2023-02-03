@@ -5,8 +5,8 @@
 
 package com.peter.azure.ui.greeting
 
-import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
+import com.peter.azure.data.util.DataResult
 
 sealed interface GreetingUiState {
 

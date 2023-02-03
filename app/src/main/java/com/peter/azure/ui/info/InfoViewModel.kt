@@ -11,9 +11,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.Info
 import com.peter.azure.data.repository.InfoRepository
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.util.INFO_TYPE_SAVED_KEY
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel

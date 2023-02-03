@@ -12,8 +12,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.peter.azure.ui.about.AboutScreen
-import com.peter.azure.ui.info.InfoScreen
-import com.peter.azure.ui.info.InfoViewModel
 import com.peter.azure.ui.game.GameScreen
 import com.peter.azure.ui.game.GameViewModel
 import com.peter.azure.ui.greeting.GreetingScreen
@@ -22,6 +20,8 @@ import com.peter.azure.ui.help.HelpScreen
 import com.peter.azure.ui.help.HelpViewModel
 import com.peter.azure.ui.home.HomeScreen
 import com.peter.azure.ui.home.HomeViewModel
+import com.peter.azure.ui.info.InfoScreen
+import com.peter.azure.ui.info.InfoViewModel
 import com.peter.azure.ui.print.PrintScreen
 import com.peter.azure.ui.print.PrintViewModel
 

@@ -10,9 +10,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.repository.PreferencesRepository
+import com.peter.azure.data.util.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

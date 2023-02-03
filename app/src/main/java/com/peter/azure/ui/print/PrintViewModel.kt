@@ -10,10 +10,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.repository.PdfRepository
 import com.peter.azure.data.repository.SudokuRepository
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.util.PDF_PAGE_SIZE
 import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
