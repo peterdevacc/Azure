@@ -208,16 +208,3 @@ private fun HomeContent(
         }
     }
 }
-
-//@Preview(name = "Home Screen", showBackground = true)
-//@Preview(
-//    name = "Home Screen (dark)", showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun HomeScreenPreview() {
-//    val viewModel = HomeViewModel()
-//    AzureTheme {
-//        HomeScreen(viewModel, {}, {})
-//    }
-//}
