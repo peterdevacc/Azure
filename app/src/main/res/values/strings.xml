@@ -3,7 +3,7 @@
     <string name="app_version_title">version</string>
     <string name="app_version">1.0</string>
     <string name="app_last_update_title">last update</string>
-    <string name="app_last_update">Jan 29 2023</string>
+    <string name="app_last_update">Feb 2 2023</string>
 
     <string name="screen_home">Home</string>
     <string name="screen_home_description">a Sudoku game is start from here.</string>
