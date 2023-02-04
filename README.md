@@ -4,7 +4,7 @@ The AzureNum is a simplistic design Sudoku game. It offer clean and refreshing S
 
 AzureNum is free and does not have any Ads and hidden charges.
 
-check out on [Google Play](https://www.example.com)
+check out on [Google Play](https://play.google.com/store/apps/details?id=com.peter.azure)
 
 ## Feature
 
