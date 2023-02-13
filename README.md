@@ -15,7 +15,3 @@ check out on [Google Play](https://play.google.com/store/apps/details?id=com.pet
 * Support most screen size
 * Doesn't collect user data
 * Run without network
-
-## License
-
-AzureNum is distributed under the terms of the Apache License (Version 2.0). See [LICENSE](LICENSE) for details.

@@ -1,6 +1,5 @@
 /*
- * Copyright 2022-2023 洪振健.
- * Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+ * Copyright (c) 2023 洪振健 All rights reserved.
  */
 
 package com.peter.azure.ui.util
