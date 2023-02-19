@@ -14,8 +14,8 @@ android {
         applicationId "com.peter.azure"
         minSdk 28
         targetSdk 33
-        versionCode 21
-        versionName "1.0"
+        versionCode 22
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
