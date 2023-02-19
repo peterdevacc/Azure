@@ -7,6 +7,7 @@ package com.peter.azure.ui.game
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -33,10 +34,16 @@ fun GameBoard(
     select: (Location, Int) -> Unit,
     isCompact: Boolean
 ) {
+    val frameColor = if (isSystemInDarkTheme()) {
+        MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+    } else {
+        MaterialTheme.colorScheme.onBackground
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .border(1.dp, MaterialTheme.colorScheme.onBackground)
+            .border(1.dp, frameColor)
     ) {
         for (i in 0..8) {
             Row(modifier = Modifier.weight(1f)) {
@@ -52,7 +59,7 @@ fun GameBoard(
                     )
                     if (j != 8) {
                         Divider(
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = frameColor,
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .width(1.dp)
@@ -63,7 +70,7 @@ fun GameBoard(
             if (i != 8) {
                 Divider(
                     thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = frameColor
                 )
             }
         }
@@ -92,7 +99,7 @@ private fun GameCell(
                 color = if (location == selectedLocation) {
                     MaterialTheme.colorScheme.primaryContainer
                 } else {
-                    MaterialTheme.colorScheme.surface
+                    MaterialTheme.colorScheme.background
                 }
             )
             .clickable { select(location, cell.num) }

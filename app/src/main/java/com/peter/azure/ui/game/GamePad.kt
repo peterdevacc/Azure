@@ -37,13 +37,16 @@ fun GamePad(
     isCompact: Boolean
 ) {
     val contentColor: Color
+    val frameColor: Color
     val backgroundColor: Color
     if (isSystemInDarkTheme()) {
         contentColor = MaterialTheme.colorScheme.secondary
+        frameColor = MaterialTheme.colorScheme.secondaryContainer
         backgroundColor = MaterialTheme.colorScheme.background
     } else {
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-        backgroundColor = MaterialTheme.colorScheme.secondaryContainer
+        contentColor = Color(0xFFbd7a0c)
+        frameColor = MaterialTheme.colorScheme.secondary
+        backgroundColor = Color(0xFFfff6e3).copy(alpha = 0.3f)
     }
 
     val textSize: Int
@@ -64,7 +67,7 @@ fun GamePad(
             .fillMaxSize()
             .border(
                 width = 1.dp,
-                color = contentColor,
+                color = frameColor,
                 shape = MaterialTheme.shapes.medium
             )
     ) {
@@ -100,7 +103,7 @@ fun GamePad(
                     }
                 }
 
-                GamePadHorizontalDivider(contentColor)
+                GamePadHorizontalDivider(frameColor)
                 ActionIcon(
                     iconId = iconId,
                     iconCd = iconCd,
@@ -113,7 +116,7 @@ fun GamePad(
                 )
             }
         }
-        GamePadVerticalDivider(contentColor)
+        GamePadVerticalDivider(frameColor)
         Column(
             modifier = Modifier.weight(3.8f)
         ) {
@@ -148,12 +151,12 @@ fun GamePad(
                             }
                         }
                         if (j != 2) {
-                            GamePadVerticalDivider(contentColor)
+                            GamePadVerticalDivider(frameColor)
                         }
                     }
                 }
                 if (i != 2) {
-                    GamePadHorizontalDivider(contentColor)
+                    GamePadHorizontalDivider(frameColor)
                 }
             }
         }

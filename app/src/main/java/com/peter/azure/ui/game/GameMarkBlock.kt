@@ -46,14 +46,14 @@ fun GameMarkBlock(
         locationTextColor = MaterialTheme.colorScheme.primary
         locationBackgroundColor = MaterialTheme.colorScheme.background
         numTextColor = MaterialTheme.colorScheme.tertiary
-        frameColor = MaterialTheme.colorScheme.tertiary
+        frameColor = MaterialTheme.colorScheme.tertiaryContainer
         backgroundColor = MaterialTheme.colorScheme.background
     } else {
-        locationTextColor = MaterialTheme.colorScheme.onPrimaryContainer
-        locationBackgroundColor = MaterialTheme.colorScheme.primaryContainer
-        numTextColor = MaterialTheme.colorScheme.onTertiaryContainer
-        frameColor = MaterialTheme.colorScheme.onTertiaryContainer
-        backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
+        locationTextColor = MaterialTheme.colorScheme.primary
+        locationBackgroundColor = Color(0xFFfff6e3).copy(alpha = 0.3f)
+        numTextColor = Color(0xFF75b056)
+        frameColor = MaterialTheme.colorScheme.tertiary
+        backgroundColor = Color(0xFFfff6e3).copy(alpha = 0.3f)
     }
 
     val locationTextStyle: TextStyle
