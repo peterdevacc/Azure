@@ -56,7 +56,7 @@ class PdfRepository @Inject constructor(
                 infoTextPaint.textSize = 12f
 
                 // header
-                val appName = "Azure Sudoku"
+                val appName = "AzureNum"
                 val appNameHeight =
                     infoTextPaint.fontMetrics.descent - infoTextPaint.fontMetrics.ascent
                 val appNameStartY = 52f + (appNameHeight / 3)
