@@ -27,10 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.text
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.drawText
-import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -100,25 +97,22 @@ private fun Block(fullSize: Dp) {
     val textStyle = MaterialTheme.typography.headlineLarge.copy(
         fontSize = fontSize
     )
+    val numTextLayout: (String) -> TextLayoutResult = {
+        textMeasurer.measure(
+            text = AnnotatedString(it),
+            style = textStyle,
+        )
+    }
 
-    val numTwoTextLayoutResult = textMeasurer.measure(
-        text = AnnotatedString("2"),
-        style = textStyle,
-    )
+    val numTwoTextLayoutResult = numTextLayout("2")
     val numTwoTextSize = numTwoTextLayoutResult.size
     val numTwoColor = MaterialTheme.colorScheme.onBackground
 
-    val numEightTextLayoutResult = textMeasurer.measure(
-        text = AnnotatedString("8"),
-        style = textStyle,
-    )
+    val numEightTextLayoutResult = numTextLayout("8")
     val numEightTextSize = numEightTextLayoutResult.size
     val numEightColor = MaterialTheme.colorScheme.tertiary
 
-    val numSevenTextLayoutResult = textMeasurer.measure(
-        text = AnnotatedString("7"),
-        style = textStyle,
-    )
+    val numSevenTextLayoutResult = numTextLayout("7")
     val numSevenTextSize = numSevenTextLayoutResult.size
     val numSevenColor = MaterialTheme.colorScheme.primary
 
