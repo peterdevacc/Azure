@@ -4,9 +4,6 @@
 
 package com.peter.azure.ui.print
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.peter.azure.data.entity.GameLevel
@@ -18,6 +15,8 @@ import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -28,11 +27,11 @@ class PrintViewModel @Inject constructor(
     private val pdfRepository: PdfRepository
 ) : ViewModel() {
 
-    private val _pdfUiState: MutableState<PdfUiState> = mutableStateOf(PdfUiState.Default)
-    val pdfUiState: State<PdfUiState> = _pdfUiState
+    private val _pdfUiState = MutableStateFlow<PdfUiState>(PdfUiState.Default)
+    val pdfUiState = _pdfUiState.asStateFlow()
 
-    private val gameLevelListState = mutableStateOf(emptyList<GameLevel>())
-    val gameLevelList: State<List<GameLevel>> = gameLevelListState
+    private val gameLevelListState = MutableStateFlow<List<GameLevel>>(emptyList())
+    val gameLevelList = gameLevelListState.asStateFlow()
 
     private var task: TimerTask? = null
 

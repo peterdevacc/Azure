@@ -4,9 +4,6 @@
 
 package com.peter.azure.ui
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.peter.azure.data.repository.PreferencesRepository
@@ -16,6 +13,8 @@ import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -25,8 +24,8 @@ class MainViewModel @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
-    private val mainUiState: MutableState<MainUiState> = mutableStateOf(MainUiState.Loading)
-    val uiState: State<MainUiState> = mainUiState
+    private val mainUiState = MutableStateFlow<MainUiState>(MainUiState.Loading)
+    val uiState = mainUiState.asStateFlow()
 
     private var task: TimerTask? = null
 

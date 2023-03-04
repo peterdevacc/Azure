@@ -4,10 +4,6 @@
 
 package com.peter.azure.ui.game
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,6 +18,8 @@ import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -35,11 +33,11 @@ class GameViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val _gameUiState: MutableState<GameUiState> = mutableStateOf(GameUiState.Loading)
-    val gameUiState: State<GameUiState> = _gameUiState
+    private val _gameUiState = MutableStateFlow<GameUiState>(GameUiState.Loading)
+    val gameUiState = _gameUiState.asStateFlow()
 
-    private val noteListState = mutableStateListOf<Note>()
-    private val numState = mutableStateOf(0)
+    private val noteListState = mutableListOf<Note>()
+    private var numState = 0
 
     private var task: TimerTask? = null
 
@@ -56,7 +54,7 @@ class GameViewModel @Inject constructor(
                 if (note != null) {
                     markList = note.markList
                 }
-                numState.value = currentNum
+                numState = currentNum
                 _gameUiState.value = uiState.copy(
                     location = location,
                     markList = markList
@@ -69,7 +67,7 @@ class GameViewModel @Inject constructor(
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
             if (uiState.location.isNotDefault()) {
-                numState.value = num
+                numState = num
                 val updatedBoard = uiState.puzzle.board.map {
                     it.toMutableList()
                 }
@@ -94,7 +92,7 @@ class GameViewModel @Inject constructor(
     fun makeMark(mark: Mark) {
         val uiState = _gameUiState.value
         if (uiState is GameUiState.Playing) {
-            val currentNum = numState.value
+            val currentNum = numState
             if (uiState.location.isNotDefault() && currentNum != 0) {
                 val currentNote = noteListState.find {
                     it.location == uiState.location
@@ -123,7 +121,7 @@ class GameViewModel @Inject constructor(
                         markList = markList
                     )
 
-                    numState.value = 0
+                    numState = 0
                 }
             }
         }

@@ -7,7 +7,8 @@ package com.peter.azure.ui.util
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,9 +28,10 @@ import com.peter.azure.ui.theme.azureShapes
 fun AzureTopBar(
     isPortrait: Boolean,
     destination: AzureDestination.Main,
-    navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit,
 ) {
+    val navDialogState = remember { mutableStateOf(false) }
+
     if (navDialogState.value) {
         AzureNavigationDialog(
             isPortrait = isPortrait,

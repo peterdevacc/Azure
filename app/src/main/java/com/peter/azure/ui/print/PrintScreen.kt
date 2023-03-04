@@ -16,9 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,6 +30,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.peter.azure.R
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.util.PDF_PAGE_SIZE
@@ -47,18 +46,18 @@ fun PrintScreen(
     isPortrait: Boolean,
     navigateToMainScreens: (String) -> Unit
 ) {
-    val navDialogState = remember { mutableStateOf(false) }
+    val pdfUiState by viewModel.pdfUiState.collectAsStateWithLifecycle()
+    val gameLevelList by viewModel.gameLevelList.collectAsStateWithLifecycle()
 
     PrintContent(
-        pdfUiState = viewModel.pdfUiState.value,
+        pdfUiState = pdfUiState,
         generatePdf = viewModel::generateSudokuPdf,
         notShareable = viewModel::notShareable,
         dismissDialog = viewModel::dismissDialog,
-        gameLevelList = viewModel.gameLevelList.value,
+        gameLevelList = gameLevelList,
         addGameLevel = viewModel::addGameLevel,
         removeGameLevel = viewModel::removeGameLevel,
         isPortrait = isPortrait,
-        navDialogState = navDialogState,
         navigateToMainScreens = navigateToMainScreens
     )
 }
@@ -73,7 +72,6 @@ private fun PrintContent(
     addGameLevel: (GameLevel) -> Unit,
     removeGameLevel: (GameLevel) -> Unit,
     isPortrait: Boolean,
-    navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit
 ) {
     val context = LocalContext.current
@@ -196,7 +194,6 @@ private fun PrintContent(
         Box(modifier = topBarModifier) {
             AzureTopBar(
                 isPortrait = isPortrait,
-                navDialogState = navDialogState,
                 destination = AzureDestination.Main.PRINT,
                 navigateToMainScreens = navigateToMainScreens
             )

@@ -4,9 +4,6 @@
 
 package com.peter.azure.ui.info
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +15,8 @@ import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -28,8 +27,8 @@ class InfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val infoUiState: MutableState<InfoUiState> = mutableStateOf(InfoUiState.Loading)
-    val uiState: State<InfoUiState> = infoUiState
+    private val infoUiState = MutableStateFlow<InfoUiState>(InfoUiState.Loading)
+    val uiState = infoUiState.asStateFlow()
 
     private var task: TimerTask? = null
 

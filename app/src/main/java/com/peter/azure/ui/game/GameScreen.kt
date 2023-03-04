@@ -11,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.peter.azure.R
 import com.peter.azure.data.entity.Location
 import com.peter.azure.data.entity.Mark
@@ -34,8 +36,9 @@ fun GameScreen(
     isCompact: Boolean,
     navigateUp: () -> Unit
 ) {
+    val gameUiState by viewModel.gameUiState.collectAsStateWithLifecycle()
     GameContent(
-        uiState = viewModel.gameUiState.value,
+        uiState = gameUiState,
         selectLocation = viewModel::selectLocation,
         writeNum = viewModel::writeNum,
         makeNote = viewModel::makeMark,

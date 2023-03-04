@@ -7,9 +7,7 @@ package com.peter.azure.ui.home
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -18,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.peter.azure.R
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.ui.navigation.AzureDestination
@@ -34,17 +33,16 @@ fun HomeScreen(
     isPortrait: Boolean,
     navigateToMainScreens: (String) -> Unit,
 ) {
-    val navDialogState = remember { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     HomeContent(
-        uiState = viewModel.uiState.value,
+        uiState = uiState,
         setDialAngle = viewModel::setDialAngle,
         getGameLevel = viewModel::getGameLevel,
         navigateToNewGame = navigateToNewGame,
         navigateToContinueGame = navigateToContinueGame,
         isPortrait = isPortrait,
         isCompact = isCompact,
-        navDialogState = navDialogState,
         navigateToMainScreens = navigateToMainScreens,
     )
 }
@@ -58,7 +56,6 @@ private fun HomeContent(
     navigateToContinueGame: () -> Unit,
     isPortrait: Boolean,
     isCompact: Boolean,
-    navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit,
 ) {
 
@@ -127,7 +124,6 @@ private fun HomeContent(
                 Box(modifier = topBarModifier) {
                     AzureTopBar(
                         isPortrait = isPortrait,
-                        navDialogState = navDialogState,
                         destination = AzureDestination.Main.HOME,
                         navigateToMainScreens = navigateToMainScreens
                     )

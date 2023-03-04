@@ -4,23 +4,18 @@
 
 package com.peter.azure.ui.about
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -28,7 +23,6 @@ import androidx.constraintlayout.compose.Dimension
 import com.peter.azure.R
 import com.peter.azure.data.entity.Info
 import com.peter.azure.ui.navigation.AzureDestination
-import com.peter.azure.ui.theme.AzureTheme
 import com.peter.azure.ui.util.AzureTopBar
 import com.peter.azure.ui.util.azureScreen
 
@@ -39,13 +33,10 @@ fun AboutScreen(
     isCompact: Boolean,
     navigateToMainScreens: (String) -> Unit,
 ) {
-    val navDialogState = remember { mutableStateOf(false) }
-
     AboutContent(
         navigateToContract = navigateToContract,
         isPortrait = isPortrait,
         isCompact = isCompact,
-        navDialogState = navDialogState,
         navigateToMainScreens = navigateToMainScreens
     )
 }
@@ -55,7 +46,6 @@ private fun AboutContent(
     navigateToContract: (Info.Type) -> Unit,
     isPortrait: Boolean,
     isCompact: Boolean,
-    navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit,
 ) {
     val gradientBrush = Brush.linearGradient(
@@ -152,7 +142,6 @@ private fun AboutContent(
         Box(modifier = topBarModifier) {
             AzureTopBar(
                 isPortrait = isPortrait,
-                navDialogState = navDialogState,
                 destination = AzureDestination.Main.ABOUT,
                 navigateToMainScreens = navigateToMainScreens
             )
@@ -234,21 +223,5 @@ private fun AboutContent(
                 )
             }
         }
-    }
-}
-
-@Preview(
-    name = "About Screen",
-    showBackground = true
-)
-@Preview(
-    name = "About Screen", showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-@Composable
-fun AboutScreenPreview() {
-    val navDialogState = remember { mutableStateOf(false) }
-    AzureTheme {
-        AboutContent({}, isPortrait = true, isCompact = true, navDialogState, {})
     }
 }

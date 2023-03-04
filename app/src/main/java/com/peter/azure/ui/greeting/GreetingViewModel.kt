@@ -4,9 +4,6 @@
 
 package com.peter.azure.ui.greeting
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.peter.azure.data.entity.Info
@@ -17,6 +14,8 @@ import com.peter.azure.util.azureSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -27,9 +26,8 @@ class GreetingViewModel @Inject constructor(
     private val infoRepository: InfoRepository
 ) : ViewModel() {
 
-    private val greetingUiState: MutableState<GreetingUiState> =
-        mutableStateOf(GreetingUiState.Default)
-    val uiState: State<GreetingUiState> = greetingUiState
+    private val greetingUiState = MutableStateFlow<GreetingUiState>(GreetingUiState.Default)
+    val uiState = greetingUiState.asStateFlow()
 
     private var task: TimerTask? = null
 

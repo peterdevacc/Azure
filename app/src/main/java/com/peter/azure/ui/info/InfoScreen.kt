@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.ui.util.AzureTopBar
 import com.peter.azure.ui.util.ErrorNotice
@@ -29,8 +31,9 @@ fun InfoScreen(
     isPortrait: Boolean,
     navigateUp: () -> Unit
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     InfoContent(
-        uiState = viewModel.uiState.value,
+        uiState = uiState,
         isPortrait = isPortrait,
         navigateUp = navigateUp
     )

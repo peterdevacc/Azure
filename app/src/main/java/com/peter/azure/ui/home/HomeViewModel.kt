@@ -4,15 +4,14 @@
 
 package com.peter.azure.ui.home
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.data.util.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,8 +20,8 @@ class HomeViewModel @Inject constructor(
     preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
-    private val homeUiState: MutableState<HomeUiState> = mutableStateOf(HomeUiState.Loading)
-    val uiState: State<HomeUiState> = homeUiState
+    private val homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
+    val uiState = homeUiState.asStateFlow()
 
     fun setDialAngle(angle: Double) {
         if (homeUiState.value is HomeUiState.Success) {

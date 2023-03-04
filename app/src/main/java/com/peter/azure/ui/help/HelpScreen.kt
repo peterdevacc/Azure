@@ -8,14 +8,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.ui.util.AzureTopBar
 import com.peter.azure.ui.util.ErrorNotice
@@ -27,12 +26,11 @@ fun HelpScreen(
     isPortrait: Boolean,
     navigateToMainScreens: (String) -> Unit
 ) {
-    val navDialogState = remember { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     HelpContent(
-        uiState = viewModel.uiState.value,
+        uiState = uiState,
         isPortrait = isPortrait,
-        navDialogState = navDialogState,
         navigateToMainScreens = navigateToMainScreens
     )
 }
@@ -41,7 +39,6 @@ fun HelpScreen(
 private fun HelpContent(
     uiState: HelpUiState,
     isPortrait: Boolean,
-    navDialogState: MutableState<Boolean>,
     navigateToMainScreens: (String) -> Unit
 ) {
     ConstraintLayout(
@@ -87,7 +84,6 @@ private fun HelpContent(
         Box(modifier = topBarModifier) {
             AzureTopBar(
                 isPortrait = isPortrait,
-                navDialogState = navDialogState,
                 destination = AzureDestination.Main.HELP,
                 navigateToMainScreens = navigateToMainScreens
             )
