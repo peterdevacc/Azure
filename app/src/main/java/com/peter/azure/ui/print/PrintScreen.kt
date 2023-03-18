@@ -292,13 +292,15 @@ private fun PrintContent(
                         .height(40.dp)
                 ) {
                     val listText = "${gameLevelList.size} / $PDF_PAGE_SIZE"
+                    val listTextDescription = stringResource(
+                        R.string.print_list_capacity_description,
+                        listText
+                    )
                     Text(
                         text = listText,
                         color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.semantics {
-                            this.text = AnnotatedString(
-                                "Current print list: $listText"
-                            )
+                            this.text = AnnotatedString(listTextDescription)
                         }
                     )
                 }

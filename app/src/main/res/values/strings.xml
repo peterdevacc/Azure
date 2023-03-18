@@ -129,4 +129,8 @@
         AzureNum Info Dialog
     </string>
 
+    <string name="print_list_capacity_description">
+        Current print list capacity: %1$s
+    </string>
+
 </resources>
