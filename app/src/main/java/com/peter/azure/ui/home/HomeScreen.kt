@@ -33,8 +33,7 @@ fun HomeScreen(
     isPortrait: Boolean,
     navigateToMainScreens: (String) -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
+    val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     HomeContent(
         uiState = uiState,
         setDialAngle = viewModel::setDialAngle,

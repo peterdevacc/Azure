@@ -10,9 +10,7 @@ import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.repository.PreferencesRepository
 import com.peter.azure.data.util.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,13 +18,33 @@ class HomeViewModel @Inject constructor(
     preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
-    private val homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
-    val uiState = homeUiState.asStateFlow()
+    private val gameExistedFlow = preferencesRepository.getGameExistedState()
+    private val dialAngleFlow = MutableStateFlow(0.0)
+
+    val homeUiState = gameExistedFlow
+        .combine(dialAngleFlow) { prefResult, dialAngle ->
+            prefResult to dialAngle
+        }.map { (prefResult, angle) ->
+            when (prefResult) {
+                is DataResult.Error -> {
+                    HomeUiState.Error(prefResult.code)
+                }
+                is DataResult.Success -> {
+                    HomeUiState.Success(
+                        gameExisted = prefResult.result,
+                        dialAngle = angle
+                    )
+                }
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(3_000),
+            initialValue = HomeUiState.Loading,
+        )
 
     fun setDialAngle(angle: Double) {
         if (homeUiState.value is HomeUiState.Success) {
-            val state = (homeUiState.value as HomeUiState.Success)
-            homeUiState.value = state.copy(dialAngle = angle)
+            dialAngleFlow.value = angle
         }
     }
 
@@ -40,25 +58,6 @@ class HomeViewModel @Inject constructor(
             GameLevel.EASY
         }
         return level
-    }
-
-    init {
-        val gameExistedFlow = preferencesRepository.getGameExistedState()
-        viewModelScope.launch {
-            gameExistedFlow.collect { prefResult ->
-                when (prefResult) {
-                    is DataResult.Success -> {
-                        homeUiState.value = HomeUiState.Success(
-                            gameExisted = prefResult.result,
-                            dialAngle = 0.0
-                        )
-                    }
-                    is DataResult.Error -> {
-                        homeUiState.value = HomeUiState.Error(prefResult.code)
-                    }
-                }
-            }
-        }
     }
 
 }
