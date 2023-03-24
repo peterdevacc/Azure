@@ -14,8 +14,8 @@ android {
         applicationId "com.peter.azure"
         minSdk 28
         targetSdk 33
-        versionCode 23
-        versionName "1.2"
+        versionCode 24
+        versionName "1.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -42,7 +42,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.3'
+        kotlinCompilerExtensionVersion '1.4.4'
     }
     packagingOptions {
         resources {
@@ -65,31 +65,31 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation "androidx.core:core-splashscreen:1.0.0"
 
-    implementation 'androidx.activity:activity-compose:1.7.0-rc01'
+    implementation 'androidx.activity:activity-compose:1.7.0'
 
     implementation 'com.google.android.material:material:1.8.0'
 
-    implementation "androidx.compose.runtime:runtime:1.4.0-rc01"
-    implementation "androidx.compose.ui:ui:1.4.0-rc01"
-    implementation "androidx.compose.ui:ui-tooling-preview:1.4.0-rc01"
-    implementation "androidx.compose.material3:material3:1.1.0-alpha08"
-    implementation "androidx.compose.material3:material3-window-size-class:1.1.0-alpha08"
-    implementation "androidx.compose.animation:animation:1.4.0-rc01"
+    implementation "androidx.compose.runtime:runtime:1.4.0"
+    implementation "androidx.compose.ui:ui:1.4.0"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.4.0"
+    implementation "androidx.compose.material3:material3:1.1.0-beta01"
+    implementation "androidx.compose.material3:material3-window-size-class:1.1.0-beta01"
+    implementation "androidx.compose.animation:animation:1.4.0"
 
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.29.1-alpha"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.30.0"
 
     implementation("io.coil-kt:coil-compose:2.2.2")
 
-    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.0'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0"
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.6.0"
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.6.1"
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
-    implementation "androidx.navigation:navigation-compose:2.6.0-alpha07"
+    implementation "androidx.navigation:navigation-compose:2.6.0-alpha08"
 
     implementation "androidx.room:room-runtime:2.5.0"
     annotationProcessor "androidx.room:room-compiler:2.5.0"
@@ -107,9 +107,9 @@ dependencies {
 
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.0-rc01"
-    debugImplementation "androidx.compose.ui:ui-tooling:1.4.0-rc01"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:1.4.0-rc01"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.0"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.4.0"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:1.4.0"
 
     testImplementation "androidx.room:room-testing:2.5.0"
 
