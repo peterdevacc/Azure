@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
             }
         }.stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(3_000),
+            started = SharingStarted.WhileSubscribed(3_000, 0),
             initialValue = HomeUiState.Loading,
         )
 
