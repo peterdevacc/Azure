@@ -65,7 +65,7 @@ fun PrintScreen(
 @Composable
 private fun PrintContent(
     pdfUiState: PdfUiState,
-    generatePdf: () -> Unit,
+    generatePdf: (String, String, List<String>) -> Unit,
     notShareable: () -> Unit,
     dismissDialog: () -> Unit,
     gameLevelList: List<GameLevel>,
@@ -75,6 +75,13 @@ private fun PrintContent(
     navigateToMainScreens: (String) -> Unit
 ) {
     val context = LocalContext.current
+    val appName = stringResource(R.string.app_name)
+    val gameLevelTitlePrefix = stringResource(R.string.screen_print_pdf_game_level_title)
+    val gameLevelTextList = listOf(
+        stringResource(R.string.game_level_easy),
+        stringResource(R.string.game_level_moderate),
+        stringResource(R.string.game_level_hard)
+    )
 
     ConstraintLayout(
         modifier = Modifier.azureScreen()
@@ -269,7 +276,7 @@ private fun PrintContent(
                 ) {
                     itemsIndexed(gameLevelList) { index, level ->
                         PrintLevelListItem(
-                            text = level.name,
+                            text = getGameLevelText(level),
                             index = index,
                             onClick = { removeGameLevel(level) },
                             modifier = Modifier
@@ -308,14 +315,15 @@ private fun PrintContent(
         }
 
         Column(modifier = levelButtonListModifier) {
+            val gameLevelEnumList = GameLevel.values()
             if (isPortrait) {
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    items(GameLevel.values()) { level ->
+                    items(gameLevelEnumList) { level ->
                         PrintLevelButton(
-                            text = level.name,
+                            text = getGameLevelText(level),
                             onClick = { addGameLevel(level) },
                             modifier = Modifier.padding(end = 8.dp)
                         )
@@ -327,9 +335,9 @@ private fun PrintContent(
                     reverseLayout = true,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    items(GameLevel.values()) { level ->
+                    items(gameLevelEnumList) { level ->
                         PrintLevelButton(
-                            text = level.name,
+                            text = getGameLevelText(level),
                             onClick = { addGameLevel(level) },
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -366,9 +374,23 @@ private fun PrintContent(
 
         PrintActionButton(
             textId = R.string.screen_print_generate_pdf,
-            onClick = generatePdf,
+            onClick = {
+                generatePdf(
+                    appName,
+                    gameLevelTitlePrefix,
+                    gameLevelTextList
+                )
+            },
             uiState = pdfUiState,
             modifier = generateButtonModifier
         )
+    }
+}
+@Composable
+private fun getGameLevelText(level: GameLevel): String {
+    return when (level) {
+        GameLevel.EASY -> stringResource(R.string.game_level_easy)
+        GameLevel.MODERATE -> stringResource(R.string.game_level_moderate)
+        GameLevel.HARD -> stringResource(R.string.game_level_hard)
     }
 }

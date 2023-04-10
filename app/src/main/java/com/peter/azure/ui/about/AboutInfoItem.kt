@@ -35,7 +35,7 @@ fun AboutInfoItem(
     }
     val heading = title to infoType
     val description = stringResource(
-        R.string.navigate_to_contract_description, heading.second.name
+        R.string.navigate_to_info_description, heading.second.name
     )
 
     OutlinedButton(

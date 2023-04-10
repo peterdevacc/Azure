@@ -28,18 +28,9 @@ class HelpViewModel @Inject constructor(
 
     private var task: TimerTask? = null
 
-    private fun scheduleLimit(job: Job) = azureSchedule {
-        if (helpUiState.value is HelpUiState.Loading) {
-            helpUiState.value = HelpUiState.Error(
-                DataResult.Error.Code.UNKNOWN
-            )
-            job.cancel()
-        }
-    }
-
-    init {
+    suspend fun initHelpData(language: String) {
         val job = viewModelScope.launch(start = CoroutineStart.LAZY) {
-            when (val helpMapResult = helpRepository.getHelpMap()) {
+            when (val helpMapResult = helpRepository.getHelpMap(language)) {
                 is DataResult.Error -> {
                     helpUiState.value = HelpUiState.Error(helpMapResult.code)
                 }
@@ -51,6 +42,14 @@ class HelpViewModel @Inject constructor(
         }
         task = scheduleLimit(job)
         job.start()
+    }
+    private fun scheduleLimit(job: Job) = azureSchedule {
+        if (helpUiState.value is HelpUiState.Loading) {
+            helpUiState.value = HelpUiState.Error(
+                DataResult.Error.Code.UNKNOWN
+            )
+            job.cancel()
+        }
     }
 
 }

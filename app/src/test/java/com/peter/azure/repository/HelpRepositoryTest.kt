@@ -37,7 +37,7 @@ class HelpRepositoryTest {
         val inputStream: InputStream = Json
             .encodeToString(helpList).byteInputStream()
 
-        val resultError = helpRepository.getHelpMap()
+        val resultError = helpRepository.getHelpMap("en")
         assertTrue(resultError is DataResult.Error)
 
         clearMocks(assetManager)
@@ -46,8 +46,8 @@ class HelpRepositoryTest {
             assetManager.open(HELP_FILE_NAME)
         } returns inputStream
 
-        helpRepository.getHelpMap()
-        val resultSuccess = helpRepository.getHelpMap()
+        helpRepository.getHelpMap("en")
+        val resultSuccess = helpRepository.getHelpMap("en")
 
         coVerify(exactly = 1) {
             assetManager.open(HELP_FILE_NAME)

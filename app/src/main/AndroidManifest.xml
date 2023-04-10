@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Azure.SplashScreenTheme"
+        android:localeConfig="@xml/locale_config"
         tools:targetApi="33">
         <activity
             android:name=".ui.MainActivity"

@@ -11,6 +11,7 @@ const val ON_BOARDING_PREF_KEY = "on_boarding_pref"
 const val GAME_EXISTED_PREF_KEY = "game_existed_pref"
 
 const val HELP_FILE_NAME = "help.json"
+const val HELP_FILE_ZH_NAME = "help-zh.json"
 
 const val INFO_TYPE_SAVED_KEY = "info_type"
 const val GAME_LEVEL_SAVED_KEY = "game_level"

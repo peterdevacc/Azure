@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AzureNum</string>
-    <string name="app_version_title">version</string>
-    <string name="app_version">1.4</string>
+    <string name="app_version_title">app version</string>
+    <string name="app_version" translatable="false">1.4</string>
     <string name="app_last_update_title">last update</string>
     <string name="app_last_update">Mar 25 2023</string>
 
@@ -23,6 +23,7 @@
     <string name="screen_print_empty_game_level_list_dialog_msg">
         You need to add at least one game level in the list.
     </string>
+    <string name="screen_print_pdf_game_level_title">Game Level</string>
 
     <string name="screen_help">Help</string>
     <string name="screen_help_description">
@@ -31,10 +32,10 @@
 
     <string name="screen_about">About</string>
     <string name="screen_about_description">
-        Our information and legal files are list in here.
+        AzureNum information and legal files are list in here.
     </string>
     <string name="screen_about_motto">Build &amp; Improve\nJudgement</string>
-    <string name="screen_about_website">https://github.com/peterdevacc/PeterSoftware</string>
+    <string name="screen_about_website" translatable="false">https://github.com/peterdevacc/PeterSoftware</string>
 
     <string name="screen_game">Game</string>
     <string name="screen_game_delete_dialog_title">Delete game</string>
@@ -64,6 +65,9 @@
     <string name="screen_greeting_reject">REJECT AND EXIT</string>
     <string name="screen_greeting_info_dialog_title">%1$s INFO</string>
     <string name="screen_greeting_info_dialog_cancel">Cancel</string>
+    <string name="screen_greeting_legal_text_me">My </string>
+    <string name="screen_greeting_legal_text_and"> and </string>
+    <string name="screen_greeting_legal_text_period">.</string>
 
     <string name="service_title">service terms</string>
     <string name="privacy_title">privacy policy</string>
@@ -79,58 +83,40 @@
         <item>@string/game_level_hard</item>
     </string-array>
 
-    <string name="icon_error">Error icon</string>
+    <string name="icon_error" translatable="false">Error icon</string>
     <string name="error_io">A IO error happened, \nplease try again.</string>
     <string name="error_unknown">A unknown error happened, \nplease try again.</string>
 
-    <string name="icon_cd_navigation_menu">Navigation menu</string>
-    <string name="icon_cd_navigate_up">Navigate up</string>
-    <string name="icon_cd_screen_print">Print screen logo</string>
-    <string name="icon_cd_add_level">Add level %1$s to the list</string>
-    <string name="icon_cd_remove_level">Remove position %1$s level %2$s from the list</string>
-    <string name="icon_cd_delete_game">Delete game dialog</string>
-    <string name="icon_cd_submit_answer">Submit answer dialog</string>
-    <string name="icon_cd_clean">Clean</string>
-    <string name="icon_cd_mark_potential">Mark potential</string>
-    <string name="icon_cd_mark_wrong">Mark wrong</string>
-    <string name="icon_cd_mark_none">Mark none</string>
+    <string name="icon_cd_navigation_menu" translatable="false">Navigation menu</string>
+    <string name="icon_cd_navigate_up" translatable="false">Navigate up</string>
+    <string name="icon_cd_screen_print" translatable="false">Print screen logo</string>
+    <string name="icon_cd_add_level" translatable="false">Add level %1$s to the list</string>
+    <string name="icon_cd_delete_game" translatable="false">Delete game dialog</string>
+    <string name="icon_cd_submit_answer" translatable="false">Submit answer dialog</string>
+    <string name="icon_cd_clean" translatable="false">Clean</string>
+    <string name="icon_cd_mark_potential" translatable="false">Mark potential</string>
+    <string name="icon_cd_mark_wrong" translatable="false">Mark wrong</string>
+    <string name="icon_cd_mark_none" translatable="false">Mark none</string>
 
     <string name="screen_heading_description">%1$s Screen</string>
-    <string name="navigate_to_contract_description">Navigate to %1$s contract screen</string>
+    <string name="navigate_to_info_description">Navigate to %1$s contract screen</string>
     <string name="navigation_dialog_item_description">%1$s screen destination</string>
 
-    <string name="game_level_setting_description">
-        Game level setting wheel, current level is %1$s ,double click and then hold to spin
-    </string>
+    <string name="game_level_setting_description">"         Game level setting wheel, current level is %1$s ,double click and then hold to spin     "</string>
 
     <string name="game_existed_description">A Sudoku game existed</string>
-    <string name="game_board_blank_cell_description">
-        Game board blank cell r%1$d c%2$d with no number
-    </string>
-    <string name="game_board_blank_cell_with_num_description">
-        Game board blank cell r%1$d c%2$d with number %3$d
-    </string>
-    <string name="game_board_question_cell_description">
-        Game board question cell r%1$d c%2$d with number %3$d
-    </string>
-    <string name="mark_block_cell_title_description">
-        Mark block current selected blank %1$s
-    </string>
-    <string name="mark_block_location_none_description">
-        Mark block no blank cell selected
-    </string>
-    <string name="mark_block_num_description">
-        Mark block number %1$d with mark %2$s at %3$d row %4$d column blank cell
-    </string>
+    <string name="game_board_blank_cell_description">"         Game board blank cell r%1$d c%2$d with no number     "</string>
+    <string name="game_board_blank_cell_with_num_description">"         Game board blank cell r%1$d c%2$d with number %3$d     "</string>
+    <string name="game_board_question_cell_description">"         Game board question cell r%1$d c%2$d with number %3$d     "</string>
+    <string name="mark_block_cell_title_description">"         Mark block current selected blank %1$s     "</string>
+    <string name="mark_block_location_none_description">"         Mark block no blank cell selected     "</string>
+    <string name="mark_block_num_description">"         Mark block number %1$d with mark %2$s at %3$d row %4$d column blank cell     "</string>
     <string name="game_pad_num_button_description">Game pad number %1$d button</string>
-    <string name="game_pad_icon_button_description">Game pad %1$s button</string>
+    <string name="game_pad_icon_button_description" translatable="false">Game pad %1$s button</string>
 
-    <string name="info_dialog_title_description">
-        AzureNum Info Dialog
-    </string>
+    <string name="info_dialog_title_description">"         AzureNum Info Dialog     "</string>
 
-    <string name="print_list_capacity_description">
-        Current print list capacity: %1$s
-    </string>
+    <string name="print_list_capacity_description">"         Current print list capacity: %1$s     "</string>
+    <string name="icon_cd_remove_level" translatable="false">Remove position %1$s level %2$s from the list</string>
 
 </resources>

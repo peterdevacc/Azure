@@ -34,7 +34,12 @@ class PdfRepository @Inject constructor(
     @ApplicationContext private val appContext: Context,
 ) {
 
-    suspend fun generateSudokuPdf(printGameList: List<PrintGame>): DataResult<SudokuPdf> =
+    suspend fun generateSudokuPdf(
+        appName: String,
+        gameLevelTitlePrefix: String,
+        gameLevelTextList: List<String>,
+        printGameList: List<PrintGame>,
+    ): DataResult<SudokuPdf> =
         withContext(Dispatchers.IO) {
 
             // A4
@@ -56,7 +61,6 @@ class PdfRepository @Inject constructor(
                 infoTextPaint.textSize = 12f
 
                 // header
-                val appName = "AzureNum"
                 val appNameHeight =
                     infoTextPaint.fontMetrics.descent - infoTextPaint.fontMetrics.ascent
                 val appNameStartY = 52f + (appNameHeight / 3)
@@ -72,7 +76,8 @@ class PdfRepository @Inject constructor(
                 canvas.drawText(dateTime, dateTimeStartX, dateTimeStartY, infoTextPaint)
 
                 // footer
-                val gameLevel = "Game Level - ${printGame.gameLevel.name}"
+                val gameLevel =
+                    "$gameLevelTitlePrefix - ${gameLevelTextList[printGame.gameLevel.num]}"
                 val gameLevelHeight =
                     infoTextPaint.fontMetrics.descent - infoTextPaint.fontMetrics.ascent
                 val gameLevelStartY = 790f + (gameLevelHeight / 3)

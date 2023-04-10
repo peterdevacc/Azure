@@ -46,7 +46,7 @@ fun LegalText(
             append(" ")
         }
 
-        append("My ")
+        append(stringResource(R.string.screen_greeting_legal_text_me))
 
         pushStringAnnotation(
             tag = infoTypeTag,
@@ -57,7 +57,7 @@ fun LegalText(
         }
         pop()
 
-        append(" and ")
+        append(stringResource(R.string.screen_greeting_legal_text_and))
 
         pushStringAnnotation(
             tag = infoTypeTag,
@@ -68,7 +68,7 @@ fun LegalText(
         }
         pop()
 
-        append(".")
+        append(stringResource(R.string.screen_greeting_legal_text_period))
     }
 
     ClickableText(
