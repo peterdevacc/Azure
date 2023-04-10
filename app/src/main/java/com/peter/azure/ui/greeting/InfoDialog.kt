@@ -52,10 +52,7 @@ fun InfoDialog(
                 }
         ) {
             Text(
-                text = stringResource(
-                    R.string.screen_greeting_info_dialog_title,
-                    info.type.name
-                ),
+                text = stringResource(R.string.screen_greeting_info_dialog_title),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(vertical = 16.dp)
@@ -89,4 +86,3 @@ fun InfoDialog(
         }
     }
 }
-

@@ -60,10 +60,10 @@
     <string name="screen_info">Info</string>
 
     <string name="screen_greeting">Greeting</string>
-    <string name="screen_greeting_slogan">Play &amp; Print Sudoku.</string>
+    <string name="screen_greeting_slogan">Play &amp; Print Sudoku !</string>
     <string name="screen_greeting_accept">ACCEPT AND CONTINUE</string>
     <string name="screen_greeting_reject">REJECT AND EXIT</string>
-    <string name="screen_greeting_info_dialog_title">%1$s INFO</string>
+    <string name="screen_greeting_info_dialog_title">Info</string>
     <string name="screen_greeting_info_dialog_cancel">Cancel</string>
     <string name="screen_greeting_legal_text_me">My </string>
     <string name="screen_greeting_legal_text_and"> and </string>
@@ -102,21 +102,21 @@
     <string name="navigate_to_info_description">Navigate to %1$s contract screen</string>
     <string name="navigation_dialog_item_description">%1$s screen destination</string>
 
-    <string name="game_level_setting_description">"         Game level setting wheel, current level is %1$s ,double click and then hold to spin     "</string>
+    <string name="game_level_setting_description">Game level setting wheel, current level is %1$s ,double click and then hold to spin</string>
 
     <string name="game_existed_description">A Sudoku game existed</string>
-    <string name="game_board_blank_cell_description">"         Game board blank cell r%1$d c%2$d with no number     "</string>
-    <string name="game_board_blank_cell_with_num_description">"         Game board blank cell r%1$d c%2$d with number %3$d     "</string>
-    <string name="game_board_question_cell_description">"         Game board question cell r%1$d c%2$d with number %3$d     "</string>
-    <string name="mark_block_cell_title_description">"         Mark block current selected blank %1$s     "</string>
-    <string name="mark_block_location_none_description">"         Mark block no blank cell selected     "</string>
-    <string name="mark_block_num_description">"         Mark block number %1$d with mark %2$s at %3$d row %4$d column blank cell     "</string>
+    <string name="game_board_blank_cell_description">Game board blank cell r%1$d c%2$d with no number</string>
+    <string name="game_board_blank_cell_with_num_description">Game board blank cell r%1$d c%2$d with number %3$d</string>
+    <string name="game_board_question_cell_description">Game board question cell r%1$d c%2$d with number %3$d</string>
+    <string name="mark_block_cell_title_description">Mark block current selected blank %1$s</string>
+    <string name="mark_block_location_none_description">Mark block no blank cell selected</string>
+    <string name="mark_block_num_description">Mark block number %1$d with mark %2$s at %3$d row %4$d column blank cell</string>
     <string name="game_pad_num_button_description">Game pad number %1$d button</string>
     <string name="game_pad_icon_button_description" translatable="false">Game pad %1$s button</string>
 
-    <string name="info_dialog_title_description">"         AzureNum Info Dialog     "</string>
+    <string name="info_dialog_title_description">AzureNum Info Dialog</string>
 
-    <string name="print_list_capacity_description">"         Current print list capacity: %1$s     "</string>
+    <string name="print_list_capacity_description">Current print list capacity: %1$s</string>
     <string name="icon_cd_remove_level" translatable="false">Remove position %1$s level %2$s from the list</string>
 
 </resources>

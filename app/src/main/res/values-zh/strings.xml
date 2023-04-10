@@ -38,10 +38,10 @@
     <string name="screen_game_mark_block_cell_none_title">格子 - 无</string>
     <string name="screen_info">资讯</string>
     <string name="screen_greeting">欢迎</string>
-    <string name="screen_greeting_slogan">畅玩和打印数独</string>
+    <string name="screen_greeting_slogan">畅玩和打印数独！</string>
     <string name="screen_greeting_accept">同意和继续</string>
     <string name="screen_greeting_reject">拒绝和退出</string>
-    <string name="screen_greeting_info_dialog_title">%1$s 资讯</string>
+    <string name="screen_greeting_info_dialog_title">资讯</string>
     <string name="screen_greeting_info_dialog_cancel">关闭</string>
     <string name="screen_greeting_legal_text_me">我的</string>
     <string name="screen_greeting_legal_text_and">和</string>
