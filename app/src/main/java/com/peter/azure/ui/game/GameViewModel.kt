@@ -215,8 +215,8 @@ class GameViewModel @Inject constructor(
                         val sudoku = sudokuRepository.getPuzzleBoard(level)
                         noteList = mutableListOf()
                         val markList = Mark.getDefaultList()
-                        val board = sudoku.mapIndexed { y, row ->
-                            row.mapIndexed { x, num ->
+                        val board = sudoku.mapIndexed { y, column ->
+                            column.mapIndexed { x, num ->
                                 val type = if (num == 0) {
                                     val note = Note(Location(y, x), markList)
                                     noteList.add(note)
