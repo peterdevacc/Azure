@@ -58,7 +58,7 @@ class PrintViewModel @Inject constructor(
             _pdfUiState.value = PdfUiState.Processing
             if (gameLevelListState.value.isNotEmpty()) {
                 val boardList = sudokuRepository.getPrintGameList(gameLevelListState.value)
-                val sudokuPdfResult = pdfRepository.generateSudokuPdf(
+                val sudokuPdfResult = pdfRepository.createSudokuPdf(
                     appName,
                     gameLevelTitlePrefix,
                     gameLevelTextList,

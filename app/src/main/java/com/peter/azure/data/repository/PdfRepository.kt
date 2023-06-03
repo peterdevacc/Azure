@@ -34,7 +34,7 @@ class PdfRepository @Inject constructor(
     @ApplicationContext private val appContext: Context,
 ) {
 
-    suspend fun generateSudokuPdf(
+    suspend fun createSudokuPdf(
         appName: String,
         gameLevelTitlePrefix: String,
         gameLevelTextList: List<String>,
