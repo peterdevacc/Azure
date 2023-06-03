@@ -1,8 +1,9 @@
 package com.peter.azure.viewmodel
 
-import com.peter.azure.data.util.DataResult
+import androidx.compose.ui.text.intl.Locale
 import com.peter.azure.data.entity.Help
 import com.peter.azure.data.repository.HelpRepository
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.ui.help.HelpUiState
 import com.peter.azure.ui.help.HelpViewModel
 import io.mockk.coEvery
@@ -44,15 +45,16 @@ class HelpViewModelTest {
     fun `init success`() = runBlocking {
         launch(Dispatchers.Main) {
             coEvery {
-                helpRepository.getHelpMap()
+                helpRepository.getHelpMap(Locale.current.language)
             } returns DataResult.Success(expected)
 
             val viewModel = HelpViewModel(helpRepository)
+            viewModel.initHelpData(Locale.current.language)
 
             delay(magicNum)
 
             coVerify(exactly = 1) {
-                helpRepository.getHelpMap()
+                helpRepository.getHelpMap(Locale.current.language)
             }
 
             confirmVerified(helpRepository)
@@ -65,15 +67,16 @@ class HelpViewModelTest {
     fun `init error`() = runBlocking {
         launch(Dispatchers.Main) {
             coEvery {
-                helpRepository.getHelpMap()
+                helpRepository.getHelpMap(Locale.current.language)
             } returns DataResult.Error(DataResult.Error.Code.UNKNOWN)
 
             val viewModel = HelpViewModel(helpRepository)
+            viewModel.initHelpData(Locale.current.language)
 
             delay(magicNum)
 
             coVerify(exactly = 1) {
-                helpRepository.getHelpMap()
+                helpRepository.getHelpMap(Locale.current.language)
             }
 
             confirmVerified(helpRepository)
