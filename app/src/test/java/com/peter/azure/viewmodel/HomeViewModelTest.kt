@@ -1,12 +1,13 @@
 package com.peter.azure.viewmodel
 
-import com.peter.azure.data.util.DataResult
 import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.repository.PreferencesRepository
+import com.peter.azure.data.util.DataResult
 import com.peter.azure.ui.home.HomeUiState
 import com.peter.azure.ui.home.HomeViewModel
 import io.mockk.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -36,12 +37,20 @@ class HomeViewModelTest {
 
         val viewModel = HomeViewModel(preferencesRepository)
 
+        val job = launch(Dispatchers.Main, CoroutineStart.LAZY) {
+            viewModel.homeUiState.collect()
+        }
+        job.start()
+
         delay(magicNum)
 
         viewModel.setDialAngle(expected)
-        val result = (viewModel.uiState.value as HomeUiState.Success).dialAngle
+        delay(magicNum)
+        val result = (viewModel.homeUiState.value as HomeUiState.Success).dialAngle
         val delta = 1e-15
         assertEquals(expected, result, delta)
+
+        job.cancelAndJoin()
     }
 
     @Test
@@ -54,82 +63,110 @@ class HomeViewModelTest {
 
         val viewModel = HomeViewModel(preferencesRepository)
 
+        val job = launch(Dispatchers.Main, CoroutineStart.LAZY) {
+            viewModel.homeUiState.collect()
+        }
+        job.start()
+
         delay(magicNum)
 
         viewModel.setDialAngle(-130.0)
+        delay(magicNum)
         var level = viewModel.getGameLevel()
         assertEquals(GameLevel.EASY, level)
 
         viewModel.setDialAngle(30.0)
+        delay(magicNum)
         level = viewModel.getGameLevel()
         assertEquals(GameLevel.MODERATE, level)
 
         viewModel.setDialAngle(-30.0)
+        delay(magicNum)
         level = viewModel.getGameLevel()
         assertEquals(GameLevel.HARD, level)
+
+        job.cancelAndJoin()
+
     }
 
     @Test
     fun `init success`() = runBlocking {
-        launch(Dispatchers.Main) {
-            // game not existed
-            coEvery {
-                preferencesRepository.getGameExistedState()
-            } returns flowOf(
-                DataResult.Success(false)
-            )
-            var viewModel = HomeViewModel(preferencesRepository)
-            delay(magicNum)
-            coVerify(exactly = 1) {
-                preferencesRepository.getGameExistedState()
-            }
-            confirmVerified(preferencesRepository)
-            assertTrue(viewModel.uiState.value is HomeUiState.Success)
-            var result = (viewModel.uiState.value as HomeUiState.Success).gameExisted
-            assertEquals(false, result)
-            clearAllMocks()
+        // game not existed
+        coEvery {
+            preferencesRepository.getGameExistedState()
+        } returns flowOf(
+            DataResult.Success(false)
+        )
+        var viewModel = HomeViewModel(preferencesRepository)
 
-            // game existed
-            coEvery {
-                preferencesRepository.getGameExistedState()
-            } returns flowOf(
-                DataResult.Success(true)
-            )
-            viewModel = HomeViewModel(preferencesRepository)
-            delay(magicNum)
-            coVerify(exactly = 1) {
-                preferencesRepository.getGameExistedState()
-            }
-            confirmVerified(preferencesRepository)
-            assertTrue(viewModel.uiState.value is HomeUiState.Success)
-            result = (viewModel.uiState.value as HomeUiState.Success).gameExisted
-            assertEquals(true, result)
+        var job = launch(Dispatchers.Main, CoroutineStart.LAZY) {
+            viewModel.homeUiState.collect()
         }
-        Unit
+        job.start()
+
+        delay(magicNum)
+        coVerify(exactly = 1) {
+            preferencesRepository.getGameExistedState()
+        }
+        confirmVerified(preferencesRepository)
+        assertTrue(viewModel.homeUiState.value is HomeUiState.Success)
+        var result = (viewModel.homeUiState.value as HomeUiState.Success).gameExisted
+        assertEquals(false, result)
+        clearAllMocks()
+
+        job.cancelAndJoin()
+
+        // game existed
+        coEvery {
+            preferencesRepository.getGameExistedState()
+        } returns flowOf(
+            DataResult.Success(true)
+        )
+        viewModel = HomeViewModel(preferencesRepository)
+
+        job = launch(Dispatchers.Main, CoroutineStart.LAZY) {
+            viewModel.homeUiState.collect()
+        }
+        job.start()
+
+        delay(magicNum)
+        coVerify(exactly = 1) {
+            preferencesRepository.getGameExistedState()
+        }
+        confirmVerified(preferencesRepository)
+        assertTrue(viewModel.homeUiState.value is HomeUiState.Success)
+        result = (viewModel.homeUiState.value as HomeUiState.Success).gameExisted
+        assertEquals(true, result)
+
+        job.cancelAndJoin()
     }
 
     @Test
     fun `init error`() = runBlocking {
-        launch(Dispatchers.Main) {
-            coEvery {
-                preferencesRepository.getGameExistedState()
-            } returns flowOf(
-                DataResult.Error(DataResult.Error.Code.UNKNOWN)
-            )
-            val viewModel = HomeViewModel(preferencesRepository)
+        coEvery {
+            preferencesRepository.getGameExistedState()
+        } returns flowOf(
+            DataResult.Error(DataResult.Error.Code.UNKNOWN)
+        )
+        val viewModel = HomeViewModel(preferencesRepository)
 
-            delay(magicNum)
-
-            coVerify(exactly = 1) {
-                preferencesRepository.getGameExistedState()
-            }
-
-            confirmVerified(preferencesRepository)
-            assertTrue(viewModel.uiState.value is HomeUiState.Error)
-            val result = (viewModel.uiState.value as HomeUiState.Error).code
-            assertEquals(DataResult.Error.Code.UNKNOWN, result)
+        val job = launch(Dispatchers.Main, CoroutineStart.LAZY) {
+            viewModel.homeUiState.collect()
         }
-        Unit
+        job.start()
+
+        delay(magicNum)
+
+        coVerify(exactly = 1) {
+            preferencesRepository.getGameExistedState()
+        }
+
+        confirmVerified(preferencesRepository)
+        assertTrue(viewModel.homeUiState.value is HomeUiState.Error)
+        val result = (viewModel.homeUiState.value as HomeUiState.Error).code
+        assertEquals(DataResult.Error.Code.UNKNOWN, result)
+
+        job.cancelAndJoin()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
