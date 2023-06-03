@@ -30,6 +30,13 @@ class PrintViewModelTest {
 
     private val magicNum = 600L
 
+    private val appName = "AzureNum"
+    private val gameLevelTitlePrefix = "Game Level"
+    private val gameLevelTextList = listOf(
+        "Easy",
+        "Moderate",
+        "Hard",
+    )
     private val gameLevelList = listOf(
         GameLevel.MODERATE, GameLevel.EASY, GameLevel.MODERATE, GameLevel.EASY,
         GameLevel.HARD, GameLevel.HARD
@@ -57,11 +64,20 @@ class PrintViewModelTest {
     fun `generate Sudoku PDF`() = runBlocking {
         launch(Dispatchers.Main) {
             // EmptyGameLevelList
-            viewModel.generateSudokuPdf()
+            viewModel.generateSudokuPdf(
+                appName = appName,
+                gameLevelTitlePrefix = gameLevelTitlePrefix,
+                gameLevelTextList = gameLevelTextList,
+            )
             delay(magicNum)
             coVerify(exactly = 0) {
                 sudokuRepository.getPrintGameList(viewModel.gameLevelList.value)
-                pdfRepository.generateSudokuPdf(any())
+                pdfRepository.createSudokuPdf(
+                    appName = appName,
+                    gameLevelTitlePrefix = gameLevelTitlePrefix,
+                    gameLevelTextList = gameLevelTextList,
+                    printGameList = emptyList()
+                )
             }
             confirmVerified(sudokuRepository, pdfRepository)
             assertTrue(viewModel.pdfUiState.value is PdfUiState.EmptyGameLevelList)
@@ -76,14 +92,28 @@ class PrintViewModelTest {
             } returns emptyList()
             val sudokuPdf = SudokuPdf(File(""), emptyList())
             coEvery {
-                pdfRepository.generateSudokuPdf(emptyList())
+                pdfRepository.createSudokuPdf(
+                    appName = appName,
+                    gameLevelTitlePrefix = gameLevelTitlePrefix,
+                    gameLevelTextList = gameLevelTextList,
+                    printGameList = emptyList()
+                )
             } returns DataResult.Success(sudokuPdf)
             viewModel.addGameLevel(GameLevel.EASY)
-            viewModel.generateSudokuPdf()
+            viewModel.generateSudokuPdf(
+                appName = appName,
+                gameLevelTitlePrefix = gameLevelTitlePrefix,
+                gameLevelTextList = gameLevelTextList,
+            )
             delay(magicNum)
             coVerify(exactly = 1) {
                 sudokuRepository.getPrintGameList(viewModel.gameLevelList.value)
-                pdfRepository.generateSudokuPdf(emptyList())
+                pdfRepository.createSudokuPdf(
+                    appName = appName,
+                    gameLevelTitlePrefix = gameLevelTitlePrefix,
+                    gameLevelTextList = gameLevelTextList,
+                    printGameList = emptyList()
+                )
             }
             confirmVerified(sudokuRepository, pdfRepository)
             assertTrue(viewModel.pdfUiState.value is PdfUiState.Loaded)
@@ -99,14 +129,28 @@ class PrintViewModelTest {
                 )
             } returns emptyList()
             coEvery {
-                pdfRepository.generateSudokuPdf(emptyList())
+                pdfRepository.createSudokuPdf(
+                    appName = appName,
+                    gameLevelTitlePrefix = gameLevelTitlePrefix,
+                    gameLevelTextList = gameLevelTextList,
+                    printGameList = emptyList()
+                )
             } returns DataResult.Error(DataResult.Error.Code.UNKNOWN)
             viewModel.addGameLevel(GameLevel.EASY)
-            viewModel.generateSudokuPdf()
+            viewModel.generateSudokuPdf(
+                appName = appName,
+                gameLevelTitlePrefix = gameLevelTitlePrefix,
+                gameLevelTextList = gameLevelTextList,
+            )
             delay(magicNum)
             coVerify(exactly = 1) {
                 sudokuRepository.getPrintGameList(viewModel.gameLevelList.value)
-                pdfRepository.generateSudokuPdf(emptyList())
+                pdfRepository.createSudokuPdf(
+                    appName = appName,
+                    gameLevelTitlePrefix = gameLevelTitlePrefix,
+                    gameLevelTextList = gameLevelTextList,
+                    printGameList = emptyList()
+                )
             }
             confirmVerified(sudokuRepository, pdfRepository)
             assertTrue(viewModel.pdfUiState.value is PdfUiState.Error)
