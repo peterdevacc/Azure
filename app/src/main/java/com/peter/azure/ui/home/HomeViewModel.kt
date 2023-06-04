@@ -23,20 +23,22 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val gameExistedFlow = preferencesRepository.getGameExistedState()
-    private val dialAngleFlow = MutableStateFlow(0.0)
+    private val gameLevelFlow = MutableStateFlow(GameLevel.EASY)
+    private val gameLevelValueList = GameLevel.values()
 
     val homeUiState = gameExistedFlow
-        .combine(dialAngleFlow) { prefResult, dialAngle ->
-            prefResult to dialAngle
-        }.map { (prefResult, angle) ->
+        .combine(gameLevelFlow) { prefResult, gameLevel ->
+            prefResult to gameLevel
+        }.map { (prefResult, gameLevel) ->
             when (prefResult) {
                 is DataResult.Error -> {
                     HomeUiState.Error(prefResult.code)
                 }
+
                 is DataResult.Success -> {
                     HomeUiState.Success(
                         gameExisted = prefResult.result,
-                        dialAngle = angle
+                        gameLevel = gameLevel
                     )
                 }
             }
@@ -46,22 +48,15 @@ class HomeViewModel @Inject constructor(
             initialValue = HomeUiState.Loading,
         )
 
-    fun setDialAngle(angle: Double) {
-        if (homeUiState.value is HomeUiState.Success) {
-            dialAngleFlow.value = angle
-        }
-    }
-
     fun getGameLevel(): GameLevel {
         val state = (homeUiState.value as HomeUiState.Success)
-        val level = if (state.dialAngle >= -120.0 && state.dialAngle < 0.0) {
-            GameLevel.HARD
-        } else if (state.dialAngle in 0.0..120.0) {
-            GameLevel.MODERATE
-        } else {
-            GameLevel.EASY
+        return state.gameLevel
+    }
+
+    fun setGameLevel(gameLevelNum: Int) {
+        if (homeUiState.value is HomeUiState.Success) {
+            gameLevelFlow.value = gameLevelValueList[gameLevelNum]
         }
-        return level
     }
 
 }

@@ -7,7 +7,6 @@
 
     <string name="screen_home">Home</string>
     <string name="screen_home_description">a Sudoku game is start from here.</string>
-    <string name="screen_home_start_game">Start Game</string>
     <string name="screen_home_continue_game">Continue</string>
 
     <string name="screen_print">Print</string>
@@ -89,6 +88,8 @@
 
     <string name="icon_cd_navigation_menu" translatable="false">Navigation menu</string>
     <string name="icon_cd_navigate_up" translatable="false">Navigate up</string>
+    <string name="icon_cd_increase_game_level" translatable="false">Increase game level</string>
+    <string name="icon_cd_decrease_game_level" translatable="false">Decrease game level</string>
     <string name="icon_cd_screen_print" translatable="false">Print screen logo</string>
     <string name="icon_cd_add_level" translatable="false">Add level %1$s to the list</string>
     <string name="icon_cd_delete_game" translatable="false">Delete game dialog</string>
@@ -102,7 +103,7 @@
     <string name="navigate_to_info_description">Navigate to %1$s contract screen</string>
     <string name="navigation_dialog_item_description">%1$s screen destination</string>
 
-    <string name="game_level_setting_description">Game level setting wheel, current level is %1$s ,double click and then hold to spin</string>
+    <string name="game_level_block_description">Game level display block, current level is %1$s</string>
 
     <string name="game_existed_description">A Sudoku game existed</string>
     <string name="game_board_blank_cell_description">Game board blank cell r%1$d c%2$d with no number</string>

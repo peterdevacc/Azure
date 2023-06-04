@@ -4,13 +4,14 @@
 
 package com.peter.azure.ui.home
 
+import com.peter.azure.data.entity.GameLevel
 import com.peter.azure.data.util.DataResult
 
 sealed interface HomeUiState {
 
     data class Success(
         val gameExisted: Boolean,
-        var dialAngle: Double,
+        var gameLevel: GameLevel,
     ) : HomeUiState
 
     data class Error(

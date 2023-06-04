@@ -4,10 +4,25 @@
 
 package com.peter.azure.ui.home
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -23,6 +38,7 @@ import com.peter.azure.ui.navigation.AzureDestination
 import com.peter.azure.ui.util.AzureTopBar
 import com.peter.azure.ui.util.ErrorNotice
 import com.peter.azure.ui.util.azureScreen
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -36,7 +52,7 @@ fun HomeScreen(
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     HomeContent(
         uiState = uiState,
-        setDialAngle = viewModel::setDialAngle,
+        setGameLevel = viewModel::setGameLevel,
         getGameLevel = viewModel::getGameLevel,
         navigateToNewGame = navigateToNewGame,
         navigateToContinueGame = navigateToContinueGame,
@@ -49,7 +65,7 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     uiState: HomeUiState,
-    setDialAngle: (Double) -> Unit,
+    setGameLevel: (Int) -> Unit,
     getGameLevel: () -> GameLevel,
     navigateToNewGame: () -> Unit,
     navigateToContinueGame: () -> Unit,
@@ -60,6 +76,8 @@ private fun HomeContent(
 
     when (uiState) {
         is HomeUiState.Success -> {
+            val scope = rememberCoroutineScope()
+
             ConstraintLayout(
                 modifier = Modifier.azureScreen()
             ) {
@@ -70,11 +88,12 @@ private fun HomeContent(
 
                 val topBarModifier: Modifier
                 val settingModifier: Modifier
-                val buttonModifier: Modifier
-                val dialSize = if (isCompact) {
-                    (minSide * 0.78f).toInt()
+                val continueButtonModifier: Modifier
+                val gameLevelButtonGroupModifier: Modifier
+                val blockSize = if (isCompact) {
+                    (minSide * 0.73f).toInt()
                 } else {
-                    (minSide * 0.57f).toInt()
+                    (minSide * 0.52f).toInt()
                 }
 
                 if (isPortrait) {
@@ -92,9 +111,15 @@ private fun HomeContent(
                             width = Dimension.fillToConstraints
                             height = Dimension.fillToConstraints
                         }
-                    buttonModifier = Modifier
+                    continueButtonModifier = Modifier
                         .padding(bottom = 32.dp)
-                        .width((dialSize * 0.53f).toInt().dp)
+                        .width((blockSize * 0.53f).toInt().dp)
+                        .constrainAs(button) {
+                            centerHorizontallyTo(parent)
+                            bottom.linkTo(parent.bottom)
+                        }
+                    gameLevelButtonGroupModifier = Modifier
+                        .padding(bottom = 32.dp)
                         .constrainAs(button) {
                             centerHorizontallyTo(parent)
                             bottom.linkTo(parent.bottom)
@@ -112,11 +137,17 @@ private fun HomeContent(
                         centerHorizontallyTo(parent)
                         height = Dimension.fillToConstraints
                     }
-                    buttonModifier = Modifier
-                        .width((dialSize * 0.53f).toInt().dp)
+                    continueButtonModifier = Modifier
+                        .width((blockSize * 0.53f).toInt().dp)
                         .constrainAs(button) {
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
+                        }
+                    gameLevelButtonGroupModifier = Modifier
+                        .padding(end = 8.dp)
+                        .constrainAs(button) {
+                            end.linkTo(parent.end)
+                            centerVerticallyTo(parent)
                         }
                 }
 
@@ -128,6 +159,8 @@ private fun HomeContent(
                     )
                 }
 
+                val anim = remember { Animatable(0f) }
+
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = settingModifier
@@ -135,57 +168,79 @@ private fun HomeContent(
                     if (!uiState.gameExisted) {
                         val level = getGameLevel()
                         val description = stringResource(
-                            R.string.game_level_setting_description,
+                            R.string.game_level_block_description,
                             level.name
                         )
-                        GameLevelWheel(
-                            fullSize = dialSize.dp,
-                            dialAngle = uiState.dialAngle,
-                            setDialAngle = setDialAngle,
-                            semanticsDescription = description
+
+                        LaunchedEffect(anim) {
+                            anim.animateTo(
+                                targetValue = 1f,
+                                animationSpec = tween(
+                                    durationMillis = 600,
+                                    easing = LinearEasing
+                                )
+                            )
+                        }
+
+                        GameLevelBlock(
+                            fullSize = blockSize.dp,
+                            gameLevel = level,
+                            semanticsDescription = description,
+                            anim = anim.value
                         )
                     } else {
                         Box(
                             contentAlignment = Alignment.Center,
-                            modifier = Modifier.size(dialSize.dp)
+                            modifier = Modifier.size(blockSize.dp)
                         ) {
-                            AzureBlock(fullSize = (dialSize * 0.76f).dp)
+                            AzureBlock(fullSize = (blockSize * 0.76f).dp)
                         }
                     }
                 }
 
-                val buttonText: String
-                val navigate: () -> Unit
-                val buttonColors: ButtonColors
                 if (uiState.gameExisted) {
-                    buttonText = stringResource(R.string.screen_home_continue_game)
-                    navigate = navigateToContinueGame
-                    buttonColors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    )
+                    Button(
+                        onClick = navigateToContinueGame,
+                        contentPadding = PaddingValues(16.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        ),
+                        modifier = continueButtonModifier
+                    ) {
+                        Text(
+                            text = stringResource(R.string.screen_home_continue_game),
+                            fontSize = 18.sp,
+                        )
+                    }
                 } else {
-                    buttonText = stringResource(R.string.screen_home_start_game)
-                    navigate = navigateToNewGame
-                    buttonColors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary
-                    )
+                    Box(
+                        modifier = gameLevelButtonGroupModifier
+                    ) {
+                        GameLevelButtonGroup(
+                            isPortrait = isPortrait,
+                            currentGameLevel = uiState.gameLevel,
+                            setGameLevel = { level ->
+                                setGameLevel(level)
+                                scope.launch {
+                                    anim.snapTo(0f)
+                                    anim.animateTo(
+                                        targetValue = 1f,
+                                        animationSpec = tween(
+                                            durationMillis = 600,
+                                            easing = LinearEasing
+                                        )
+                                    )
+                                }
+                            },
+                            startGame = navigateToNewGame,
+                        )
+                    }
                 }
 
-                Button(
-                    onClick = navigate,
-                    contentPadding = PaddingValues(16.dp),
-                    colors = buttonColors,
-                    modifier = buttonModifier
-                ) {
-                    Text(
-                        text = buttonText,
-                        fontSize = 18.sp,
-                    )
-                }
             }
         }
+
         else -> {
             Box(
                 contentAlignment = Alignment.Center,
