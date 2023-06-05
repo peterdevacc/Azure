@@ -14,7 +14,7 @@ android {
         applicationId "com.peter.azure"
         minSdk 28
         targetSdk 33
-        versionCode 28
+        versionCode 29
         versionName "1.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
