@@ -57,7 +57,7 @@ fun GameLevelButtonGroup(
             FilledTonalButton(
                 onClick = startGame,
                 shape = MaterialTheme.shapes.medium,
-                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                 colors = ButtonDefaults.filledTonalButtonColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -90,7 +90,7 @@ fun GameLevelButtonGroup(
             FilledTonalButton(
                 onClick = startGame,
                 shape = MaterialTheme.shapes.medium,
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
                 colors = ButtonDefaults.filledTonalButtonColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -102,7 +102,7 @@ fun GameLevelButtonGroup(
             ) {
                 val gameLevelTextColor = MaterialTheme.colorScheme.onPrimaryContainer
                 val gameLevelTextSize = startButtonSize.first * 0.43f
-                val textWidthHalf = startButtonSize.second * 0.46f
+                val textWidthHalf = startButtonSize.second * 0.42f
 
                 Canvas(
                     modifier = Modifier.size(
