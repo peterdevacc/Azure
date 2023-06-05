@@ -3,7 +3,7 @@
     <string name="app_name">蔚蓝数独</string>
     <string name="app_version_title">软件版本</string>
     <string name="app_last_update_title">最近更新</string>
-    <string name="app_last_update">4月12号2023年</string>
+    <string name="app_last_update">6月5号2023年</string>
     <string name="screen_home">首页</string>
     <string name="screen_home_description">数独游戏在这里开始</string>
     <string name="screen_home_continue_game">继续游戏</string>
