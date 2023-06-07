@@ -18,6 +18,20 @@ check out on [Google Play](https://play.google.com/store/apps/details?id=com.pet
 * Doesn't collect user data
 * Run without network
 
+## Screenshot
+
+* Phone
+
+![Phone Screenshot](screen-shot/Phone.png)
+
+* Foldable
+
+![Phone Screenshot](screen-shot/Foldable.png)
+
+* Tablet
+
+![Phone Screenshot](screen-shot/Tablet.png)
+
 ## License
 
 * AzureNum is distributed under the terms of the Apache License (Version 2.0). See [license](LICENSE) for details.
