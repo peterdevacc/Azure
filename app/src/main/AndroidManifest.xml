@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Azure.SplashScreenTheme"
         android:localeConfig="@xml/locale_config"
-        tools:targetApi="33">
+        tools:targetApi="34">
         <activity
             android:name=".ui.MainActivity"
             android:theme="@style/Theme.Azure.SplashScreenTheme"
