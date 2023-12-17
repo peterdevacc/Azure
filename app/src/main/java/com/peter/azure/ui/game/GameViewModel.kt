@@ -71,7 +71,7 @@ class GameViewModel @Inject constructor(
                 val updatedBoard = uiState.puzzle.board.map {
                     it.toMutableList()
                 }
-                updatedBoard[uiState.location.y][uiState.location.x] =
+                updatedBoard[uiState.location.x][uiState.location.y] =
                     Cell(num, Cell.Type.BLANK)
                 val updatePuzzle = Puzzle(board = updatedBoard)
                 viewModelScope.launch {
