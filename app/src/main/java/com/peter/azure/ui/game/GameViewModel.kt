@@ -107,7 +107,7 @@ class GameViewModel @Inject constructor(
                     val updatedBoard = uiState.puzzle.board.map {
                         it.toMutableList()
                     }
-                    updatedBoard[currentNote.location.y][currentNote.location.x] =
+                    updatedBoard[currentNote.location.x][currentNote.location.y] =
                         Cell(0, Cell.Type.BLANK)
                     val updatePuzzle = Puzzle(board = updatedBoard)
 
