@@ -8,14 +8,14 @@ plugins {
 
 android {
     namespace 'com.peter.azure'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.peter.azure"
         minSdk 28
-        targetSdk 33
-        versionCode 29
-        versionName "1.7"
+        targetSdkVersion 34
+        versionCode 30
+        versionName "1.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

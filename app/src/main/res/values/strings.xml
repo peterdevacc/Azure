@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">AzureNum</string>
     <string name="app_version_title">app version</string>
-    <string name="app_version" translatable="false">1.7</string>
+    <string name="app_version" translatable="false">1.8</string>
     <string name="app_last_update_title">last update</string>
-    <string name="app_last_update">Jun 5 2023</string>
+    <string name="app_last_update">Dec 17 2023</string>
 
     <string name="screen_home">Home</string>
     <string name="screen_home_description">a Sudoku game is start from here.</string>
