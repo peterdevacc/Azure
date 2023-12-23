@@ -1,3 +1,5 @@
+[![cn](https://img.shields.io/badge/lang-cn-red.svg)](README.cn.md)
+
 # AzureNum
 
 ![Logo](AzureNumLogo.png)
